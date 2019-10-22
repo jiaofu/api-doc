@@ -1,0 +1,762 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Documentation</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+
+
+      .header{
+        padding: 0 26px;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        height: 60px;
+        background: #222;
+        position: fixed;
+        display: flex;
+        z-index: 100;
+        top: 0;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .header-left{
+        display: flex;
+        align-items: center;
+      }
+      .header .logo{
+        width: 212px;
+        height: 32px;
+      }
+      .nav li{
+        display:inline-block;
+        color:#B0B8DB;
+        padding: 0 20px;
+      }
+      .nav li a{
+        height: 60px;
+        line-height: 60px;
+        display: block;
+        color:#B0B8DB;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        cursor: pointer;
+      }
+      .nav li a.current{
+        color:#fff;
+        border-bottom: 2px solid #F0B90B;
+      
+      }
+      .language{
+        width: 78px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        border: 1px solid #383F66;
+        color: #F0B90B;
+        text-decoration: none;
+        border-radius: 3px;
+        -webkit-transition: all 300ms;
+        transition: all 300ms;
+        cursor: pointer;
+      }
+      .toc-wrapper,.page-wrapper{
+        margin-top: 60px;
+      }
+      
+
+    </style>
+    <link href="stylesheets/screen-a1ce949a.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-bccf8c07.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all_nosearch-c275c2f6.js"></script>
+  </head>
+
+  <body class="web-socket-streams" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar-cad8cdcb.png" alt="Navbar" />
+      </span>
+    </a>
+
+    
+    <div class="header">
+      <div class="header-left">
+      <img src="images/jex-8167d7cd.png" class="logo" alt="Jex" />
+        <ul class="nav" id="data-nav">
+          <li><a href="https://www.baidu.com">spot</a></li>
+          <li><a href="https://www.qq.com">contract</a></li>
+          <li><a href="https://www.163.com">API</a></li>
+          <li><a href="https://www.sina.com">TESTNET API</a></li>
+        </ul>
+      </div>
+      <a class="language" id="language">English</a>
+    </div>
+
+    <div class="toc-wrapper">
+    
+  
+      <ul id="toc" class="toc-list-h1">
+          <li>
+            <a href="#web-socket-streams-for-jex" class="toc-h1 toc-link" data-title="Web Socket Streams for JEX">Web Socket Streams for JEX</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#general-wss-information" class="toc-h2 toc-link" data-title="General WSS information">General WSS information</a>
+                  </li>
+                  <li>
+                    <a href="#a15f2d25ee" class="toc-h2 toc-link" data-title="其他说明">其他说明</a>
+                  </li>
+                  <li>
+                    <a href="#stream-detailed-stream-information" class="toc-h2 toc-link" data-title="Stream Detailed Stream information">Stream Detailed Stream information</a>
+                  </li>
+                  <li>
+                    <a href="#trade-streams" class="toc-h2 toc-link" data-title="Trade Streams">Trade Streams</a>
+                  </li>
+                  <li>
+                    <a href="#kline-candlestick-streams" class="toc-h2 toc-link" data-title="Kline/Candlestick Streams">Kline/Candlestick Streams</a>
+                  </li>
+                  <li>
+                    <a href="#individual-symbol-mini-ticker-stream" class="toc-h2 toc-link" data-title="Individual Symbol Mini Ticker Stream">Individual Symbol Mini Ticker Stream</a>
+                  </li>
+                  <li>
+                    <a href="#all-market-mini-tickers-stream" class="toc-h2 toc-link" data-title="All Market Mini Tickers Stream">All Market Mini Tickers Stream</a>
+                  </li>
+                  <li>
+                    <a href="#individual-symbol-ticker-streams" class="toc-h2 toc-link" data-title="Individual Symbol Ticker Streams">Individual Symbol Ticker Streams</a>
+                  </li>
+                  <li>
+                    <a href="#all-market-tickers-stream" class="toc-h2 toc-link" data-title="All Market Tickers Stream">All Market Tickers Stream</a>
+                  </li>
+                  <li>
+                    <a href="#partial-book-depth-streams" class="toc-h2 toc-link" data-title="Partial Book Depth Streams">Partial Book Depth Streams</a>
+                  </li>
+                  <li>
+                    <a href="#diff-depth-stream" class="toc-h2 toc-link" data-title="Diff. Depth Stream">Diff. Depth Stream</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#user-data-streams-for-jex" class="toc-h1 toc-link" data-title="User Data Streams for JEX">User Data Streams for JEX</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#b122f813d5" class="toc-h2 toc-link" data-title="基本信息">基本信息</a>
+                  </li>
+                  <li>
+                    <a href="#rest-api-related-to-websocket-account-api-please-refer-to-user-data-subscription-api-of-rest-document" class="toc-h2 toc-link" data-title="REST API related to Websocket account API Please refer to user data subscription API of REST document">REST API related to Websocket account API Please refer to user data subscription API of REST document</a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='web-socket-streams-for-jex'>Web Socket Streams for JEX</h1><h2 id='general-wss-information'>General WSS information</h2>
+<ul>
+<li>The base endpoint is: <strong>wss://ws.jex.com</strong> or <strong>wss://testnetws.jex.com</strong></li>
+<li>which the <strong>wss://testnetws.jex.com</strong> simulation environment。</li>
+<li>Streams can be accessed either in a single raw stream or in a combined stream</li>
+<li>Raw streams are accessed at <strong>/ws/&lt;streamName&gt;</strong></li>
+<li>Combined streams are accessed at <strong>/stream?streams=&lt;streamName1&gt;/&lt;streamName2&gt;/&lt;streamName3&gt;</strong></li>
+<li>Combined stream events are wrapped as follows: <strong>{&quot;stream&quot;:&quot;&lt;streamName&gt;&quot;,&quot;data&quot;:&lt;rawPayload&gt;}</strong></li>
+<li>All symbols for streams are <strong>lowercase</strong></li>
+<li>A single connection to <strong>stream.jex.com</strong> is only valid for 24 hours; expect to be disconnected at the 24 hour mark</li>
+<li>The websocket server will send a <code>ping frame</code> every 3 minutes. If the websocket server does not receive a <code>pong frame</code> back from the connection within a 10 minute period, the connection will be disconnected. Unsolicited <code>pong frames</code> are allowed.</li>
+</ul>
+<h2 id='a15f2d25ee'>其他说明</h2>
+<ul>
+<li>WSS contract order sells are uniformly negative</li>
+</ul>
+<h2 id='stream-detailed-stream-information'>Stream Detailed Stream information</h2><h2 id='trade-streams'>Trade Streams</h2>
+<blockquote>
+<p>Every 100 ms push, every single transaction in the last second is defined as a transaction between only one order taker and one bill holder.</p>
+</blockquote>
+<h3 id='stream-name-lt-symbol-gt-lt-tradetype-gt'>Stream Name: &lt;symbol&gt;@&lt;tradeType&gt;</h3><h3 id='playload'>Playload</h3><pre class="highlight javascript tab-javascript"><code><span class="p">[{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotTrade"</span><span class="p">,</span>    <span class="c1">//  Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>      <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>       <span class="c1">// Symbol</span>
+  <span class="s2">"t"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>          <span class="c1">// Trade ID</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.001"</span><span class="p">,</span>        <span class="c1">// Price</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span>          <span class="c1">// Quantity</span>
+  <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123456785</span><span class="p">,</span>      <span class="c1">// Trade time</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>           <span class="c1">// Is the buyer the market maker?If true，this is a seller order，otherwise it is a buyer order.</span>
+<span class="p">},{...},...</span>
+<span class="p">]</span>
+</code></pre><h3 id='tradetype'>tradeType</h3>
+<ul>
+<li>Support 3 types as below:
+
+<ul>
+<li>spotTrade </li>
+<li>optionTrade </li>
+<li>contractTrade </li>
+</ul></li>
+</ul>
+<h2 id='kline-candlestick-streams'>Kline/Candlestick Streams</h2>
+<blockquote>
+<p>The Kline/Candlestick Stream push updates to the current klines/candlestick every second</p>
+</blockquote>
+
+<ul>
+<li><p>Booking Kline requires interval parameter, shortest one is minute line, longest one is week line. Support intervals as below:</p>
+
+<ul>
+<li>1M </li>
+<li>5M </li>
+<li>15M </li>
+<li>30M</li>
+<li>1H </li>
+<li>4H</li>
+<li>1D </li>
+<li>1W</li>
+</ul></li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-klinetype-gt-_-lt-interval-gt'>Stream Name: &lt;symbol&gt;@&lt;klineType&gt;_&lt;interval&gt;</h3><h3 id='playload-2'>Playload</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotKline"</span><span class="p">,</span>     <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>       <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>        <span class="c1">// Symbol</span>
+  <span class="s2">"k"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"t"</span><span class="p">:</span> <span class="mi">123400000</span><span class="p">,</span>     <span class="c1">// Kline start time</span>
+    <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123460000</span><span class="p">,</span>     <span class="c1">// Kline close time</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>      <span class="c1">// Symbol</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"1m"</span><span class="p">,</span>          <span class="c1">// Interval</span>
+    <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>      <span class="c1">// Open price</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0020"</span><span class="p">,</span>      <span class="c1">// Close price</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>      <span class="c1">// High price</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>      <span class="c1">// Low price</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"1000"</span><span class="p">,</span>        <span class="c1">// Base asset volume</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"1.0000"</span><span class="p">,</span>      <span class="c1">// Quote asset volume</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h3 id='klinetype'>klineType</h3>
+<p>-Support types
+  - spotKline
+  - optionKline
+  - contractKline</p>
+<h2 id='individual-symbol-mini-ticker-stream'>Individual Symbol Mini Ticker Stream</h2>
+<blockquote>
+<p>24hr rolling window mini-ticker statistics for a single symbol pushed every second.</p>
+</blockquote>
+<h3 id='stream-name-lt-symbol-gt-lt-minitickertype-gt'>Stream Name: &lt;symbol&gt;@&lt;miniTickerType&gt;</h3><h3 id='playload-3'>Playload</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotMiniTicker"</span><span class="p">,</span>   <span class="c1">// Event type</span>
+    <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>              <span class="c1">// Event time</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>               <span class="c1">// Symbol</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// Close price</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">//  High  price</span>
+    <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// Open price</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>               <span class="c1">// Low price</span>
+    <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// mark price(Only  contractMiniTicker have)</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// index price(Only contractMiniTicker have)</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// Base asset volume</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span>                    <span class="c1">// Total traded quote asset volume</span>
+<span class="p">}</span>
+
+</code></pre><h3 id='minitickertype'>miniTickerType</h3>
+<ul>
+<li>Support types:
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='all-market-mini-tickers-stream'>All Market Mini Tickers Stream</h2>
+<blockquote>
+<p>24hr rolling window mini-ticker statistics for all symbols that changed in an array pushed every second</p>
+</blockquote>
+<h3 id='streamname-lt-minitickertype-gt-arr'>StreamName: !&lt;miniTickerType&gt;@arr</h3><h3 id='playload-4'>Playload</h3><pre class="highlight javascript tab-javascript"><code>
+<span class="p">[</span>
+  <span class="p">{</span>
+     <span class="c1">// Same as &lt;symbol&gt;@miniTicker payload</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h3 id='minitickertype-2'>miniTickerType</h3>
+<ul>
+<li>Support types: 
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='individual-symbol-ticker-streams'>Individual Symbol Ticker Streams</h2>
+<blockquote>
+<p>24hr rollwing window ticker statistics for a single symbol pushed every second. </p>
+</blockquote>
+<h3 id='stream-name-lt-symbol-gt-lt-tickertype-gt'>Stream Name: &lt;symbol&gt;@&lt;tickerType&gt;</h3><h3 id='playload-5'>Playload</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotTicker"</span><span class="p">,</span>  <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>         <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// Symbol</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>          <span class="c1">// Price change in 24h</span>
+  <span class="s2">"P"</span><span class="p">:</span> <span class="s2">"250.00"</span><span class="p">,</span>          <span class="c1">// Price change in 24h percent</span>
+  <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// Last price</span>
+  <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// Highest price in 24h</span>
+  <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>          <span class="c1">// Lowest price in 24h</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// Trade volume in 24h</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span><span class="p">,</span>              <span class="c1">// Trade asset in 24h</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// mark price(Only  contractMiniTicker have)</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// index price(Only contractMiniTicker have)</span>
+  <span class="s2">"O"</span><span class="p">:</span> <span class="mi">1234567890</span><span class="p">,</span>        <span class="c1">// TODO 0  Starting time</span>
+  <span class="s2">"C"</span><span class="p">:</span> <span class="mi">86400000</span><span class="p">,</span>          <span class="c1">// TODO 3600*24*1000，milliseconds in 24h  ending time</span>
+<span class="p">}</span>
+</code></pre><h2 id='all-market-tickers-stream'>All Market Tickers Stream</h2>
+<blockquote>
+<p>24hr rolling window ticker statistics for all symbols that changed in an array pushed every second.</p>
+</blockquote>
+<h3 id='streamname-lt-tickertype-gt-arr'>StreamName: !&lt;tickerType&gt;@arr</h3><h3 id='payload'>Payload:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+     <span class="c1">//Same as &lt;symbol&gt;@ticker payload</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<ul>
+<li>tickerType 
+
+<ul>
+<li>spotTicker</li>
+<li>optionTicker</li>
+<li>contractTicker</li>
+</ul></li>
+</ul>
+<h2 id='partial-book-depth-streams'>Partial Book Depth Streams</h2>
+<blockquote>
+<p>Top <levels> bids and asks, pushed every second. Valid <levels> are 5, 10, or 20.</p>
+</blockquote>
+<h3 id='stream-name-lt-symbol-gt-lt-depthtype-gt-lt-levels-gt'>Stream Name: &lt;symbol&gt;@&lt;depthType&gt;&lt;levels&gt;</h3><h3 id='playload-6'>Playload:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"bids"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// Buy</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>         <span class="c1">// Price</span>
+      <span class="s2">"10"</span><span class="p">,</span>             <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"asks"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// Sell</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>         <span class="c1">// Price</span>
+      <span class="s2">"100"</span><span class="p">,</span>            <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType 
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>levels 
+
+<ul>
+<li>5</li>
+<li>10</li>
+<li>20</li>
+</ul></li>
+</ul>
+<h2 id='diff-depth-stream'>Diff. Depth Stream</h2>
+<blockquote>
+<p>Order book price and quantity depth updates used to locally manage an order book pushed every second.</p>
+</blockquote>
+<h3 id='stream-name-lt-symbol-gt-lt-depthtype-gt'>Stream Name: &lt;symbol&gt;@&lt;depthType&gt;</h3><h3 id='payload-2'>Payload:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotDepthUpdate"</span><span class="p">,</span> <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// Symbol</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="mi">157</span><span class="p">,</span>               <span class="c1">// Version to be updated</span>
+  <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span>                  <span class="c1">// Changing depth for buyer</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>          <span class="c1">// Price</span>
+      <span class="s2">"10"</span><span class="p">,</span>              <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"a"</span><span class="p">:</span> <span class="p">[</span>                 <span class="c1">// Changing depth for seller</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>          <span class="c1">// Price</span>
+      <span class="s2">"100"</span><span class="p">,</span>             <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType Support types
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>Types for Depth Streams 
+
+<ul>
+<li>spotDepthUpdate</li>
+<li>optionDepthUpdate</li>
+<li>contractDepthUpdate</li>
+</ul></li>
+</ul>
+<h1 id='user-data-streams-for-jex'>User Data Streams for JEX</h1><h2 id='b122f813d5'>基本信息</h2>
+<ul>
+<li>The base API endpoint is: <strong>https://www.jex.com</strong> or <strong>https://testnet.jex.com</strong></li>
+<li>which the <strong>https://testnet.jex.com</strong> Simulation environment。</li>
+<li>A User Data Stream <code>listenKey</code> is valid for 60 minutes after creation.</li>
+<li>Doing a <code>PUT</code> on a <code>listenKey</code> will extend its validity for 60 minutes.</li>
+<li>Doing a <code>DELETE</code> on a <code>listenKey</code> will close the stream.</li>
+<li>The base websocket endpoint is: <strong>wss://ws.jex.com</strong>   or <strong>wss://testnetws.jex.com</strong></li>
+<li>which the <strong>wss://testnetws.jex.com</strong> Simulation environment。</li>
+<li>User Data Streams are accessed at <strong>/ws/&lt;listenKey&gt;</strong></li>
+<li>A single connection to <strong>stream.jex.com</strong> is only valid for 24 hours; expect to be disconnected at the 24 hour mark</li>
+<li>User data stream payloads are <strong>not guaranteed</strong> to be in order during heavy periods; <strong>make sure to order your updates using E</strong></li>
+</ul>
+<h2 id='rest-api-related-to-websocket-account-api-please-refer-to-user-data-subscription-api-of-rest-document'>REST API related to Websocket account API Please refer to user data subscription API of REST document</h2><h3 id='account-updates'>Account updates</h3>
+<blockquote>
+<p>Event type of account updates is fixed to <code>accountSpotInfo</code> AND <code>accountOptionInfo</code> AND <code>accountContractInfo</code> They respectively refers to the asset related event of spot, options and futures.
+When there is a change of asset, relevant event will be pushed</p>
+</blockquote>
+<h3 id='playload-7'>Playload:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"accountSpotInfo"</span><span class="p">,</span>       <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>           <span class="c1">// Event time</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                       <span class="c1">// Fee rate of entry order </span>
+  <span class="s2">"t"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                       <span class="c1">// Fee rate of taking order</span>
+  <span class="s2">"u"</span><span class="p">:</span> <span class="mi">1499405658848</span><span class="p">,</span>           <span class="c1">// Time stamp of</span>
+  <span class="s2">"B"</span><span class="p">:</span> <span class="p">[</span>                        <span class="c1">// Balance</span>
+    <span class="p">{</span>
+      <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"LTC"</span><span class="p">,</span>               <span class="c1">// Asset name</span>
+      <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"1.57"</span><span class="p">,</span>              <span class="c1">// Order Margin（Only Furtures）</span>
+      <span class="s2">"p"</span><span class="p">:</span>  <span class="s2">"0"</span>  <span class="err">，</span>             <span class="c1">// Position Margin（Only Furtures ）</span>
+      <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"17366.18538083"</span><span class="p">,</span>    <span class="c1">// Free amount</span>
+      <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>        <span class="c1">// Locked amount  </span>
+      <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can trade</span>
+      <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can withdraw</span>
+      <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can deposit</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+      <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"10537.85314051"</span><span class="p">,</span>
+      <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"2.19464093"</span><span class="p">,</span>
+      <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can trade</span>
+      <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can withdraw</span>
+       <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>               <span class="c1">// Can deposit</span>
+ <span class="p">},</span>
+    <span class="p">{</span>
+    <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can trade</span>
+    <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can withdraw</span>
+    <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can deposit</span>
+    <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"ETH"</span><span class="p">,</span>
+    <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"17902.35190619"</span><span class="p">,</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.00000000"</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='update-of-orders'>Update of orders</h3>
+<blockquote>
+<p>Account state is updated with the outboundAccountInfo event.</p>
+</blockquote>
+
+<p>event type is <code>execSpotReport</code> AND <code>execOptionReport</code> AND <code>execContractReport</code> They respectively refers to the asset related event of spot、options、futures Event type</p>
+
+<p>Possible executive type of contract(X field)</p>
+<h3 id='playload-of-spot-and-options'>Playload of spot and options:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>            <span class="c1">// Event time</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"execSpotReport"</span><span class="p">,</span>         <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>                 <span class="c1">// Symbol</span>
+  <span class="s2">"S"</span><span class="p">:</span> <span class="s2">"BUY"</span><span class="p">,</span>                    <span class="c1">// Order direction</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>             <span class="c1">//  Order quantity</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.10264410"</span><span class="p">,</span>             <span class="c1">//  Order price</span>
+  <span class="s2">"X"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>                    <span class="c1">// Current order state</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="mi">4293153</span><span class="p">,</span>                  <span class="c1">// ID Order ID</span>
+  <span class="s2">"z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">//  Cumulative filled quantity</span>
+  <span class="s2">"O"</span><span class="p">:</span> <span class="mi">1499405658657</span><span class="p">,</span>            <span class="c1">// Transaction time</span>
+  <span class="s2">"Z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Total transaction sum</span>
+<span class="p">}</span>
+</code></pre><h4 id='possible-executive-type-of-spot-and-options-x-field'>Possible executive type of spot and options (X field):</h4>
+<ul>
+<li>NEW </li>
+<li>PARTIALLY_FILLED<br></li>
+<li>FILLED<br></li>
+<li>CANCELED<br></li>
+<li>FAIL </li>
+<li>CANCLEFILLED</li>
+</ul>
+<h3 id='contract-playload'>contract Playload:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>            <span class="c1">// Event time</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"execContractReport"</span><span class="p">,</span>     <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"ETHBTC"</span><span class="p">,</span>                 <span class="c1">// Symbol   (Not exist if refused)   </span>
+  <span class="s2">"X"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>                    <span class="c1">// Current state of the order   </span>
+  <span class="s2">"r"</span><span class="p">:</span> <span class="s2">"NONE"</span><span class="p">,</span>                   <span class="c1">// Refused reason of the order ( exist if refused)</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="mi">4293153</span><span class="p">,</span>                  <span class="c1">// Order ID</span>
+  <span class="s2">"z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Cumulative filled quantity (Not exist if refused)</span>
+  <span class="s2">"Z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Cumulative filled sum(Not exist if refused)</span>
+
+<span class="p">}</span>
+</code></pre><h4 id='possible-executive-type-of-contract-x-field'>Possible executive type of contract(X field):</h4>
+<ul>
+<li>ENTRUSTED </li>
+<li>ENTRUSTING </li>
+<li>FAIL </li>
+<li>PARTFILLED </li>
+<li>FILLED </li>
+<li>CANCEL<br></li>
+</ul>
+<h4 id='example-if-refused'>example if refused:</h4><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="nl">E</span><span class="p">:</span> <span class="mi">1571225843289</span>
+  <span class="nl">X</span><span class="p">:</span> <span class="s2">"FAIL"</span>
+  <span class="nl">e</span><span class="p">:</span> <span class="s2">"execContractReport"</span>
+  <span class="nl">i</span><span class="p">:</span> <span class="s2">"4612616205276108403"</span>
+  <span class="nl">r</span><span class="p">:</span> <span class="s2">"insufficient Available"</span>  
+<span class="p">}</span>
+</code></pre><h4 id='if-refused-r-field'>if refused(R field)</h4>
+<ul>
+<li> insufficient Available</li>
+<li> too many pending requests</li>
+<li> position is being liquidated</li>
+<li> position is being closed</li>
+<li> closing empty position</li>
+<li> closing order is enough</li>
+<li> contract is disabled</li>
+<li> reach liquidation price</li>
+<li> reach risk limit</li>
+</ul>
+<h3 id='contract-positions'>Contract positions</h3>
+<blockquote>
+<p>Where there is a change in contract position
+event type is  contractPositions</p>
+</blockquote>
+<h4 id='playload-8'>playload</h4><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1553050064078</span><span class="p">,</span>
+    <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"contractPositions"</span><span class="p">,</span>
+    <span class="s2">"p"</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s2">"M"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span> <span class="c1">// Largest leverage available </span>
+        <span class="s2">"R"</span><span class="p">:</span> <span class="s2">"3903.99060000"</span><span class="p">,</span> <span class="c1">// Used risk limits</span>
+        <span class="s2">"S"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">// sell Entrusted value</span>
+        <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"20"</span><span class="p">,</span> <span class="c1">// Auto-deleverage sequence</span>
+        <span class="s2">"b"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">// buy Entrusted value</span>
+        <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"1301.33020000"</span><span class="p">,</span> <span class="c1">//Open price</span>
+        <span class="s2">"d"</span><span class="p">:</span> <span class="s2">"longs"</span><span class="p">,</span> <span class="c1">//Direction </span>
+        <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"0.05"</span><span class="p">,</span> <span class="c1">//Initial margin</span>
+        <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"-49.9759"</span><span class="p">,</span> <span class="c1">//Close price</span>
+        <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"0.005"</span><span class="p">,</span> <span class="c1">//Maintenance Margin</span>
+        <span class="s2">"n"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">//Current entrusted value </span>
+        <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"4088.0779300000"</span><span class="p">,</span> <span class="c1">//Margin</span>
+        <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"3.0000"</span><span class="p">,</span><span class="c1">//Holding positions </span>
+        <span class="s2">"r"</span><span class="p">:</span> <span class="s2">"900000"</span><span class="p">,</span><span class="c1">//Current risk value</span>
+        <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"EOSUSDT"</span><span class="p">,</span><span class="c1">//Symbol</span>
+        <span class="s2">"t"</span><span class="p">:</span> <span class="s2">"3903.99060000"</span><span class="p">,</span> <span class="c1">//Holding positions costs value </span>
+        <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"20.00"</span><span class="c1">//Leverage</span>
+    <span class="p">}]</span>
+<span class="p">}</span>
+
+</code></pre>
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+
+
+  <script>
+    const page = ["spot","contract","API","TESTNETAPI"];
+    page.forEach((item,index)=>{
+      if(window.location.href.split("/").includes(item)){
+        document.querySelectorAll("#data-nav li a")[index].className = "current"
+      }
+    })
+    window.location.href.split("/").forEach(item=>{
+      item.indexOf("_CN") > 0
+      ? document.querySelector("#language").href = location.href.replace("_CN.html",".html") 
+      : document.querySelector("#language").href = location.href.replace(".html","_CN.html");
+      })
+  </script>
+</html>
+
