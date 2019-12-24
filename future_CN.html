@@ -3821,7 +3821,7 @@ NONE</p>
     },
     "testnet" : {
       "text": "Futures Testnet",
-      "url": "https://testnet.jexzh.com",
+      "url": "",
     },
   }
   const htmlItem = location.href.split("/").find(item=>item.indexOf(".html") >= 0) || "future_CN.html";
@@ -3843,7 +3843,7 @@ NONE</p>
       })
       document.querySelector("#language .chinese").style = "display:block;"
       document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/cn" + pageObject[currentPage]
-        .url : pageObject[currentPage].url + "/cn";
+        .url : "https://testnet.jexzh.com" + "/cn" + "/futures";
       document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex " + pageObject[currentPage].text;
     } else {
       const currentPage = htmlItem.replace(".html","_CN.html").split("_")[0];
@@ -3856,7 +3856,7 @@ NONE</p>
       })
       document.querySelector("#language .english").style = "display:block;"
       document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jex.com" + "/en" + pageObject[currentPage]
-        .url : pageObject[currentPage].url + "/en";
+        .url : "https://testnet.jex.com" + "/en" + "/futures";;
       document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex " + pageObject[currentPage].text;
     }
   }
