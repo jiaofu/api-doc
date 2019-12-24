@@ -1,0 +1,265 @@
+<h1 id='web-socket-streams'>Web Socket Streams</h1><h2 id='general-wss-information'>General WSS information</h2>
+<ul>
+<li>The base endpoint is: <strong>wss://ws.jex.com</strong> </li>
+<li>Streams can be accessed either in a single raw stream or in a combined stream</li>
+<li>Raw streams are accessed at <strong>/ws/&lt;streamName&gt;</strong></li>
+<li>Combined streams are accessed at <strong>/stream?streams=&lt;streamName1&gt;/&lt;streamName2&gt;/&lt;streamName3&gt;</strong></li>
+<li>Combined stream events are wrapped as follows: <strong>{&quot;stream&quot;:&quot;&lt;streamName&gt;&quot;,&quot;data&quot;:&lt;rawPayload&gt;}</strong></li>
+<li>All symbols for streams are <strong>lowercase</strong></li>
+<li>A single connection to <strong>stream.jex.com</strong> is only valid for 24 hours; expect to be disconnected at the 24 hour mark</li>
+<li>The websocket server will send a <code>ping frame</code> every 3 minutes. If the websocket server does not receive a <code>pong frame</code> back from the connection within a 10 minute period, the connection will be disconnected. Unsolicited <code>pong frames</code> are allowed.</li>
+<li>WSS contract order sells are uniformly negative</li>
+<li>It is recommended to use the combined streams method for connection. Each combined stream can subscribe to a maximum of 10 streams</li>
+</ul>
+<h2 id='stream-detailed-stream-information'>Stream Detailed Stream information</h2><h2 id='websocket-trade-streams'>Websocket Trade Streams</h2>
+<ul>
+<li>Every 100 ms push, every single transaction in the last second is defined as a transaction between only one order taker and one bill holder.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-tradetype-gt'>Stream Name: &lt;symbol&gt;@&lt;tradeType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="p">[{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotTrade"</span><span class="p">,</span>    <span class="c1">//  Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>      <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>       <span class="c1">// Symbol</span>
+  <span class="s2">"t"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>          <span class="c1">// Trade ID</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.001"</span><span class="p">,</span>        <span class="c1">// Price</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span>          <span class="c1">// Quantity</span>
+  <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123456785</span><span class="p">,</span>      <span class="c1">// Trade time</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>           <span class="c1">// Is the buyer the market maker?If true，this is a seller order，otherwise it is a buyer order.</span>
+<span class="p">},{...},...</span>
+<span class="p">]</span>
+</code></pre><h3 id='tradetype'>tradeType</h3>
+<ul>
+<li>Support 3 types as below:
+
+<ul>
+<li>spotTrade </li>
+<li>optionTrade </li>
+<li>contractTrade </li>
+</ul></li>
+</ul>
+<h2 id='websocket-kline-candlestick-streams'>Websocket Kline/Candlestick Streams</h2>
+<ul>
+<li><p>The Kline/Candlestick Stream push updates to the current klines/candlestick every second</p></li>
+<li><p>Booking Kline requires interval parameter, shortest one is minute line, longest one is week line. Support intervals as below:</p>
+
+<ul>
+<li>1M </li>
+<li>5M </li>
+<li>15M </li>
+<li>30M</li>
+<li>1H </li>
+<li>4H</li>
+<li>1D </li>
+<li>1W</li>
+</ul></li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-klinetype-gt-_-lt-interval-gt'>Stream Name: &lt;symbol&gt;@&lt;klineType&gt;_&lt;interval&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotKline"</span><span class="p">,</span>     <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>       <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>        <span class="c1">// Symbol</span>
+  <span class="s2">"k"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"t"</span><span class="p">:</span> <span class="mi">123400000</span><span class="p">,</span>     <span class="c1">// Kline start time</span>
+    <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123460000</span><span class="p">,</span>     <span class="c1">// Kline close time</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>      <span class="c1">// Symbol</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"1m"</span><span class="p">,</span>          <span class="c1">// Interval</span>
+    <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>      <span class="c1">// Open price</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0020"</span><span class="p">,</span>      <span class="c1">// Close price</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>      <span class="c1">// High price</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>      <span class="c1">// Low price</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"1000"</span><span class="p">,</span>        <span class="c1">// Base asset volume</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"1.0000"</span><span class="p">,</span>      <span class="c1">// Quote asset volume</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h3 id='klinetype'>klineType</h3>
+<p>-Support types
+  - spotKline
+  - optionKline
+  - contractKline</p>
+<h2 id='individual-symbol-mini-ticker-stream'>Individual Symbol Mini Ticker Stream</h2>
+<ul>
+<li>24hr rolling window mini-ticker statistics for a single symbol pushed every second.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-minitickertype-gt'>Stream Name: &lt;symbol&gt;@&lt;miniTickerType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotMiniTicker"</span><span class="p">,</span>   <span class="c1">// Event type</span>
+    <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>              <span class="c1">// Event time</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>               <span class="c1">// Symbol</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// Close price</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">//  High  price</span>
+    <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// Open price</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>               <span class="c1">// Low price</span>
+    <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// mark price(Only  contractMiniTicker have)</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// index price(Only contractMiniTicker have)</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// Base asset volume</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span>                    <span class="c1">// Total traded quote asset volume</span>
+<span class="p">}</span>
+
+</code></pre><h3 id='minitickertype'>miniTickerType</h3>
+<ul>
+<li>Support types:
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='all-market-mini-tickers-stream'>All Market Mini Tickers Stream</h2>
+<ul>
+<li>24hr rolling window mini-ticker statistics for all symbols that changed in an array pushed every second</li>
+</ul>
+<h3 id='streamname-lt-minitickertype-gt-arr'>StreamName: !&lt;miniTickerType&gt;@arr</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="p">[</span>
+  <span class="p">{</span>
+     <span class="c1">// Same as &lt;symbol&gt;@miniTicker payload</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h3 id='minitickertype-2'>miniTickerType</h3>
+<ul>
+<li>Support types: 
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='individual-symbol-ticker-streams'>Individual Symbol Ticker Streams</h2>
+<ul>
+<li>24hr rollwing window ticker statistics for a single symbol pushed every second. </li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-tickertype-gt'>Stream Name: &lt;symbol&gt;@&lt;tickerType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotTicker"</span><span class="p">,</span>  <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>         <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// Symbol</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>          <span class="c1">// Price change in 24h</span>
+  <span class="s2">"P"</span><span class="p">:</span> <span class="s2">"250.00"</span><span class="p">,</span>          <span class="c1">// Price change in 24h percent</span>
+  <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// Last price</span>
+  <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// Highest price in 24h</span>
+  <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>          <span class="c1">// Lowest price in 24h</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// Trade volume in 24h</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span><span class="p">,</span>              <span class="c1">// Trade asset in 24h</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// mark price(Only  contractMiniTicker have)</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// index price(Only contractMiniTicker have)</span>
+  <span class="s2">"O"</span><span class="p">:</span> <span class="mi">1234567890</span><span class="p">,</span>        <span class="c1">// TODO 0  Starting time</span>
+  <span class="s2">"C"</span><span class="p">:</span> <span class="mi">86400000</span><span class="p">,</span>          <span class="c1">// TODO 3600*24*1000，milliseconds in 24h  ending time</span>
+<span class="p">}</span>
+</code></pre><h2 id='all-market-tickers-stream'>All Market Tickers Stream</h2>
+<blockquote>
+<p>24hr rolling window ticker statistics for all symbols that changed in an array pushed every second.</p>
+</blockquote>
+<h3 id='streamname-lt-tickertype-gt-arr'>StreamName: !&lt;tickerType&gt;@arr</h3><h3 id='payload'>Payload:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+     <span class="c1">//Same as &lt;symbol&gt;@ticker payload</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<ul>
+<li>tickerType 
+
+<ul>
+<li>spotTicker</li>
+<li>optionTicker</li>
+<li>contractTicker</li>
+</ul></li>
+</ul>
+<h2 id='partial-book-depth-streams'>Partial Book Depth Streams</h2>
+<ul>
+<li>Top <levels> bids and asks, pushed every second. Valid <levels> are 5, 10, or 20.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-depthtype-gt-lt-levels-gt'>Stream Name: &lt;symbol&gt;@&lt;depthType&gt;&lt;levels&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  :</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"bids"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// Buy</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>         <span class="c1">// Price</span>
+      <span class="s2">"10"</span><span class="p">,</span>             <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"asks"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// Sell</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>         <span class="c1">// Price</span>
+      <span class="s2">"100"</span><span class="p">,</span>            <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType 
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>levels 
+
+<ul>
+<li>5</li>
+<li>10</li>
+<li>20</li>
+</ul></li>
+</ul>
+<h2 id='diff-depth-stream'>Diff. Depth Stream</h2>
+<ul>
+<li>Order book price and quantity depth updates used to locally manage an order book pushed every second.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-depthtype-gt'>Stream Name: &lt;symbol&gt;@&lt;depthType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong> :</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotDepthUpdate"</span><span class="p">,</span> <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// Symbol</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="mi">157</span><span class="p">,</span>               <span class="c1">// Version to be updated</span>
+  <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span>                  <span class="c1">// Changing depth for buyer</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>          <span class="c1">// Price</span>
+      <span class="s2">"10"</span><span class="p">,</span>              <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"a"</span><span class="p">:</span> <span class="p">[</span>                 <span class="c1">// Changing depth for seller</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>          <span class="c1">// Price</span>
+      <span class="s2">"100"</span><span class="p">,</span>             <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType Support types
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>Types for Depth Streams 
+
+<ul>
+<li>spotDepthUpdate</li>
+<li>optionDepthUpdate</li>
+<li>contractDepthUpdate</li>
+</ul></li>
+</ul>

@@ -15,6 +15,15 @@ under the License.
 %>
 <% language_tabs = current_page.data.language_tabs || [] %>
 <% page_content = yield %>
+
+<%
+  if current_page.data.includesf
+    current_page.data.includesf.each do |include|
+      page_content = partial("includes/#{include}")+page_content
+    end
+  end
+%>
+
 <%
   if current_page.data.includes
     current_page.data.includes.each do |include|
@@ -35,10 +44,12 @@ under the License.
       <%= Rouge::Themes::MonokaiSublime.render(:scope => '.highlight') %>
 
 
+     
       .header{
         padding: 0 26px;
         width: 100%;
-        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
         height: 60px;
         background: #222;
         position: fixed;
@@ -60,6 +71,7 @@ under the License.
         display:inline-block;
         color:#B0B8DB;
         padding: 0 20px;
+        font-size: 16px;
       }
       .nav li a{
         height: 60px;
@@ -68,13 +80,17 @@ under the License.
         color:#B0B8DB;
         text-decoration: none;
         border-bottom: 2px solid transparent;
-        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
         cursor: pointer;
       }
       .nav li a.current{
         color:#fff;
         border-bottom: 2px solid #F0B90B;
       
+      }
+      .nav li a span{
+        display:none;
       }
       .language{
         width: 78px;
@@ -85,12 +101,21 @@ under the License.
         color: #F0B90B;
         text-decoration: none;
         border-radius: 3px;
+        -webkit-transition: all 300ms;
         transition: all 300ms;
         cursor: pointer;
+      }
+      .language span{
+        display:none;
       }
       .toc-wrapper,.page-wrapper{
         margin-top: 60px;
       }
+      .toc-list-h1 li a{
+        height: 48px;
+        line-height: 48px;
+      }
+
       
 
     </style>
@@ -111,18 +136,18 @@ under the License.
       </span>
     </a>
 
-    
+           
     <div class="header">
       <div class="header-left">
       <%= image_tag "jex.png", class: 'logo' %>
         <ul class="nav" id="data-nav">
-          <li><a href="https://www.baidu.com">spot</a></li>
-          <li><a href="https://www.qq.com">contract</a></li>
-          <li><a href="https://www.163.com">API</a></li>
-          <li><a href="https://www.sina.com">TESTNET API</a></li>
+          <li><a href="spot_CN.html"><span class="english">Spot</span><span class="chinese">币币</span></a></li>
+          <li><a href="option_CN.html"><span class="english">Options</span><span class="chinese">期权</span></a></li>
+          <li><a href="future_CN.html"><span class="english">Futures</span><span class="chinese">合约</span></a></li>
+          <li><a href="testnet_CN.html"><span class="english">TestNet API</span><span class="chinese">TestNet API</span></a></li>
         </ul>
       </div>
-      <a class="language" id="language">English</a>
+      <a class="language" id="language"><span class="english">English</span><span class="chinese">简体中文</span></a>
     </div>
 
     <div class="toc-wrapper">
@@ -190,19 +215,58 @@ under the License.
     </div>
   </body>
 
-
   <script>
-    const page = ["spot","contract","API","TESTNETAPI"];
-    page.forEach((item,index)=>{
-      if(window.location.href.split("/").includes(item)){
-        document.querySelectorAll("#data-nav li a")[index].className = "current"
-      }
-    })
-    window.location.href.split("/").forEach(item=>{
-      item.indexOf("_CN") > 0
-      ? document.querySelector("#language").href = location.href.replace("_CN.html",".html") 
-      : document.querySelector("#language").href = location.href.replace(".html","_CN.html");
+  const page = ["spot","option","future","testnet"];
+  const pageObject = {
+    "spot" : {
+      "text": "Spot",
+      "url": "/spot",
+    },
+    "option" :{
+      "text": "Option",
+      "url": "/options",
+    },
+    "future" : {
+      "text": "Futures",
+      "url": "/futures",
+    },
+    "testnet" : {
+      "text": "Futures Testnet",
+      "url": "https://testnet.jexzh.com/",
+    },
+  }
+  const htmlItem = location.href.split("/").find(item=>item.indexOf(".html") >= 0) || "future_CN.html";
+  page.forEach((item,index)=>{
+    if(htmlItem.indexOf(item) >= 0){
+      document.querySelectorAll("#data-nav li a")[index].className = "current";
+    }
+  })
+
+  if(htmlItem){
+    if(htmlItem.indexOf("_CN") > 0){
+      const arr = location.href.split("/");
+      arr.splice(-1,1,htmlItem.replace("_CN.html",".html"))
+      const url = arr.join("/");
+      document.querySelector("#language").href = url;
+      document.querySelectorAll("#data-nav li a span.chinese").forEach(item=>{
+        item.style="display:block"
       })
+      document.querySelector("#language .chinese").style = "display:block;"
+      document.querySelectorAll(".toc-footer li a")[0].href = index !== 4 ? "https://www.jexzh.com" + "/cn" + pageObject[page[index]].url : pageObject[page[index]].url + "/cn"; 
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/cn" + pageObject[page[index]].text; 
+    }else{
+      document.querySelector("#language").href = location.href.replace(".html","_CN.html");
+      document.querySelectorAll("#data-nav li a").forEach(item=>{
+        item.href = item.href.replace("_CN.html",".html") ; 
+      })
+      document.querySelectorAll("#data-nav li a span.english").forEach(item=>{
+        item.style="display:block"
+      })
+      document.querySelector("#language .english").style = "display:block;"
+      document.querySelectorAll(".toc-footer li a")[0].href = index !== 4 ? "https://www.jex.com" + "/en" + pageObject[page[index]].url : pageObject[page[index]].url + "/en"; 
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/en" + pageObject[page[index]].text;  
+    }
+  }
   </script>
 </html>
 

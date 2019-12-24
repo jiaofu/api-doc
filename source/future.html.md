@@ -2,81 +2,75 @@
 title: API Reference
 
 language_tabs: 
-
+ 
 
 toc_footers:
   - <a href='https://testnet.jexzh.com/cn/contract'>Binance jex Futures</a>
 
 includesf:
-  - BaseInfo_CN
-  - CHANGELOG_CN
+  - BaseInfo
+  - CHANGELOG
 includes:
-  - userDataStream_CN
-  - web-socket-streams_CN
-  - errors_CN
-
-
-
+  - userDataStream
+  - web-socket-streams
+  - errors
 
 
 search: true
 ---
-# 行情接口
 
+# General endpoints
+## Test connectivity PING
 
-## 测试服务器连通性
-```javascript
-GET /api/v1/ping
-```
-测试能否联通
+`GET /api/v1/ping`
 
-**权重:**
-1
+Test connectivity 
 
-**参数:**
-NONE
-
-> **响应:**
-
-```javascript
-{}
-```
-
-## 获取服务器时间
-
-`GET /api/v1/time`
-
-
-获取服务器时间
-
-**权重:**
-1
-
-**参数:**
-NONE
-
-> **响应:**
-
-```javascript
-
-{
-  "serverTime": 1499827319595
-}
-```
-
-## 交易对信息
-
-`GET /api/v1/exchangeInfo`
-
-获取此时的限制信息和交易对信息
-
-**权重:**
+**Weight:**
 1
 
 **Parameters:**
 NONE
 
-> **响应:**
+>**Response**
+
+```javascript
+{}
+```
+
+## Check server time
+```
+GET /api/v1/time
+```
+Get the current server time.
+
+**Weight:**
+1
+
+**Parameters:**
+NONE
+
+>**Response**  
+
+```javascript
+{
+  "serverTime": 1499827319595
+}
+```
+
+## Exchange information
+
+`GET /api/v1/exchangeInfo`
+
+Get the current trading rules and symbol information
+
+**Weight:**
+1
+
+**Parameters:**
+NONE
+
+>**Response**  
 
 ```javascript
 {
@@ -187,19 +181,20 @@ NONE
 ```
 
 
-## 合约交易对信息
+
+## Exchange information for futures
 
 `GET /api/v1/contractInfo`
 
-获取此时的限制信息和交易对信息
+Get the current trading rules and symbol information
 
-**权重:**
+**Weight:**
 1
 
 **Parameters:**
 NONE
 
-> **响应:**
+>**Response**  
 
 ```javascript
 [
@@ -219,25 +214,29 @@ NONE
 ```
 
 
-## 合约深度信息
-`GET /api/v1/contract/depth`
-**权重:1**  
-**参数:**  
 
-名称 | 类型 | 是否必须 | 描述
+## Depth information for futures
+
+`GET /api/v1/contract/depth`
+
+**Weight:1**  
+**Parameters:**  
+
+Name | Type   | Mandatory  | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]  
->**响应:**  
+limit | INT | NO | Default  60; Max 60. Available:[5, 10, 20, 50, 60]  
+
+>**Response**    
 
 ```javascript
 {
   "lastUpdateId": 1027024,
   "bids": [
     [
-      "4.00000000",     // 价位
-      "431.00000000",   // 挂单量
-      []                // 请忽略.
+      "4.00000000",     // PRICE
+      "431.00000000",   // QTY
+      []                // IGNORE.
     ]
   ],
   "asks": [
@@ -250,17 +249,19 @@ limit | INT | NO | 默认 60; 最大 60. 可选值:[5, 10, 20, 50, 60]
 }
 ```
 
-## 合约近期成交
+## Recent trades for futures
 
 `GET /api/v1/contract/trades`
-**权重:1**  
-**参数:**  
+
+**Weight:1**  
+**Parameters:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 60; max 60.  
->**响应:**  
+
+>**Response**    
 
 ```javascript
 [
@@ -283,19 +284,20 @@ limit | INT | NO | Default 60; max 60.
 ```
 
 
-## 查询合约历史成交(MARKET_DATA)
+## Old trade lookup for futures (MARKET_DATA)
 
 `GET /api/v1/contract/historicalTrades`
-**权重:5**  
-**参数:**  
+
+**Weight:5**  
+**Parameters:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
 limit | INT | NO | Default 200; max 500.
-fromId | LONG | NO | 从哪一条成交id开始返回. 缺省返回最近的成交记录  
+fromId | LONG | NO | TradeId to fetch from. Default gets most recent trades  
 
->**响应:** 
+>**Response**    
 
 ```javascript
 [
@@ -317,59 +319,59 @@ fromId | LONG | NO | 从哪一条成交id开始返回. 缺省返回最近的成�
 ```
 
 
-
-
-## 查询合约K线数据
+## Kline data lookup for futures
 
 `GET /api/v1/contract/klines`
 
-**权重:1**  
-**参数:**  
+**Weight:1**  
+**Parameters:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-interval | ENUM | YES | "1m":分钟"3m":分钟"5m":分钟"15m":分钟"30m":分钟"1h":小时"2h":小时"4h":小时"6h":小时"12h":小时"1d":天"3d":天"1w":星期  
+interval | ENUM | YES | "1m":minute"3m": minute"5m": minute"15m":minute"30m":minute"1h":hour"2h":hour"4h":hour"6h":"12h":hour"1d":day"3d":day"1w":week
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 1000.
 
-* 缺省返回最近的数据
+* If startTime and endTime are not sent, the most recent klines are returned.
   
->**响应:**  
+>**Response**    
 
 ```javascript
 [
   [
-    1499040000000,      // 开盘时间
-    "0.01634790",       // 开盘价
-    "0.80000000",       // 最高价
-    "0.01575800",       // 最低价
-    "0.01577100",       // 收盘价(当前K线未结束的即为最新价)
-    "148976.11427815",  // 成交量
-    1499644799999,      // 收盘时间
-    "2434.19055334",    // 成交额
-    308,                // 成交笔数
-    "1756.87402397",    // 主动买入成交量
-    "28.46694368",      // 主动买入成交额
-    "17928899.62484339" // 请忽略该参数
+    1499040000000,      // Open time
+    "0.01634790",       // Open
+    "0.80000000",       // High
+    "0.01575800",       // Low
+    "0.01577100",       // Close
+    "148976.11427815",  // Volume
+    1499644799999,      // Close time
+    "2434.19055334",    // Quote asset volume
+    308,                // Number of trades
+    "1756.87402397",    // Taker buy base asset volume
+    "28.46694368",      // Taker buy quote asset volume
+    "17928899.62484339" // Ignore
   ]
 ]
 ```
 
 
 
-## 查询合约当前平均价格
+
+## Look up current average price for futures
 
 `GET /api/v1/contract/avgPrice`
-**权重:1**  
-**参数:**  
+
+**Weight:1**  
+**Parameters:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |  
 
->**响应:**  
+>**Response**    
 
 ```javascript
 {
@@ -380,21 +382,20 @@ symbol | STRING | YES |
 
 
 
-
-
-## 查询合约24hr价格变动情况
+## Look up 24hr ticker price change statistics for futrues
 
 `GET /api/v1/contract/ticker/24hr`
-**权重:**  
-带symbol为1
-不带为40  
-**参数:**  
+
+**Weight:**  
+1 for a single symbol; **40** when the symbol parameter is omitted
+
+**Parameters:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
   
->**响应:**  
+>**Response**    
 
 ```javascript
 {
@@ -443,21 +444,22 @@ symbol | STRING | NO |
 
 
 
-## 查询合约最新价格接口
+## Look up price ticker for futures
 
 `GET /api/v1/contract/ticker/price`
-**权重:**  
-单交易对1
-无交易对2  
-**参数:**  
+
+**Weight:**  
+1 for a single symbol; **2** when the symbol parameter is omitted
+
+**Parameters:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* 不发送交易对参数，则会返回所有交易对信息
+* If the symbol is not sent, prices for all symbols will be returned in an array.
   
->**响应:**  
+>**Response**    
 
 ```javascript
 {
@@ -480,30 +482,31 @@ symbol | STRING | NO |
 ]
 ```
 
-## 查询合约最优挂单接口
+
+## Look up Symbol order book ticker for futures
 
 `GET /api/v1/contract/ticker/bookTicker`
-返回当前最优的挂单(最高买单，最低卖单)
-**权重:**  
-单交易对1
-无交易对2  
-**参数:**  
+
+Best price/qty on the order book for a symbol or symbols.
+**Weight:**  
+1 for a single symbol; **2** when the symbol parameter is omitted 
+**Parameters:**  
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* 不发送交易对参数，则会返回所有交易对信息  
 
->**响应:**  
+* If the symbol is not sent, prices for all symbols will be returned in an array.  
+
+>**Response**    
 
 ```javascript
 {
-  "symbol": "LTCBTC",
-  "bidPrice": "4.00000000",//最优买单价
-  "bidQty": "431.00000000",//挂单量
-  "askPrice": "4.00000200",//最优卖单价
-  "askQty": "9.00000000"//挂单量
+  "bidPrice": "4.00000000",//Best price for buy
+  "bidQty": "431.00000000",//QTY
+  "askPrice": "4.00000200",//Best price for sell
+  "askQty": "9.00000000"//QTY
 }
 ```
 >OR
@@ -527,25 +530,25 @@ symbol | STRING | NO |
 ]
 ```
 
-
-## 合约的指数价格，标记价格
+## Index price and mark price for futures
 
 `GET /api/v1/contract/ticker/indicesPrice`
-返回当前最优的挂单(最高买单，最低卖单)
 
-**权重:**
+Best price/qty on the order book for a symbol or symbols.
+
+**Weight:**
 1
 
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | NO |
 
-* 不发送交易对参数，则会返回所有交易对信息
+* If the symbol is not sent, prices for all symbols will be returned in an array.
 
->**响应:**
+>**Response**  
 
 ```javascript
 {
@@ -574,71 +577,67 @@ symbol | STRING | NO |
 ]
 ```
 
-# 交易接口
+# Account endpoints
 
 
-
-
-## 合约下单  (TRADE)
+## Place order in contract transaction(TRADE)
 
 `POST /api/v1/contract/order  (HMAC SHA256)`
 
-**权重:**
+**Weight:**
 1
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-side | ENUM | YES |
-type | ENUM | YES |`LIMIT`,`stopLimit`,`profitLimit`
+side | ENUM | YES | `BUY` or `SELL`
+type | ENUM | YES | `LIMIT`,`stopLimit`,`profitLimit`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
-triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice` (仅 `stopLimit`, `profitLimit` 需要此参数)
-triggerPrice | DECIMAL | YES | 仅 `stopLimit`, `profitLimit` 需要此参数
-newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
+triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice`( Used with `stopLimit`, `profitLimit` orders)
+triggerPrice | DECIMAL | NO |  Used with `stopLimit`, `profitLimit` orders.
+newOrderRespType | ENUM | NO | Specify response type   `ACK`, `RESULT`; Default is `ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
 
-根据 order `type`的不同，某些参数强制要求，具体如下:
 
-Type | 强制要求的参数
+Additional mandatory parameters based on `type`:
+
+Type | Additional mandatory parameters
 ------------ | ------------
 `LIMIT` | `quantity`, `price`
 `stopLimit` | `quantity`, `price`,`triggerType`,`triggerPrice`
 `profitLimit` |  `quantity`, `price`,`triggerType`,`triggerPrice`
 
-其他:
+Other info:
 
-* 用户预设止盈止损指令（`stopLimit`,`profitLimit`），提前设置 触发价格（`triggerPrice`）、委托价格(`price`)、委托数量(`quantity`)。当对应 “指标” 满足用户设置的 触发价（`triggerPrice`）格 条件时，止盈止损订单将被触发，系统将按照用户设置的 委托价格(`price`)，委托数量(`quantity`) 提交一笔限价委托订单。
-
-
-条件单的触发价格必须:
-
-* 止盈
-
-  * 多仓： 对未来价格看涨，设置触发价格高于最新价格（或标记价格、指数），可以设置卖出止盈指令；
-
-  * 空仓： 对未来价格看跌，设置触发价格低于最新价格（或标记价格、指数），可以设置买入止盈指令；
-
-* 止损
-
-  * 多仓： 对未来价格看跌，设置触发价格低于最新价格（或标记价格、指数），可以设置卖出止损指令；
-
-   * 空仓： 对未来价格看涨，设置触发价格高于最新价格（或标记价格、指数），可以设置买入止损指令；
-
-* 当触发价格 = 最新价格（或标记价格、指数），或者无持仓时候，不可发起止盈止损委托指令；
+* User can preset the Take profit/Stop command with the trigger price, commission price, and commission quantity in advance. When the corresponding “indicator” satisfies the trigger price set by the user, the order will be triggered, then the system will submit an order according to the price and quantity set by the user
 
 
+Trigger price of condition sheet must be:
 
+* Take Profit
+
+  * Long: when it's bullish, set the trigger price higher than the latest price (or mark price, index), you can set the sell Take profit order;
+
+  * Short: If it's bearish, set the trigger price below the latest price (or mark price, index), you can set the buy Take profit order;
+
+* Stop
+
+   * Long: when it's bearish, set the trigger price below the latest price (or mark the price, index),  you can set the sell Stop order;
+
+   *  Short: If it's bullish, set the trigger price higher than the latest price (or mark the price, index),you can set the buy Stop order;
+
+*  When the trigger price = the latest price (or mark price, index), or no position, the Take profit/Stop order can not be set;
 
 
 **Response ACK:**
-返回速度快，不包含成交信息，信息量最少
+Returning speed is fast, trading information not included, less information 
 
->**响应:**  
+>**Response**  
 
 ```javascript
 {
@@ -648,10 +647,9 @@ Type | 强制要求的参数
 ```
 
 **Response RESULT:**
+Returning speed is fast, returning some information on taking order transaction
 
-返回速度慢，返回吃单成交的少量信息
-
->**响应:**  
+>**Response**  
 
 ```javascript
 {
@@ -667,37 +665,38 @@ Type | 强制要求的参数
 ```
 
 
-
-## 合约测试下单接口 (TRADE)
+## Test placing order API of contract transaction(TRADE)
 
 `POST /api/v1/contract/order/test (HMAC SHA256)`
 
-用于测试订单请求，但不会提交到撮合引擎
+Used for test placing order request, won’t be submitted to matchmaking trading engine
 
-**权重:**
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
-参考 `POST /api/v1/contract/order`
+Reference   `POST /api/v1/contract/order`
 
 
->**响应:**
+>**Response**  
 
 ```javascript
 {}
 ```
 
-## 合约查询订单 (USER_DATA)
+
+
+## Check orders of contract transaction(USER_DATA) 
 
 `GET /api/v1/contract/order (HMAC SHA256)`
 
-查询订单状态
+Check order status
 
-**权重:**
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -709,7 +708,7 @@ timestamp | LONG | YES |
 
 
 
->**响应:**
+>**Response**  
 
 ```javascript
 {
@@ -728,12 +727,12 @@ timestamp | LONG | YES |
 }
 ```
 
-## 合约撤销订单 (TRADE)
 
+## Cancel order for contract transaction (TRADE) 
 
 `DELETE /api/v1/contract/order  (HMAC SHA256)`
 
-**权重:**
+**Weight:**
 1
 
 **Parameters:**
@@ -748,7 +747,7 @@ timestamp | LONG | YES |
 
 
 
->**响应:**
+>**Response**  
 
 ```javascript
 {
@@ -763,19 +762,19 @@ timestamp | LONG | YES |
 }
 ```
 
-## 查看账户当前合约挂单 (USER_DATA)
+## Check entry orders of contract transaction of this account(USER_DATA) 
 
 `GET /api/v1/contract/openOrders  (HMAC SHA256)`
 
-**权重:**
+**Weight:**
 5
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO | 只返回此orderID之后的订单，缺省返回最近的订单
+orderId | LONG | NO | Only orders after this orderID will be returned. Only partial recent orders will be returned
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
@@ -783,7 +782,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
->**响应:**
+>**Response**  
 
 ```javascript
 [
@@ -805,15 +804,14 @@ timestamp | LONG | YES |
 ]
 ```
 
-## 合约平仓 (TRADE)
-
+## Close positions for contract(TRADE)
 
 `POST /api/v1/contract/liquidation  (HMAC SHA256)`
 
-**权重:**
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -822,7 +820,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
->**响应:**
+>**Response**  
 
 ```javascript
 {
@@ -835,25 +833,26 @@ timestamp | LONG | YES |
 }
 ```
 
-## 查看账户合约平仓单 (MARKET_DATA)
+
+## Check orders of closed positions of the account (MARKET_DATA )
 
 `GET /api/v1/contract/liquidationOrder`
 
-**权重:**
+**Weight:**
 5
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO | 只返回此orderID之后的订单，缺省返回最近的订单
+orderId | LONG | NO | Only orders after this orderID will be returned. Only partial recent orders will be returned
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
 
 
->**响应:**
+>**Response**  
 
 ```javascript
 [
@@ -874,15 +873,15 @@ limit | INT | NO | Default 500; max 500.
 ]
 ```
 
-## 查看账户合约仓位 (USER_DATA)
 
+## Check contract positions of the account(USER_DATA)
 
 `GET /api/v1/contract/position  (HMAC SHA256)`
 
-**权重:**
+**Weight:**
 2
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -891,7 +890,7 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
->**响应:**
+>**Response** 
 
 ```javascript
 [
@@ -916,15 +915,14 @@ timestamp | LONG | YES |
 ]
 ```
 
-## 调整账户合约杠杆 (USER_DATA)
-
+## Adjust contract leverage of the account(USER_DATA)
 
 `POST /api/v1/contract/position/leverage  (HMAC SHA256)`
 
-**权重:**
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -934,35 +932,35 @@ recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
 
->**响应:**
+>**Response**  
 
 ```javascript
 {}
 ```
 
 
-## 账户合约历史委托 (USER_DATA)
-
+## Historical contract entry order of the account (USER_DATA)
 
 `GET /api/v1/contract/historyOrders  (HMAC SHA256)`
-获取某交易对的成交历史
 
-**权重:**
+Obtain trading history of specified trading pair
+
+**Weight:**
 5
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-orderId | LONG | NO |返回该orderId之后的成交，缺省返回最近的成交
+orderId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 startTime | LONG | NO |
 endTime | LONG | NO |
 limit | INT | NO | Default 500; max 500.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
->**响应:**
+>**Response**  
 
 ```javascript
 [
@@ -983,26 +981,29 @@ timestamp | LONG | YES |
 ]
 ```
 
-## 账户合约账单 (USER_DATA)
+
+
+## Contract bill of the account(USER_DATA)
 
 `GET /api/v1/contract/bill  (HMAC SHA256)`
-获取账户的合约账单
 
-**权重:**
+Contract bill of obtained account
+
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-fromId | LONG | NO |返回该orderId之后的成交，Default -1(返回最近的成交)
+fromId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 limit | INT | NO | Default 100; max 100.
 startTime | LONG | NO |
 endTime | LONG | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
->**响应:**
+>**Response**  
 
 ```javascript
 [
@@ -1023,25 +1024,28 @@ timestamp | LONG | YES |
 ]
 ```
 
-## 获取历史成交信息 (USER_DATA)
+
+
+## Contract bill of the account(USER_DATA)
 
 `GET /api/v1/contract/userHistoricalTrades  (HMAC SHA256)`
-获取历史成交信息
 
-**权重:**
+Contract bill of obtained account
+
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-endId | LONG | NO |返回该endId之前的成交
+endId | LONG | NO |Only orders after this orderID will be returned
 limit | INT | NO | Default 1000; max 1000.
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
->**响应:**
+>**Response**  
 
 ```javascript
 [
@@ -1068,24 +1072,24 @@ timestamp | LONG | YES |
 ```
 
 
-## 批量撤单  (TRADE)
-
+## cancel all orders (TRADE)
 
 `DELETE /api/v1/contract/batchOrder(HMAC SHA256)`
+
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-ordersJsonArray | String | YES | json 字符串 (1秒最多请求1次,1次最多10单)
+ordersJsonArray | String | YES | json String (Request 1 time in 1 second, up to 10 orders in 1 time)
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**ordersJsonArray json 字符串规则示例：**
+**ordersJsonArray json String rule example:**
 
 `[{"symbol":"btcusdt","orderId":"4612172002566865072"},{"symbol":"btcusdt","orderId":"4612170903055237327"},{"symbol":"EOSUSDT","orderId":"4612170903055237327"},{"symbol":"ETHUSDT","orderId":"4612168704031981750"}]`
 
->**响应:**
+>**Response**  
 
 ``` javascript
 [{
@@ -1129,51 +1133,44 @@ timestamp | LONG | YES |
 	"type": "limit"
 }]
 ```
+**Precautions and instructions:**
 
-**注意事项及说明:**
-
-- 签名及请求注意事项:
+- Signature and request notes:
   
-  1. 先按照通用规则对参数进行签名
-  1. 对ordersJsonArray的参数进行urlEncode
-  1. 发送delete请求
+  1. First Signature the parameters according to the general rules
+  1. urlEncode on the parameters of ordersJsonArray
+  1. Send a delete request
 
-- 限制事项：
-  1. 1秒最多请求1次
-  1. 1次最多10单
-
-- 返回值说明:
-
-  1. 如果签名通过，返回的是一个json数组。
-  1. 数组对应入参的单
-  1. 对应单撤单成功，数组元素为订单信息
-  1. 对应单撤单失败，数组元素为一个错误信息
+- Restrictions：
+  1. Request 1 time at most 1 second
+  1. 1 time up to 10 orders
 
 
 
 
-## 批量查询 (USER_DATA)
+
+## get all orders(USER_DATA)
 
 `GET /api/v1/contract/batchOrder(HMAC SHA256)`
-
 
 **Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
-ordersJsonArray | String | YES | json 字符串 
+ordersJsonArray | String | YES | json String 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
-**ordersJsonArray json 字符串规则示例：**
+
+**ordersJsonArray json String rule example：**
 
 `[{"orderId":4611993881683165185},{"orderId":4611993881683165185,"symbol":"btcusdt"},{"orderId":4611993881683165185,"symbol":"eosusdt"},{"orderId":123,"symbol":"btcusdt"}]`
 
 
-**响应:**
+> **Response:**
+
 
 ``` javascript
-
 [{
   "symbol":"BTCUSDT",
   "orderId":"4611993881683165185",
@@ -1205,48 +1202,48 @@ timestamp | LONG | YES |
   }]
 
 ```
+**Precautions and instructions:**
 
-
-**注意事项及说明:**
-
-- 签名及请求注意事项:
+- Signature and request notes:
   
-  1. 先按照通用规则对参数进行签名
-  1. 对ordersJsonArray的参数进行urlEncode
-  1. 发送get请求
-  1. symbol 可以不用传
+  1. First Signature the parameters according to the general rules
+  1. urlEncode on the parameters of ordersJsonArray
+  1. Send a delete request
+  1. The symbol can not be transmitted
 
-- 限制事项：
-  1. 1分钟1200,5分钟5000
-  1. 1次最多100单
+- Restrictions：
+  1. Request 1200 times at most 1 Minute,Request 5000 times at most 5 Minute
+  1. 1 time up to 100 orders
 
-- 返回值说明:
-  1. 如果签名通过，返回的是一个json数组。
-  1. 数组对应入参的单
-  1. 对应单查询成功，数组元素为订单信息
-  1. 对应单查询失败，数组元素为一个错误信息
+- Return value description:
+  1. If the signature passes, a JSON array is returned.
+  1. List of input parameters corresponding to array
+  1. The corresponding document is queried successfully. The array element is order information
+  1. Failed to query corresponding doc, array element is an error message
 
 
 
-## 合约资金费率
 
-`GET /api/v1/contract/historyRate `
-获取某合约的资金费率
+## Capital fee rate of contract
 
-**权重:**
+`GET /api/v1/contract/historyRate`
+
+Get capital fee of one specified contract
+
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-fromId | LONG | NO |返回该fromId之后的记录，Default -1(返回最近的记录)
+fromId | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 limit | INT | NO | Default 100; max 100.
 startTime | LONG | NO |
 endTime | LONG | NO |
 
->**响应:**
+>**Response**  
 
 ```javascript
 [
@@ -1268,25 +1265,26 @@ endTime | LONG | NO |
 ```
 
 
-## 合约保护基金 
+## Contract protection fund
 
-`GET /api/v1/contract/protectionFund`
-获取某合约的保护基金
+`GET /api/v1/contract/protectionFund `
 
-**权重:**
+Get contract protection fund of one specified contract
+
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 symbol | STRING | YES |
-start | LONG | NO |返回该start之后的记录，Default -1(返回最近的记录)
+start | LONG | NO |Only orders after this orderID will be returned. Only partial recent orders will be returned
 size | INT | NO | Default 100; max 100.
 startTime | LONG | NO |
 endTime | LONG | NO |
 
->**响应:**
+>**Response**  
 
 ```javascript
 [
@@ -1305,15 +1303,17 @@ endTime | LONG | NO |
 ]
 ```
 
-## 转移保证金 (USER_DATA)
+
+## Transfer Margin(USER_DATA)
 
 `POST /api/v1/contract/transferMargin  (HMAC SHA256)`
-币币余额转移到某合约的保证金
 
-**权重:**
+The margin transferred to one specified contract from coins account balance
+
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
@@ -1322,7 +1322,7 @@ amount | STRING | NO |
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
->**响应:**
+>**Response**  
 
 ```javascript
 {
@@ -1332,22 +1332,21 @@ timestamp | LONG | YES |
 }
 ```
 
-
-## 账户资产信息(USER_DATA)
+## Account information(USER_DATA)
 
 `GET /api/v1/account (HMAC SHA256)`
 
-**权重:**
+**Weight:**
 1
 
-**参数:**
+**Parameters:**
 
 Name | Type | Mandatory | Description
 ------------ | ------------ | ------------ | ------------
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
 
->**响应:**
+>**Response**  
 
 ```javascript
 {
@@ -1384,3 +1383,5 @@ timestamp | LONG | YES |
     ],
 }
 ```
+
+

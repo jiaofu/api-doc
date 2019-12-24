@@ -279,7 +279,7 @@
       <script src="javascripts/all-c5541673.js"></script>
   </head>
 
-  <body class="index" data-languages="[]">
+  <body class="testnet_CN" data-languages="[]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -416,10 +416,7 @@
                     <a href="#user_data-7" class="toc-h2 toc-link" data-title="获取历史成交信息 (USER_DATA)">获取历史成交信息 (USER_DATA)</a>
                   </li>
                   <li>
-                    <a href="#trade-5" class="toc-h2 toc-link" data-title="批量撤单  (TRADE)">批量撤单  (TRADE)</a>
-                  </li>
-                  <li>
-                    <a href="#user_data-8" class="toc-h2 toc-link" data-title="批量查询 (USER_DATA)">批量查询 (USER_DATA)</a>
+                    <a href="#user_data-8" class="toc-h2 toc-link" data-title="批量撤单(USER_DATA)">批量撤单(USER_DATA)</a>
                   </li>
                   <li>
                     <a href="#187dff4eed" class="toc-h2 toc-link" data-title="合约资金费率">合约资金费率</a>
@@ -465,7 +462,7 @@
                     <a href="#websock" class="toc-h2 toc-link" data-title="websock基本信息">websock基本信息</a>
                   </li>
                   <li>
-                    <a href="#websocket-2" class="toc-h2 toc-link" data-title="Websocket 最近成交">Websocket 最近成交</a>
+                    <a href="#websocket-2" class="toc-h2 toc-link" data-title="Websocket最近成交">Websocket最近成交</a>
                   </li>
                   <li>
                     <a href="#websocket-k" class="toc-h2 toc-link" data-title="Websocket K线">Websocket K线</a>
@@ -593,7 +590,8 @@
 </ul>
 <h1 id='b122f813d5'>基本信息</h1><h2 id='api'>api 基本信息</h2>
 <ul>
-<li>本篇列出REST接口的baseurl  https://www.jex.com </li>
+<li>本篇列出REST接口的baseurl  https://testnet.jex.com</li>
+<li>其中 https://testnet.jex.com 为模拟环境。</li>
 <li>所有接口的响应都是JSON格式</li>
 <li>响应中如有数组，数组元素以时间升序排列，越早的数据越提前。</li>
 <li>所有时间、时间戳均为UNIX时间，单位为毫秒</li>
@@ -610,7 +608,7 @@
 <span class="o">}</span>
 </code></pre>
 <ul>
-<li>具体的错误码及其解释在  <code>错误代码汇总</code></li>
+<li>具体的错误码及其解释在 <code>错误代码汇总</code></li>
 <li><code>GET</code>方法的接口, 参数必须在<code>query string</code>中发送.</li>
 <li><code>POST</code>, <code>PUT</code>, 和 <code>DELETE</code> 方法的接口, 参数可以在 <code>query string</code>中发送，也可以在 <code>request body</code>中发送(content type <code>application/x-www-form-urlencoded</code>。允许混合这两种方式发送参数。但如果同一个参数名在query string和request body中都有，query string中的会被优先采用。</li>
 </ul>
@@ -655,12 +653,11 @@
 <li>api的contract订单的sell数量统一为负数</li>
 </ul>
 <h2 id='a573a19f9c'>接口鉴权类型</h2>
-<ul>
-<li>每个接口都有自己的鉴权类型，鉴权类型决定了访问时应当进行何种鉴权</li>
-<li>如果需要 API-key，应当在HTTP头中以<code>X-JEX-APIKEY</code>字段传递</li>
-<li>API-key 与 API-secret 是大小写敏感的</li>
-<li>可以在网页用户中心修改API-key 所具有的权限，例如读取账户信息、发送交易指令、发送提现指令</li>
-</ul>
+<p>S
+* 每个接口都有自己的鉴权类型，鉴权类型决定了访问时应当进行何种鉴权
+* 如果需要 API-key，应当在HTTP头中以<code>X-JEX-APIKEY</code>字段传递
+* API-key 与 API-secret 是大小写敏感的
+* 可以在网页用户中心修改API-key 所具有的权限，例如读取账户信息、发送交易指令、发送提现指令</p>
 
 <table><thead>
 <tr>
@@ -1665,7 +1662,7 @@ NONE</p>
 <tr>
 <td>triggerPrice</td>
 <td>DECIMAL</td>
-<td>YES</td>
+<td>No</td>
 <td>仅 <code>stopLimit</code>, <code>profitLimit</code> 需要此参数</td>
 </tr>
 <tr>
@@ -2420,8 +2417,8 @@ NONE</p>
     <span class="s2">"buyerMaker"</span><span class="p">:</span><span class="kc">false</span>
   <span class="p">}</span>
 <span class="p">]</span>
-</code></pre><h2 id='trade-5'>批量撤单  (TRADE)</h2>
-<p><code>DELETE /api/v1/contract/batchOrder(HMAC SHA256)</code></p>
+</code></pre><h2 id='user_data-8'>批量撤单(USER_DATA)</h2>
+<p><code>DELETE /api/v1/contract/batchOrder</code></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2514,119 +2511,21 @@ NONE</p>
 </ol>
 
 <ul>
-<li><p>限制事项：</p>
+<li>限制事项：
 
 <ol>
 <li>1秒最多请求1次</li>
 <li>1次最多10单</li>
 </ol></li>
-<li><p>返回值说明:</p></li>
 </ul>
 
-<ol>
+<p><strong>返回值说明:</strong></p>
+
+<ul>
 <li>如果签名通过，返回的是一个json数组。</li>
 <li>数组对应入参的单</li>
 <li>对应单撤单成功，数组元素为订单信息</li>
 <li>对应单撤单失败，数组元素为一个错误信息</li>
-</ol>
-<h2 id='user_data-8'>批量查询 (USER_DATA)</h2>
-<p><code>GET /api/v1/contract/batchOrder(HMAC SHA256)</code></p>
-
-<p><strong>Parameters:</strong></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Mandatory</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ordersJsonArray</td>
-<td>String</td>
-<td>YES</td>
-<td>json 字符串</td>
-</tr>
-<tr>
-<td>recvWindow</td>
-<td>LONG</td>
-<td>NO</td>
-<td></td>
-</tr>
-<tr>
-<td>timestamp</td>
-<td>LONG</td>
-<td>YES</td>
-<td></td>
-</tr>
-</tbody></table>
-
-<p><strong>ordersJsonArray json 字符串规则示例：</strong></p>
-
-<p><code>[{&quot;orderId&quot;:4611993881683165185},{&quot;orderId&quot;:4611993881683165185,&quot;symbol&quot;:&quot;btcusdt&quot;},{&quot;orderId&quot;:4611993881683165185,&quot;symbol&quot;:&quot;eosusdt&quot;},{&quot;orderId&quot;:123,&quot;symbol&quot;:&quot;btcusdt&quot;}]</code></p>
-
-<p><strong>响应:</strong></p>
-<pre class="highlight javascript tab-javascript"><code>
-<span class="p">[{</span>
-  <span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"BTCUSDT"</span><span class="p">,</span>
-  <span class="s2">"orderId"</span><span class="p">:</span><span class="s2">"4611993881683165185"</span><span class="p">,</span>
-  <span class="s2">"updateTime"</span><span class="p">:</span><span class="mi">1576749391000</span><span class="p">,</span>
-  <span class="s2">"side"</span><span class="p">:</span><span class="s2">"buy"</span><span class="p">,</span>
-  <span class="s2">"origQty"</span><span class="p">:</span><span class="s2">"1.0000"</span><span class="p">,</span>
-  <span class="s2">"executedQty"</span><span class="p">:</span><span class="s2">"1.0000"</span><span class="p">,</span>
-  <span class="s2">"price"</span><span class="p">:</span><span class="s2">"9990.0"</span><span class="p">,</span>
-  <span class="s2">"executedPrice"</span><span class="p">:</span><span class="s2">"9990.0"</span><span class="p">,</span>
-  <span class="s2">"status"</span><span class="p">:</span><span class="s2">"filled"</span><span class="p">,</span>
-  <span class="s2">"time"</span><span class="p">:</span><span class="mi">1576749391000</span><span class="p">,</span>
-  <span class="s2">"type"</span><span class="p">:</span><span class="s2">"limit"</span>
-  <span class="p">},{</span>
-  <span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"BTCUSDT"</span><span class="p">,</span>
-  <span class="s2">"orderId"</span><span class="p">:</span><span class="s2">"4611993881683165185"</span><span class="p">,</span>
-  <span class="s2">"updateTime"</span><span class="p">:</span><span class="mi">1576749391000</span><span class="p">,</span>
-  <span class="s2">"side"</span><span class="p">:</span><span class="s2">"buy"</span><span class="p">,</span>
-  <span class="s2">"origQty"</span><span class="p">:</span><span class="s2">"1.0000"</span><span class="p">,</span>
-  <span class="s2">"executedQty"</span><span class="p">:</span><span class="s2">"1.0000"</span><span class="p">,</span>
-  <span class="s2">"price"</span><span class="p">:</span><span class="s2">"9990.0"</span><span class="p">,</span>
-  <span class="s2">"executedPrice"</span><span class="p">:</span><span class="s2">"9990.0"</span><span class="p">,</span>
-  <span class="s2">"status"</span><span class="p">:</span><span class="s2">"filled"</span><span class="p">,</span>
-  <span class="s2">"time"</span><span class="p">:</span><span class="mi">1576749391000</span><span class="p">,</span>
-  <span class="s2">"type"</span><span class="p">:</span><span class="s2">"limit"</span>
-  <span class="p">},{</span>
-  <span class="s2">"msg"</span><span class="p">:</span><span class="s2">"Order does not exist."</span><span class="p">,</span><span class="s2">"code"</span><span class="p">:</span><span class="o">-</span><span class="mi">2013</span>
-  <span class="p">},{</span>
-  <span class="s2">"msg"</span><span class="p">:</span><span class="s2">"Order does not exist."</span><span class="p">,</span><span class="s2">"code"</span><span class="p">:</span><span class="o">-</span><span class="mi">2013</span>
-  <span class="p">}]</span>
-
-</code></pre>
-<p><strong>注意事项及说明:</strong></p>
-
-<ul>
-<li>签名及请求注意事项:</li>
-</ul>
-
-<ol>
-<li>先按照通用规则对参数进行签名</li>
-<li>对ordersJsonArray的参数进行urlEncode</li>
-<li>发送get请求</li>
-<li>symbol 可以不用传</li>
-</ol>
-
-<ul>
-<li><p>限制事项：</p>
-
-<ol>
-<li>1分钟1200,5分钟5000</li>
-<li>1次最多100单</li>
-</ol></li>
-<li><p>返回值说明:</p>
-
-<ol>
-<li>如果签名通过，返回的是一个json数组。</li>
-<li>数组对应入参的单</li>
-<li>对应单查询成功，数组元素为订单信息</li>
-<li>对应单查询失败，数组元素为一个错误信息</li>
-</ol></li>
 </ul>
 <h2 id='187dff4eed'>合约资金费率</h2>
 <p><code>GET /api/v1/contract/historyRate</code>
@@ -2882,11 +2781,12 @@ NONE</p>
 </code></pre><h1 id='d71e480bcb'>用户数据流订阅接口</h1>
 <ul>
 <li>此处仅列出如何得到数据流名称及如何维持有效期的接口</li>
-<li>本篇所列出REST接口的baseurl <strong>https://www.jex.com</strong> </li>
+<li>本篇所列出REST接口的baseurl <strong>https://testnet.jex.com</strong></li>
 <li>用于订阅账户数据的 <code>listenKey</code> 从创建时刻起有效期为60分钟</li>
 <li>可以通过<code>PUT</code>一个<code>listenKey</code>延长60分钟有效期</li>
 <li><code>DELETE</code>一个 <code>listenKey</code> 立即关闭当前数据流</li>
-<li>本篇所列出的websocket接口baseurl: <strong>wss://ws.jex.com</strong> </li>
+<li>本篇所列出的websocket接口baseurl: <strong>wss://testnetws.jex.com</strong></li>
+<li>其中 <strong>wss://testnetws.jex.com</strong> 为模拟环境。</li>
 <li>订阅账户数据流的stream名称为 <strong>/ws/&lt;listenKey&gt;</strong></li>
 <li>每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。</li>
 <li>账户数据流的消息<strong>不保证</strong>严格时间序; <strong>请使用 E 字段进行排序</strong></li>
@@ -3125,7 +3025,7 @@ NONE</p>
 
 </code></pre><h1 id='websocket'>Websocket 行情推送</h1><h2 id='websock'>websock基本信息</h2>
 <ul>
-<li>本篇所列出的所有wss接口的baseurl为: wss://ws.jex.com 或者 wss://testnetws.jex.com</li>
+<li>本篇所列出的所有wss接口的baseurl为: wss://testnetws.jex.com</li>
 <li>其中 wss://testnetws.jex.com 为模拟环境。</li>
 <li>所有stream均可以直接访问，或者作为组合streams的一部分。</li>
 <li>直接访问时URL格式为 /ws/&lt;streamName&gt;</li>
@@ -3133,13 +3033,13 @@ NONE</p>
 <li>订阅组合streams时，事件payload会以这样的格式封装 {&quot;stream&quot;:&quot;&lt;streamName&gt;&quot;,&quot;data&quot;:&lt;rawPayload&gt;}</li>
 <li>stream名称中所有交易对均为大写</li>
 <li>每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。</li>
-<li>每20秒，服务端会发送ping帧，客户端应当在10分钟内回复pong帧，否则服务端会主动断开链接。允许客户端发送不成对的pong帧(即客户端可以以高于10分钟每次的频率发送pong帧保持链接)。</li>
+<li>每3分钟，服务端会发送ping帧，客户端应当在10分钟内回复pong帧，否则服务端会主动断开链接。允许客户端发送不成对的pong帧(即客户端可以以高于10分钟每次的频率发送pong帧保持链接)。</li>
 <li>wss 的 contract 订单的sell数量统一为负数</li>
 <li>推荐使用组合streams方式进行连接，每个组合streams可最多订阅10个stream</li>
 </ul>
 
 <p><strong>Stream 详细定义</strong></p>
-<h2 id='websocket-2'>Websocket 最近成交</h2>
+<h2 id='websocket-2'>Websocket最近成交</h2>
 <ul>
 <li>每隔100 ms 推送一次，上一秒内所有的逐笔交易，一笔逐笔交易的定义是仅有一个吃单者与一个挂单者相互交易。</li>
 </ul>

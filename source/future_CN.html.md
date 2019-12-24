@@ -577,8 +577,6 @@ symbol | STRING | NO |
 # 交易接口
 
 
-
-
 ## 合约下单  (TRADE)
 
 `POST /api/v1/contract/order  (HMAC SHA256)`
@@ -595,7 +593,7 @@ type | ENUM | YES |`LIMIT`,`stopLimit`,`profitLimit`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
 triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice` (仅 `stopLimit`, `profitLimit` 需要此参数)
-triggerPrice | DECIMAL | YES | 仅 `stopLimit`, `profitLimit` 需要此参数
+triggerPrice | DECIMAL | NO | 仅 `stopLimit`, `profitLimit` 需要此参数
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -1225,8 +1223,6 @@ timestamp | LONG | YES |
   1. 数组对应入参的单
   1. 对应单查询成功，数组元素为订单信息
   1. 对应单查询失败，数组元素为一个错误信息
-
-
 
 ## 合约资金费率
 

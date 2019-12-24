@@ -1,0 +1,247 @@
+<h1 id='user-data-streams'>User Data Streams</h1>
+<ul>
+<li>The base API endpoint is: <strong>https://www.jex.com</strong> </li>
+<li>A User Data Stream <code>listenKey</code> is valid for 60 minutes after creation.</li>
+<li>Doing a <code>PUT</code> on a <code>listenKey</code> will extend its validity for 60 minutes.</li>
+<li>Doing a <code>DELETE</code> on a <code>listenKey</code> will close the stream.</li>
+<li>The base websocket endpoint is: <strong>wss://ws.jex.com</strong> </li>
+<li>User Data Streams are accessed at <strong>/ws/&lt;listenKey&gt;</strong></li>
+<li>A single connection to <strong>stream.jex.com</strong> is only valid for 24 hours; expect to be disconnected at the 24 hour mark</li>
+<li><p>User data stream payloads are <strong>not guaranteed</strong> to be in order during heavy periods; <strong>make sure to order your updates using E</strong></p></li>
+<li><p>Specifics on how user data streams work.</p></li>
+<li><p>For detailed subscription method, please refer to another websocket document.</p></li>
+</ul>
+<h2 id='start-user-data-stream-user_stream'>Start user data stream (USER_STREAM)</h2>
+<p><code>POST /api/v1/userDataStream</code></p>
+
+<p>Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent.</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong>
+NONE</p>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"listenKey"</span><span class="p">:</span> <span class="s2">"pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1"</span> <span class="c1">//用于订阅的数据流名</span>
+<span class="p">}</span>
+</code></pre><h2 id='keepalive-user_stream'>Keepalive (USER_STREAM)</h2>
+<p><code>PUT /api/v1/userDataStream</code></p>
+
+<p>Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It&#39;s recommended to send a ping about every 30 minutes.</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>listenKey</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{}</span>
+</code></pre><h2 id='close-user-data-stream-user_stream'>Close user data stream (USER_STREAM)</h2>
+<p><code>DELETE /api/v1/userDataStream</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>listenKey</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{}</span>
+</code></pre><h2 id='account-updates'>Account updates</h2>
+<ul>
+<li>Event type of account updates is fixed to <code>accountSpotInfo</code> AND <code>accountOptionInfo</code> AND <code>accountContractInfo</code> They respectively refers to the asset related event of spot, options and futures.
+When there is a change of asset, relevant event will be pushed</li>
+</ul>
+
+<blockquote>
+<p><strong>Response</strong> </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"accountSpotInfo"</span><span class="p">,</span>       <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>           <span class="c1">// Event time</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                       <span class="c1">// Fee rate of entry order </span>
+  <span class="s2">"t"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                       <span class="c1">// Fee rate of taking order</span>
+  <span class="s2">"u"</span><span class="p">:</span> <span class="mi">1499405658848</span><span class="p">,</span>           <span class="c1">// Time stamp of</span>
+  <span class="s2">"B"</span><span class="p">:</span> <span class="p">[</span>                        <span class="c1">// Balance</span>
+    <span class="p">{</span>
+      <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"LTC"</span><span class="p">,</span>               <span class="c1">// Asset name</span>
+      <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"1.57"</span><span class="p">,</span>              <span class="c1">// Order Margin（Only Furtures）</span>
+      <span class="s2">"p"</span><span class="p">:</span>  <span class="s2">"0"</span>  <span class="err">，</span>             <span class="c1">// Position Margin（Only Furtures ）</span>
+      <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"17366.18538083"</span><span class="p">,</span>    <span class="c1">// Free amount</span>
+      <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>        <span class="c1">// Locked amount  </span>
+      <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can trade</span>
+      <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can withdraw</span>
+      <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can deposit</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+      <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"10537.85314051"</span><span class="p">,</span>
+      <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"2.19464093"</span><span class="p">,</span>
+      <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can trade</span>
+      <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can withdraw</span>
+       <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>               <span class="c1">// Can deposit</span>
+ <span class="p">},</span>
+    <span class="p">{</span>
+    <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can trade</span>
+    <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can withdraw</span>
+    <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can deposit</span>
+    <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"ETH"</span><span class="p">,</span>
+    <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"17902.35190619"</span><span class="p">,</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.00000000"</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='update-of-orders'>Update of orders</h3>
+<ul>
+<li>Account state is updated with the outboundAccountInfo event.</li>
+</ul>
+
+<p>event type is <code>execSpotReport</code> AND <code>execOptionReport</code> AND <code>execContractReport</code> They respectively refers to the asset related event of spot、options、futures Event type</p>
+
+<p>Possible executive type of contract(X field)</p>
+
+<blockquote>
+<p>Response  of spot and options:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>            <span class="c1">// Event time</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"execSpotReport"</span><span class="p">,</span>         <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>                 <span class="c1">// Symbol</span>
+  <span class="s2">"S"</span><span class="p">:</span> <span class="s2">"BUY"</span><span class="p">,</span>                    <span class="c1">// Order direction</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>             <span class="c1">//  Order quantity</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.10264410"</span><span class="p">,</span>             <span class="c1">//  Order price</span>
+  <span class="s2">"X"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>                    <span class="c1">// Current order state</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="mi">4293153</span><span class="p">,</span>                  <span class="c1">// ID Order ID</span>
+  <span class="s2">"z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">//  Cumulative filled quantity</span>
+  <span class="s2">"O"</span><span class="p">:</span> <span class="mi">1499405658657</span><span class="p">,</span>            <span class="c1">// Transaction time</span>
+  <span class="s2">"Z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Total transaction sum</span>
+<span class="p">}</span>
+</code></pre><h4 id='possible-executive-type-of-spot-and-options-x-field'>Possible executive type of spot and options (X field):</h4>
+<ul>
+<li>NEW </li>
+<li>PARTIALLY_FILLED<br></li>
+<li>FILLED<br></li>
+<li>CANCELED<br></li>
+<li>FAIL </li>
+<li>CANCLEFILLED</li>
+</ul>
+
+<blockquote>
+<p>Response contract :</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>            <span class="c1">// Event time</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"execContractReport"</span><span class="p">,</span>     <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"ETHBTC"</span><span class="p">,</span>                 <span class="c1">// Symbol   (Not exist if refused)   </span>
+  <span class="s2">"X"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>                    <span class="c1">// Current state of the order   </span>
+  <span class="s2">"r"</span><span class="p">:</span> <span class="s2">"NONE"</span><span class="p">,</span>                   <span class="c1">// Refused reason of the order ( exist if refused)</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="mi">4293153</span><span class="p">,</span>                  <span class="c1">// Order ID</span>
+  <span class="s2">"z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Cumulative filled quantity (Not exist if refused)</span>
+  <span class="s2">"Z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Cumulative filled sum(Not exist if refused)</span>
+
+<span class="p">}</span>
+</code></pre><h4 id='possible-executive-type-of-contract-x-field'>Possible executive type of contract(X field):</h4>
+<ul>
+<li>ENTRUSTED </li>
+<li>ENTRUSTING </li>
+<li>FAIL </li>
+<li>PARTFILLED </li>
+<li>FILLED </li>
+<li>CANCEL<br></li>
+</ul>
+
+<blockquote>
+<p>Response example if refused:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="nl">E</span><span class="p">:</span> <span class="mi">1571225843289</span>
+  <span class="nl">X</span><span class="p">:</span> <span class="s2">"FAIL"</span>
+  <span class="nl">e</span><span class="p">:</span> <span class="s2">"execContractReport"</span>
+  <span class="nl">i</span><span class="p">:</span> <span class="s2">"4612616205276108403"</span>
+  <span class="nl">r</span><span class="p">:</span> <span class="s2">"insufficient Available"</span>  
+<span class="p">}</span>
+</code></pre><h4 id='if-refused-r-field'>if refused(R field)</h4>
+<ul>
+<li> insufficient Available</li>
+<li> too many pending requests</li>
+<li> position is being liquidated</li>
+<li> position is being closed</li>
+<li> closing empty position</li>
+<li> closing order is enough</li>
+<li> contract is disabled</li>
+<li> reach liquidation price</li>
+<li> reach risk limit</li>
+</ul>
+<h3 id='contract-positions'>Contract positions</h3>
+<ul>
+<li>Where there is a change in contract position</li>
+<li>event type is  contractPositions</li>
+</ul>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1553050064078</span><span class="p">,</span>
+    <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"contractPositions"</span><span class="p">,</span>
+    <span class="s2">"p"</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s2">"M"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span> <span class="c1">// Largest leverage available </span>
+        <span class="s2">"R"</span><span class="p">:</span> <span class="s2">"3903.99060000"</span><span class="p">,</span> <span class="c1">// Used risk limits</span>
+        <span class="s2">"S"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">// sell Entrusted value</span>
+        <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"20"</span><span class="p">,</span> <span class="c1">// Auto-deleverage sequence</span>
+        <span class="s2">"b"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">// buy Entrusted value</span>
+        <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"1301.33020000"</span><span class="p">,</span> <span class="c1">//Open price</span>
+        <span class="s2">"d"</span><span class="p">:</span> <span class="s2">"longs"</span><span class="p">,</span> <span class="c1">//Direction </span>
+        <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"0.05"</span><span class="p">,</span> <span class="c1">//Initial margin</span>
+        <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"-49.9759"</span><span class="p">,</span> <span class="c1">//Close price</span>
+        <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"0.005"</span><span class="p">,</span> <span class="c1">//Maintenance Margin</span>
+        <span class="s2">"n"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">//Current entrusted value </span>
+        <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"4088.0779300000"</span><span class="p">,</span> <span class="c1">//Margin</span>
+        <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"3.0000"</span><span class="p">,</span><span class="c1">//Holding positions </span>
+        <span class="s2">"r"</span><span class="p">:</span> <span class="s2">"900000"</span><span class="p">,</span><span class="c1">//Current risk value</span>
+        <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"EOSUSDT"</span><span class="p">,</span><span class="c1">//Symbol</span>
+        <span class="s2">"t"</span><span class="p">:</span> <span class="s2">"3903.99060000"</span><span class="p">,</span> <span class="c1">//Holding positions costs value </span>
+        <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"20.00"</span><span class="c1">//Leverage</span>
+    <span class="p">}]</span>
+<span class="p">}</span>
+
+</code></pre>

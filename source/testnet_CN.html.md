@@ -8,11 +8,11 @@ toc_footers:
   - <a href='https://testnet.jexzh.com/cn/contract'>Binance jex Futures</a>
 
 includesf:
-  - BaseInfo_CN
+  - BaseInfo_CN_TESTNET
   - CHANGELOG_CN
 includes:
-  - userDataStream_CN
-  - web-socket-streams_CN
+  - userDataStream_CN_TESTNET
+  - web-socket-streams_CN_TESTNET
   - errors_CN
 
 
@@ -578,7 +578,6 @@ symbol | STRING | NO |
 
 
 
-
 ## 合约下单  (TRADE)
 
 `POST /api/v1/contract/order  (HMAC SHA256)`
@@ -595,7 +594,7 @@ type | ENUM | YES |`LIMIT`,`stopLimit`,`profitLimit`
 quantity | DECIMAL | YES |
 price | DECIMAL | YES |
 triggerType | ENUM | No | `lastPrice`,`markPrice`,`indexPrice` (仅 `stopLimit`, `profitLimit` 需要此参数)
-triggerPrice | DECIMAL | YES | 仅 `stopLimit`, `profitLimit` 需要此参数
+triggerPrice | DECIMAL | No | 仅 `stopLimit`, `profitLimit` 需要此参数
 newOrderRespType | ENUM | NO | 指定响应类型 `ACK`, `RESULT`; 默认为`ACK`. 
 recvWindow | LONG | NO |
 timestamp | LONG | YES |
@@ -665,7 +664,6 @@ Type | 强制要求的参数
   "type": "limit"
 }
 ```
-
 
 
 ## 合约测试下单接口 (TRADE)
@@ -1068,10 +1066,10 @@ timestamp | LONG | YES |
 ```
 
 
-## 批量撤单  (TRADE)
+## 批量撤单(USER_DATA)
 
 
-`DELETE /api/v1/contract/batchOrder(HMAC SHA256)`
+`DELETE /api/v1/contract/batchOrder`
 
 **Parameters:**
 
@@ -1142,89 +1140,12 @@ timestamp | LONG | YES |
   1. 1秒最多请求1次
   1. 1次最多10单
 
-- 返回值说明:
+**返回值说明:**
 
-  1. 如果签名通过，返回的是一个json数组。
-  1. 数组对应入参的单
-  1. 对应单撤单成功，数组元素为订单信息
-  1. 对应单撤单失败，数组元素为一个错误信息
-
-
-
-
-## 批量查询 (USER_DATA)
-
-`GET /api/v1/contract/batchOrder(HMAC SHA256)`
-
-
-**Parameters:**
-
-Name | Type | Mandatory | Description
------------- | ------------ | ------------ | ------------
-ordersJsonArray | String | YES | json 字符串 
-recvWindow | LONG | NO |
-timestamp | LONG | YES |
-
-**ordersJsonArray json 字符串规则示例：**
-
-`[{"orderId":4611993881683165185},{"orderId":4611993881683165185,"symbol":"btcusdt"},{"orderId":4611993881683165185,"symbol":"eosusdt"},{"orderId":123,"symbol":"btcusdt"}]`
-
-
-**响应:**
-
-``` javascript
-
-[{
-  "symbol":"BTCUSDT",
-  "orderId":"4611993881683165185",
-  "updateTime":1576749391000,
-  "side":"buy",
-  "origQty":"1.0000",
-  "executedQty":"1.0000",
-  "price":"9990.0",
-  "executedPrice":"9990.0",
-  "status":"filled",
-  "time":1576749391000,
-  "type":"limit"
-  },{
-  "symbol":"BTCUSDT",
-  "orderId":"4611993881683165185",
-  "updateTime":1576749391000,
-  "side":"buy",
-  "origQty":"1.0000",
-  "executedQty":"1.0000",
-  "price":"9990.0",
-  "executedPrice":"9990.0",
-  "status":"filled",
-  "time":1576749391000,
-  "type":"limit"
-  },{
-  "msg":"Order does not exist.","code":-2013
-  },{
-  "msg":"Order does not exist.","code":-2013
-  }]
-
-```
-
-
-**注意事项及说明:**
-
-- 签名及请求注意事项:
-  
-  1. 先按照通用规则对参数进行签名
-  1. 对ordersJsonArray的参数进行urlEncode
-  1. 发送get请求
-  1. symbol 可以不用传
-
-- 限制事项：
-  1. 1分钟1200,5分钟5000
-  1. 1次最多100单
-
-- 返回值说明:
-  1. 如果签名通过，返回的是一个json数组。
-  1. 数组对应入参的单
-  1. 对应单查询成功，数组元素为订单信息
-  1. 对应单查询失败，数组元素为一个错误信息
+  - 如果签名通过，返回的是一个json数组。
+  - 数组对应入参的单
+  - 对应单撤单成功，数组元素为订单信息
+  - 对应单撤单失败，数组元素为一个错误信息
 
 
 

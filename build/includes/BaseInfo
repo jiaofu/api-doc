@@ -1,0 +1,362 @@
+<h1 id='general-api'>General API</h1><h2 id='general-api-information'>General API Information</h2>
+<ul>
+<li>The base endpoint is:  https://www.jex.com </li>
+<li>All endpoints return either a JSON object or array.</li>
+<li>Data is returned in ascending order. Oldest first, newest last。</li>
+<li>All time and timestamp related fields are in milliseconds</li>
+<li>HTTP <code>4XX</code> return codes are used for malformed requests; the issue is on the sender&#39;s side</li>
+<li>HTTP <code>429</code> return code is used when breaking a request rate limit.</li>
+<li>HTTP <code>418</code> return code is used when an IP has been auto-banned for continuing to send requests after receiving <code>429</code> codes.</li>
+<li>HTTP <code>5XX</code> return codes are used for internal errors; the issue is on
+jex&#39;s side.
+It is important to <strong>NOT</strong> treat this as a failure operation; the execution status is
+<strong>UNKNOWN</strong> and could have been a success.</li>
+<li>Any endpoint can return an ERROR; the error payload is as follows:</li>
+</ul>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"code"</span><span class="p">:</span> <span class="o">-</span><span class="mi">1121</span><span class="p">,</span>
+  <span class="s2">"msg"</span><span class="p">:</span> <span class="s2">"Invalid symbol."</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>Specific error codes and messages defined in another document.</li>
+<li>For <code>GET</code> endpoints, parameters must be sent as a <code>query string</code>.</li>
+<li>For <code>POST</code>, <code>PUT</code>, and <code>DELETE</code> endpoints, the parameters may be sent as a
+<code>query string</code> or in the <code>request body</code> with content type
+<code>application/x-www-form-urlencoded</code>. You may mix parameters between both the
+<code>query string</code> and <code>request body</code> if you wish to do so.</li>
+<li>Parameters may be sent in any order.</li>
+<li>If a parameter sent in both the <code>query string</code> and <code>request body</code>, the
+<code>query string</code> parameter will be used.</li>
+</ul>
+<h2 id='limits'>LIMITS</h2>
+<ul>
+<li>New intervalLetter values for headers:
+
+<ul>
+<li>SECOND =&gt; S</li>
+<li>MINUTE =&gt; M</li>
+<li>HOUR =&gt; H</li>
+<li>DAY =&gt; D</li>
+</ul></li>
+<li>The <code>/api/v1/exchangeInfo</code> <code>rateLimits</code> array contains objects related to the exchange&#39;s <code>RAW_REQUEST</code>, symbol accuracy,<code>REQUEST_WEIGHT</code>, and <code>ORDER</code> rate limits. These are further defined in the <code>ENUM definitions</code> section under <code>Rate limiters (rateLimitType)</code>.</li>
+<li>When a 429 is recieved, it&#39;s your obligation as an API to back off and not spam the API</li>
+<li>Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (http status 418).</li>
+<li>IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days</li>
+<li>New Headers  <code>X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter) </code> will give your current used request weight for the (intervalNum)(intervalLetter) rate limiter. For example, if there is a one minute request rate weight limiter set, you will get a  <code>X-MBX-USED-WEIGHT-1M </code> header in the response. The legacy header  <code>X-MBX-USED-WEIGHT </code> will still be returned and will represent the current used weight for the one minute request rate weight limit</li>
+<li>New Header <code>X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)</code>that is updated on any valid order placement and tracks your current order count for the interval; rejected/unsuccessful orders are not guaranteed to have <code>X-MBX-ORDER-COUNT-**</code> headers in the response。
+
+<ul>
+<li>Eg. <code>X-MBX-ORDER-COUNT-1S</code> for &quot;orders per 1 second&quot; and <code>X-MBX-ORDER-COUNT-1D</code> for orders per &quot;one day&quot;</li>
+</ul></li>
+<li>A <code>Retry-After</code> header is sent with a 418 or 429 responses and will give the number of seconds required to wait, in the case of a 418, to prevent a ban, or, in the case of a 429, until the ban is over.。</li>
+<li>Wrong order accuracy does not allow ordering</li>
+</ul>
+
+<p><strong>Order Count Limits</strong>
+* To keep an orderly market, jex imposes limits on the number of open orders per account. These limits are:
+* Maximum 200 open orders per contract per account;
+* Maximum 10 stop profit or stop  orders per contract per account;
+* When placing a new order that causes these caps to be exceeded, it will be rejected with the message “has reach max order number [200|10]”.</p>
+
+<p><strong>Other instructions</strong>
+The number of contract orders sells for API is uniformly negative</p>
+<h2 id='endpoint-security-type'>Endpoint security type</h2>
+<ul>
+<li>Each endpoint has a security type that determines the how you will interact with it</li>
+<li>API-keys are passed into the Rest API via the <code>X-JEX-APIKEY</code> header</li>
+<li>API-keys and secret-keys are case sensitive</li>
+<li>API-keys can be configured to only access certain types of secure endpoints. For example, one API-key could be used for TRADE only, while another API-key can access everything except for TRADE routes.</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Security Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>NONE</td>
+<td>Endpoint can be accessed freely.</td>
+</tr>
+<tr>
+<td>TRADE</td>
+<td>Endpoint requires sending a valid API-Key and signature</td>
+</tr>
+<tr>
+<td>USER_DATA</td>
+<td>Endpoint requires sending a valid API-Key and signature.</td>
+</tr>
+<tr>
+<td>USER_STREAM</td>
+<td>Endpoint requires sending a valid API-Key.</td>
+</tr>
+<tr>
+<td>MARKET_DATA</td>
+<td>Endpoint requires sending a valid API-Key.</td>
+</tr>
+</tbody></table>
+<h2 id='signed-trade-and-user_data-endpoint-security'>SIGNED (TRADE and USER_DATA) Endpoint security</h2>
+<ul>
+<li><code>SIGNED</code> endpoints require an additional parameter, <code>signature</code>, to be
+sent in the  <code>query string</code> or <code>request body</code>.</li>
+<li>Endpoints use <code>HMAC SHA256</code> signatures. The <code>HMAC SHA256 signature</code> is a keyed <code>HMAC SHA256</code> operation.
+Use your <code>secretKey</code> as the key and <code>totalParams</code> as the value for the HMAC operation.</li>
+<li>The <code>signature</code> is <strong>not case sensitive</strong>.</li>
+<li><code>totalParams</code> is defined as the <code>query string</code> concatenated with the
+<code>request body</code>.</li>
+<li>The parameters of signature must be transmitted in the order of interface documents.</li>
+</ul>
+
+<p><strong>Timing security</strong>
+* A <code>SIGNED</code> endpoint also requires a parameter, <code>timestamp</code>, to be sent which
+  should be the millisecond timestamp of when the request was created and sent.
+* An additional parameter, <code>recvWindow</code>, may be sent to specify the number of
+  milliseconds after <code>timestamp</code> the request is valid for. If <code>recvWindow</code>
+  is not sent, <strong>it defaults to 5000</strong>.
+* The logic is as follows:
+  <code>javascript
+  if (timestamp &lt; (serverTime + 1000) &amp;&amp; (serverTime - timestamp) &lt;= recvWindow) {
+    // process request
+  } else {
+    // reject request
+  }
+</code>
+<strong>Serious trading is about timing.</strong> Networks can be unstable and unreliable,
+which can lead to requests taking varying amounts of time to reach the
+servers. With <code>recvWindow</code>, you can specify that the request must be
+processed within a certain number of milliseconds or be rejected by the
+server.</p>
+
+<aside class="notice">
+**It recommended to use a small recvWindow of 5000 or less! The max cannot go beyond 60,000!**
+</aside>
+
+<ul>
+<li>POST /api/v1/spot/order Examples for POST
+Here is a step-by-step example of how to send a vaild signed payload from the
+Linux command line using <code>echo</code>, <code>openssl</code>, and <code>curl</code>.</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>apiKey</td>
+<td>vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A</td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Parameters</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>LTCBTC</td>
+</tr>
+<tr>
+<td>side</td>
+<td>BUY</td>
+</tr>
+<tr>
+<td>type</td>
+<td>LIMIT</td>
+</tr>
+<tr>
+<td>timeInForce</td>
+<td>GTC</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>1</td>
+</tr>
+<tr>
+<td>price</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>1499827319559</td>
+</tr>
+</tbody></table>
+<h3 id='example-1-as-a-query-string'>Example 1: As a query string</h3>
+<ul>
+<li><strong>queryString:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 signature:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+</code></pre>
+<ul>
+<li><strong>curl command:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code>  <span class="o">(</span>HMAC SHA256<span class="o">)</span>
+  <span class="o">[</span>linux]<span class="nv">$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order?symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'</span>
+</code></pre><h3 id='example-2-as-a-request-body'>Example 2: As a request body</h3>
+<ul>
+<li><strong>requestBody:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 signature:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+</code></pre>
+<ul>
+<li><strong>curl command:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="o">(</span>HMAC SHA256<span class="o">)</span>
+<span class="gp">[linux]$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order'</span> -d <span class="s1">'symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'</span>
+</code></pre><h3 id='example-3-mixed-query-string-and-request-body'>Example 3: Mixed query string and request body</h3>
+<ul>
+<li><strong>queryString:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC</li>
+<li><strong>requestBody:</strong> quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 signature:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTCquantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> 0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77
+</code></pre>
+<ul>
+<li><strong>curl command:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="o">(</span>HMAC SHA256<span class="o">)</span>
+<span class="gp">[linux]$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order?symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC'</span> -d <span class="s1">'quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77'</span>
+</code></pre>
+<p>Note that the signature is different in example 3.
+There is no &amp; between &quot;GTC&quot; and &quot;quantity=1&quot;.</p>
+<h2 id='terminology'>Terminology</h2>
+<ul>
+<li><code>base asset</code> refers to the asset that is the <code>quantity</code> of a symbol.</li>
+<li><code>quote asset</code> refers to the asset that is the <code>price</code> of a symbol.</li>
+</ul>
+<h2 id='enum-definitions'>ENUM definitions</h2>
+<p><strong>Symbol status (status):</strong></p>
+
+<ul>
+<li>PRE_TRADING </li>
+<li>TRADING </li>
+<li>POST_TRADING </li>
+<li>END_OF_DAY </li>
+<li>HALT </li>
+<li>AUCTION_MATCH </li>
+<li>BREAK </li>
+</ul>
+
+<p><strong>Symbol type:</strong></p>
+
+<ul>
+<li>SPOT </li>
+<li>OPTION </li>
+<li>CONTRACT </li>
+</ul>
+
+<p><strong>spot and option Order status (status):</strong></p>
+
+<ul>
+<li>NEW </li>
+<li>PARTIALLY_FILLED<br></li>
+<li>FILLED<br></li>
+<li>CANCELED<br></li>
+<li>PENDING_CANCEL (currently unused))</li>
+<li>FAIL </li>
+<li>CANCLEFILLED</li>
+<li>REJECTED  (currently unused)</li>
+<li>EXPIRED  (currently unused)</li>
+</ul>
+
+<p><strong>contract status (status):</strong></p>
+
+<ul>
+<li>ENTRUSTED </li>
+<li>ENTRUSTING </li>
+<li>FAIL </li>
+<li>PARTFILLED </li>
+<li>FILLED </li>
+<li>CANCEL </li>
+</ul>
+
+<p><strong>Order types (orderTypes, type):</strong></p>
+
+<ul>
+<li>LIMIT </li>
+<li>MARKET<br></li>
+<li>STOPLIMIT </li>
+<li>STOPMARKET </li>
+<li>PROFITLIMIT </li>
+<li>PROFITMARKET </li>
+</ul>
+
+<p><strong>Order side (side):</strong></p>
+
+<ul>
+<li>BUY </li>
+<li>SELL </li>
+</ul>
+
+<p><strong>Time in force:</strong></p>
+
+<ul>
+<li>GTC - Good Till Cancel </li>
+<li>IOC - Immediate or Cancel </li>
+<li>FOK - Fill or Kill </li>
+</ul>
+
+<p><strong>Kline/Candlestick chart intervals:</strong></p>
+
+<p>m -&gt; minutes; h -&gt; hours; d -&gt; days; w -&gt; weeks; M -&gt; months</p>
+
+<ul>
+<li>1m</li>
+<li>3m</li>
+<li>5m</li>
+<li>15m</li>
+<li>30m</li>
+<li>1h</li>
+<li>2h</li>
+<li>4h</li>
+<li>6h</li>
+<li>12h</li>
+<li>1d</li>
+<li>1w</li>
+</ul>
+
+<p><strong>Rate limiters (rateLimitType)</strong></p>
+
+<ul>
+<li>REQUESTS_WEIGHT<br></li>
+<li>ORDERS<br></li>
+<li>RAW_REQUESTS </li>
+</ul>
+
+<p><strong>Rate limit intervals (interval)</strong></p>
+
+<ul>
+<li>SECOND</li>
+<li>MINUTE</li>
+<li>DAY</li>
+</ul>
+
+<p><strong>Endpoints for futures account</strong></p>
+
+<ul>
+<li>transfer<br></li>
+<li>fee<br></li>
+<li>funding<br></li>
+<li>closPosition<br></li>
+<li>liquidation<br></li>
+<li>adl<br></li>
+<li>autoMargin<br></li>
+<li>positionSize<br></li>
+</ul>
