@@ -2925,29 +2925,32 @@ NONE</p>
     }
   })
 
-  if(htmlItem){
-    if(htmlItem.indexOf("_CN") > 0){
+  if (htmlItem) {
+    const currentPage = htmlItem.split("_")[0];
+    if (htmlItem.indexOf("_CN") > 0) {
       const arr = location.href.split("/");
-      arr.splice(-1,1,htmlItem.replace("_CN.html",".html"))
+      arr.splice(-1, 1, htmlItem.replace("_CN.html", ".html"))
       const url = arr.join("/");
       document.querySelector("#language").href = url;
-      document.querySelectorAll("#data-nav li a span.chinese").forEach(item=>{
-        item.style="display:block"
+      document.querySelectorAll("#data-nav li a span.chinese").forEach(item => {
+        item.style = "display:block"
       })
       document.querySelector("#language .chinese").style = "display:block;"
-      document.querySelectorAll(".toc-footer li a")[0].href = index !== 4 ? "https://www.jexzh.com" + "/cn" + pageObject[page[index]].url : pageObject[page[index]].url + "/cn"; 
-      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/cn" + pageObject[page[index]].text; 
-    }else{
-      document.querySelector("#language").href = location.href.replace(".html","_CN.html");
-      document.querySelectorAll("#data-nav li a").forEach(item=>{
-        item.href = item.href.replace("_CN.html",".html") ; 
+      document.getElementById("computedHref").href = index !== 4 ? "https://www.jexzh.com" + "/cn" + pageObject[currentPage]
+        .url : pageObject[currentPage].url + "/cn";
+      document.getElementById("computedHref").text = "Binance jex" + "/cn" + pageObject[currentPage].text;
+    } else {
+      document.querySelector("#language").href = location.href.replace(".html", "_CN.html");
+      document.querySelectorAll("#data-nav li a").forEach(item => {
+        item.href = item.href.replace("_CN.html", ".html");
       })
-      document.querySelectorAll("#data-nav li a span.english").forEach(item=>{
-        item.style="display:block"
+      document.querySelectorAll("#data-nav li a span.english").forEach(item => {
+        item.style = "display:block"
       })
       document.querySelector("#language .english").style = "display:block;"
-      document.querySelectorAll(".toc-footer li a")[0].href = index !== 4 ? "https://www.jex.com" + "/en" + pageObject[page[index]].url : pageObject[page[index]].url + "/en"; 
-      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/en" + pageObject[page[index]].text;  
+      document.getElementById("computedHref").href = index !== 4 ? "https://www.jexzh.com" + "/en" + pageObject[currentPage]
+        .url : pageObject[currentPage].url + "/en";
+      document.getElementById("computedHref").text = "Binance jex" + "/en" + pageObject[currentPage].text;
     }
   }
   </script>
