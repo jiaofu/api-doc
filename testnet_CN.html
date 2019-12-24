@@ -3742,9 +3742,9 @@ NONE</p>
         item.style = "display:block"
       })
       document.querySelector("#language .chinese").style = "display:block;"
-      document.getElementById("computedHref").href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/cn" + pageObject[currentPage]
+      document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/cn" + pageObject[currentPage]
         .url : pageObject[currentPage].url + "/cn";
-      document.getElementById("computedHref").text = "Binance jex" + "/cn" + pageObject[currentPage].text;
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/cn" + pageObject[currentPage].text;
     } else {
       document.querySelector("#language").href = location.href.replace(".html", "_CN.html");
       document.querySelectorAll("#data-nav li a").forEach(item => {
@@ -3754,9 +3754,9 @@ NONE</p>
         item.style = "display:block"
       })
       document.querySelector("#language .english").style = "display:block;"
-      document.getElementById("computedHref").href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/en" + pageObject[currentPage]
+      document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/en" + pageObject[currentPage]
         .url : pageObject[currentPage].url + "/en";
-      document.getElementById("computedHref").text = "Binance jex" + "/en" + pageObject[currentPage].text;
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/en" + pageObject[currentPage].text;
     }
   }
   </script>
