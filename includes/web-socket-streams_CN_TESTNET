@@ -1,0 +1,276 @@
+<h1 id='websocket'>Websocket 行情推送</h1><h2 id='websock'>websock基本信息</h2>
+<ul>
+<li>本篇所列出的所有wss接口的baseurl为: wss://testnetws.jex.com</li>
+<li>其中 wss://testnetws.jex.com 为模拟环境。</li>
+<li>所有stream均可以直接访问，或者作为组合streams的一部分。</li>
+<li>直接访问时URL格式为 /ws/&lt;streamName&gt;</li>
+<li>组合streams的URL格式为 /stream?streams=&lt;streamName1&gt;/&lt;streamName2&gt;/&lt;streamName3&gt;</li>
+<li>订阅组合streams时，事件payload会以这样的格式封装 {&quot;stream&quot;:&quot;&lt;streamName&gt;&quot;,&quot;data&quot;:&lt;rawPayload&gt;}</li>
+<li>stream名称中所有交易对均为大写</li>
+<li>每个到stream.jex.com的链接有效期不超过24小时，请妥善处理断线重连。</li>
+<li>每3分钟，服务端会发送ping帧，客户端应当在10分钟内回复pong帧，否则服务端会主动断开链接。允许客户端发送不成对的pong帧(即客户端可以以高于10分钟每次的频率发送pong帧保持链接)。</li>
+<li>wss 的 contract 订单的sell数量统一为负数</li>
+<li>推荐使用组合streams方式进行连接，每个组合streams可最多订阅10个stream</li>
+</ul>
+
+<p><strong>Stream 详细定义</strong></p>
+<h2 id='websocket-2'>Websocket最近成交</h2>
+<ul>
+<li>每隔100 ms 推送一次，上一秒内所有的逐笔交易，一笔逐笔交易的定义是仅有一个吃单者与一个挂单者相互交易。</li>
+</ul>
+<h3 id='stream-lt-symbol-gt-lt-tradetype-gt'>Stream 名称: &lt;symbol&gt;@&lt;tradeType&gt;</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotTrade"</span><span class="p">,</span>     <span class="c1">// 事件类型</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>       <span class="c1">// 事件时间</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>        <span class="c1">// 交易对</span>
+  <span class="s2">"t"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>           <span class="c1">// 交易ID</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.001"</span><span class="p">,</span>         <span class="c1">// 成交价格</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span>           <span class="c1">// 成交数量</span>
+  <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123456785</span><span class="p">,</span>       <span class="c1">// 成交时间</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>            <span class="c1">// 买方是否是做市方。如true，则此次成交是一个主动卖出单，否则是一个主动买入单。</span>
+<span class="p">},{...},...</span>
+<span class="p">]</span>
+</code></pre><h3 id='tradetype'>tradeType类型说明</h3>
+<ul>
+<li>支持以下三个事件类型
+
+<ul>
+<li>spotTrade 现货类型</li>
+<li>optionTrade 期权类型</li>
+<li>contractTrade 合约类型</li>
+</ul></li>
+</ul>
+<h2 id='websocket-k'>Websocket K线</h2>
+<ul>
+<li><p>K线stream逐秒推送所请求的K线种类(最新一根K线)的更新</p></li>
+<li><p>订阅Kline需要提供间隔参数，最短为分钟线，最长为周线。支持以下间隔:</p>
+
+<ul>
+<li>1M 1分钟</li>
+<li>5M 5分钟</li>
+<li>15M 15分钟</li>
+<li>30M 30分钟</li>
+<li>1H 1小时</li>
+<li>4H 4小时</li>
+<li>1D 1天</li>
+<li>1W 1周</li>
+</ul></li>
+</ul>
+<h3 id='stream-lt-symbol-gt-lt-klinetype-gt-_-lt-interval-gt'>Stream 名称: &lt;symbol&gt;@&lt;klineType&gt;_&lt;interval&gt;</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotKline"</span><span class="p">,</span>     <span class="c1">// 事件类型</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>       <span class="c1">// 事件时间</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>        <span class="c1">// 交易对</span>
+  <span class="s2">"k"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"t"</span><span class="p">:</span> <span class="mi">123400000</span><span class="p">,</span>     <span class="c1">// 这根K线的起始时间</span>
+    <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123460000</span><span class="p">,</span>     <span class="c1">// 这根K线的结束时间</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>      <span class="c1">// 交易对</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"1m"</span><span class="p">,</span>          <span class="c1">// K线间隔</span>
+    <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>      <span class="c1">// 这根K线期间第一笔成交价</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0020"</span><span class="p">,</span>      <span class="c1">// 这根K线期间末一笔成交价</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>      <span class="c1">// 这根K线期间最高成交价</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>      <span class="c1">// 这根K线期间最低成交价</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"1000"</span><span class="p">,</span>        <span class="c1">// 这根K线期间成交量</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"1.0000"</span><span class="p">,</span>      <span class="c1">// 这根K线期间成交额</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h3 id='klinetype'>klineType类型说明</h3>
+<ul>
+<li>klineType 支持的类型
+
+<ul>
+<li>spotKline</li>
+<li>optionKline</li>
+<li>contractKline</li>
+</ul></li>
+</ul>
+<h2 id='symbol-ticker'>按Symbol的精简Ticker</h2>
+<ul>
+<li>按Symbol逐秒刷新的24小时精简ticker信息</li>
+</ul>
+<h3 id='stream-lt-symbol-gt-lt-minitickertype-gt'>Stream 名称: &lt;symbol&gt;@&lt;miniTickerType&gt;</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotMiniTicker"</span><span class="p">,</span>   <span class="c1">// 事件类型</span>
+    <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>              <span class="c1">// 事件时间</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>               <span class="c1">// 交易对</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// 最新成交价格</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// 24小时内最高成交价</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>               <span class="c1">// 24小时内最低成交加</span>
+    <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// 标记价(只有contractMiniTicker 类型才存在字段)</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// 指数价(只有contractMiniTicker 类型才存在字段)</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// 成交量</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span><span class="err">，</span>                  <span class="c1">// 成交额</span>
+
+<span class="p">}</span>
+
+</code></pre><h3 id='minitickertype'>miniTickerType类型说明</h3>
+<ul>
+<li>miniTickerType 支持的类型
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='symbol-ticker-2'>全市场所有Symbol的精简Ticker</h2>
+<ul>
+<li>按Symbol逐秒刷新的24小时精简全市场ticker信息</li>
+</ul>
+<h3 id='stream-lt-minitickertype-gt-arr'>Stream名称: !&lt;miniTickerType&gt;@arr</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="c1">//数组每一个元素对应一个交易对，内容与 按Symbol的精简Ticker 相同</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h3 id='minitickertype-2'>miniTickerType 类型说明</h3>
+<ul>
+<li>miniTickerType 支持的类型
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='symbol-ticker-3'>按Symbol的完整Ticker</h2>
+<ul>
+<li>按Symbol逐秒刷新的24小时完整ticker信息</li>
+</ul>
+<h3 id='stream-lt-symbol-gt-lt-tickertype-gt'>Stream 名称: &lt;symbol&gt;@&lt;tickerType&gt;</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotTicker"</span><span class="p">,</span>  <span class="c1">// 事件类型</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>         <span class="c1">// 事件时间</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// 交易对</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>          <span class="c1">// 24小时价格变化</span>
+  <span class="s2">"P"</span><span class="p">:</span> <span class="s2">"250.00"</span><span class="p">,</span>          <span class="c1">// 24小时价格变化（百分比）</span>
+  <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// 最新成交价格</span>
+  <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// 24小时内最高成交价</span>
+  <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>          <span class="c1">// 24小时内最低成交价</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// 24小时内成交量</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span><span class="p">,</span>              <span class="c1">// 24小时内成交额</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// 标记价(只有contractMiniTicker 类型才存在字段)</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// 指数价(只有contractMiniTicker 类型才存在字段)</span>
+  <span class="s2">"O"</span><span class="p">:</span> <span class="mi">1234567890</span><span class="p">,</span>        <span class="c1">// TODO 0  统计开始时间</span>
+  <span class="s2">"C"</span><span class="p">:</span> <span class="mi">86400000</span><span class="p">,</span>          <span class="c1">// TODO 3600*24*1000，24小时的毫秒数  统计关闭时间</span>
+<span class="p">}</span>
+</code></pre><h2 id='ticker'>全市场所有交易对的完整Ticker</h2>
+<ul>
+<li>同上，只是推送所有的交易对</li>
+</ul>
+<h3 id='stream-lt-tickertype-gt-arr'>Stream名称: !&lt;tickerType&gt;@arr</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="c1">//数组每一个元素对应一个交易对，内容与 按Symbol的完整Ticker 相同</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<ul>
+<li>tickerType 支持的类型
+
+<ul>
+<li>spotTicker</li>
+<li>optionTicker</li>
+<li>contractTicker</li>
+</ul></li>
+</ul>
+<h2 id='6ae7c2b506'>有限档深度信息</h2>
+<ul>
+<li>每秒推送有限档深度信息。levels表示几档买卖单信息, 可选 5/10/20档</li>
+</ul>
+<h3 id='stream-lt-symbol-gt-lt-depthtype-gt-lt-levels-gt'>Stream 名称: &lt;symbol&gt;@&lt;depthType&gt;&lt;levels&gt;</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"bids"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// 买单</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>         <span class="c1">// 价</span>
+      <span class="s2">"10"</span><span class="p">,</span>             <span class="c1">// 量</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"asks"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// 卖单</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>         <span class="c1">// 价</span>
+      <span class="s2">"100"</span><span class="p">,</span>            <span class="c1">// 量</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType 支持的类型
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>levels 支持的类型
+
+<ul>
+<li>5</li>
+<li>10</li>
+<li>20</li>
+</ul></li>
+</ul>
+<h2 id='stream'>增量深度信息stream</h2>
+<ul>
+<li>每秒推送orderbook的变化部分（如果有）</li>
+</ul>
+<h3 id='stream-lt-symbol-gt-lt-depthtype-gt'>Stream 名称: &lt;symbol&gt;@&lt;depthType&gt;</h3>
+<blockquote>
+<p><strong>响应:</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotDepthUpdate"</span><span class="p">,</span> <span class="c1">// 事件类型</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// 交易对</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="mi">157</span><span class="p">,</span>               <span class="c1">// 推送的版本号</span>
+  <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span>                  <span class="c1">// 变动的买单深度</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>          <span class="c1">// 价</span>
+      <span class="s2">"10"</span><span class="p">,</span>              <span class="c1">// 量</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"a"</span><span class="p">:</span> <span class="p">[</span>                 <span class="c1">// 变动的卖单深度</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>          <span class="c1">// 价</span>
+      <span class="s2">"100"</span><span class="p">,</span>             <span class="c1">// 量</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType 支持的类型
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>增量深度推送的事件类型<br>
+
+<ul>
+<li>spotDepthUpdate</li>
+<li>optionDepthUpdate</li>
+<li>contractDepthUpdate</li>
+</ul></li>
+</ul>

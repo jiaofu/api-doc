@@ -1,0 +1,368 @@
+<h1 id='b122f813d5'>基本信息</h1><h2 id='api'>api 基本信息</h2>
+<ul>
+<li>本篇列出REST接口的baseurl  https://www.jex.com </li>
+<li>所有接口的响应都是JSON格式</li>
+<li>响应中如有数组，数组元素以时间升序排列，越早的数据越提前。</li>
+<li>所有时间、时间戳均为UNIX时间，单位为毫秒</li>
+<li>HTTP <code>4XX</code> 错误码用于指示错误的请求内容、行为、格式。</li>
+<li>HTTP <code>429</code> 错误码表示警告访问频次超限，即将被封IP</li>
+<li>HTTP <code>418</code> 表示收到429后继续访问，于是被封了。</li>
+<li>HTTP <code>5XX</code> 错误码用于指示服务器侧的问题。 </li>
+<li>HTTP <code>504</code> 表示API服务端已经向业务核心提交了请求但未能获取响应，特别需要注意的是<code>504</code>代码不代表请求失败，而是未知。很可能已经得到了执行，也有可能执行失败，需要做进一步确认。</li>
+<li>每个接口都有可能抛出异常，异常响应格式如下：</li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="o">{</span>
+  <span class="s2">"code"</span>: -1121,
+  <span class="s2">"msg"</span>: <span class="s2">"Invalid symbol."</span>
+<span class="o">}</span>
+</code></pre>
+<ul>
+<li>具体的错误码及其解释在  <code>错误代码汇总</code></li>
+<li><code>GET</code>方法的接口, 参数必须在<code>query string</code>中发送.</li>
+<li><code>POST</code>, <code>PUT</code>, 和 <code>DELETE</code> 方法的接口, 参数可以在 <code>query string</code>中发送，也可以在 <code>request body</code>中发送(content type <code>application/x-www-form-urlencoded</code>。允许混合这两种方式发送参数。但如果同一个参数名在query string和request body中都有，query string中的会被优先采用。</li>
+</ul>
+<h2 id='12907e94be'>访问限制</h2>
+<ul>
+<li>在headers 以下字符代表下列意思:
+
+<ul>
+<li>SECOND =&gt; S</li>
+<li>MINUTE =&gt; M</li>
+<li>HOUR =&gt; H</li>
+<li>DAY =&gt; D</li>
+</ul></li>
+<li>在 <code>/api/v1/exchangeInfo</code>接口中<code>rateLimits</code>数组里包含有REST接口(不限于本篇的REST接口)的访问限制。包括带权重的访问频次限制、下单速率限制、交易对精度。本篇<code>枚举定义</code>章节有限制类型的进一步说明。</li>
+<li>违反上述任何一个访问限制都会收到HTTP 429，这是一个警告.</li>
+<li>每一个接口均有一个相应的权重(weight)，有的接口根据参数不同可能拥有不同的权重。越消耗资源的接口权重就会越大。</li>
+<li>当收到429告警时，调用者应当降低访问频率或者停止访问。</li>
+<li><strong>收到429后仍然继续违反访问限制，会被封禁IP，并收到418错误码</strong></li>
+<li>频繁违反限制，封禁时间会逐渐延长，<strong>从最短2分钟到最长3天</strong>.</li>
+<li>Headers <code>X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter)</code> 会给你当前的请求权重 (intervalNum)(intervalLetter)频率的限制. 举个例子有分钟请求权重频率的设置, 在请求返回中含有  <code>X-MBX-USED-WEIGHT-1M </code>. 请求头header 中<code>X-MBX-USED-WEIGHT </code> 仍然会返回并且已经使用的次数。</li>
+<li>Header 中 <code>X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)</code>在任何有效的订单上更新，并跟踪间隔的当前订单计数; 拒绝/不成功的订单不确保有<code>X-MBX-ORDER-COUNT-**</code> headers 在返回值中。
+
+<ul>
+<li>例子. <code>X-MBX-ORDER-COUNT-1S</code> 是 &quot;这秒有多少单&quot; and<code> X-MBX-ORDER-COUNT-1D</code> 是 ”这一天有多少单“</li>
+</ul></li>
+<li>消息头header上<code>Retry-After</code>会给出具体需要等待的时间,以秒为单位，直到解除封禁。</li>
+<li>错误的下单精度不允许下单</li>
+</ul>
+
+<p><strong>委托数量限制</strong></p>
+
+<ul>
+<li>为了保持有序的市场，jex 就每个账户的待交易委托数量设置上限。这些上限是： 这些限制是：</li>
+<li>每个账户每个合约最多 200 笔未执行普通交易委托数量;</li>
+<li>每个账户每个合约最多 10 笔止损或者止盈交易委托数量;</li>
+<li>当发出超过这些上限的新交易委托时，该交易将被拒绝，并显示“has reach max order number 200或者10”。</li>
+</ul>
+
+<p><strong>其他说明</strong></p>
+
+<ul>
+<li>api的contract订单的sell数量统一为负数</li>
+</ul>
+<h2 id='a573a19f9c'>接口鉴权类型</h2>
+<ul>
+<li>每个接口都有自己的鉴权类型，鉴权类型决定了访问时应当进行何种鉴权</li>
+<li>如果需要 API-key，应当在HTTP头中以<code>X-JEX-APIKEY</code>字段传递</li>
+<li>API-key 与 API-secret 是大小写敏感的</li>
+<li>可以在网页用户中心修改API-key 所具有的权限，例如读取账户信息、发送交易指令、发送提现指令</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>鉴权类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>NONE</td>
+<td>不需要鉴权的接口</td>
+</tr>
+<tr>
+<td>TRADE</td>
+<td>需要有效的API-KEY和签名</td>
+</tr>
+<tr>
+<td>USER_DATA</td>
+<td>需要有效的API-KEY和签名</td>
+</tr>
+<tr>
+<td>USER_STREAM</td>
+<td>需要有效的API-KEY</td>
+</tr>
+<tr>
+<td>MARKET_DATA</td>
+<td>需要有效的API-KEY</td>
+</tr>
+</tbody></table>
+<h2 id='trade-user_data'>需要签名的接口 (TRADE 与 USER_DATA)</h2>
+<ul>
+<li>调用这些接口时，除了接口本身所需的参数外，还需要传递<code>signature</code>即签名参数。</li>
+<li>签名使用<code>HMAC SHA256</code>算法. API-KEY所对应的API-Secret作为 <code>HMAC SHA256</code> 的密钥，其他所有参数作为<code>HMAC SHA256</code>的操作对象，得到的输出即为签名。</li>
+<li>签名大小写不敏感。</li>
+<li>当同时使用query string和request body时，<code>HMAC SHA256</code>的输入query string在前，request body在后</li>
+<li>签名的参数一定按照接口文档顺序传参</li>
+</ul>
+
+<p><strong>时间同步安全</strong></p>
+
+<ul>
+<li>签名接口均需要传递<code>timestamp</code>参数, 其值应当是请求发送时刻的unix时间戳（毫秒）</li>
+<li>服务器收到请求时会判断请求中的时间戳，如果是5000毫秒之前发出的，则请求会被认为无效。这个时间窗口值可以通过发送可选参数<code>recvWindow</code>来自定义。</li>
+<li>另外，如果服务器计算得出客户端时间戳在服务器时间的‘未来’一秒以上，也会拒绝请求。</li>
+<li>逻辑伪代码：</li>
+</ul>
+<pre class="highlight shell tab-shell"><code>  <span class="k">if</span> <span class="o">(</span>timestamp &lt; <span class="o">(</span>serverTime + 1000<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span>serverTime - timestamp<span class="o">)</span> &lt;<span class="o">=</span> recvWindow<span class="o">)</span> <span class="o">{</span>
+    // process request
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    // reject request
+  <span class="o">}</span>
+</code></pre>
+<p><strong>关于交易时效性</strong> </p>
+
+<p>互联网状况并不100%可靠，不可完全依赖,因此你的程序本地到服务器的时延会有抖动.
+这是我们设置<code>recvWindow</code>的目的所在，如果你从事高频交易，对交易时效性有较高的要求，可以灵活设置recvWindow以达到你的要求。
+<aside class="notice">
+不推荐使用5秒以上的recvWindow
+</aside></p>
+
+<p><strong>POST /api/v1/spot/order</strong></p>
+
+<p>以下是在linux bash环境下使用 echo openssl 和curl工具实现的一个调用接口下单的示例
+apikey、secret仅供示范</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>apiKey</td>
+<td>vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A</td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>参数</th>
+<th>取值</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>LTCBTC</td>
+</tr>
+<tr>
+<td>side</td>
+<td>BUY</td>
+</tr>
+<tr>
+<td>type</td>
+<td>LIMIT</td>
+</tr>
+<tr>
+<td>timeInForce</td>
+<td>GTC</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>1</td>
+</tr>
+<tr>
+<td>price</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>1499827319559</td>
+</tr>
+</tbody></table>
+
+<p><strong>示例 1: 所有参数通过 query string 发送</strong></p>
+
+<ul>
+<li><strong>queryString:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 签名:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+</code></pre>
+<ul>
+<li><strong>curl 调用:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="o">(</span>HMAC SHA256<span class="o">)</span>
+<span class="gp">[linux]$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order?symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'</span>
+</code></pre>
+<p><strong>示例 2: 所有参数通过 request body 发送</strong></p>
+
+<ul>
+<li><strong>requestBody:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 签名:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+</code></pre>
+<blockquote>
+<ul>
+<li><strong>curl 调用:</strong></li>
+</ul>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>  <span class="o">(</span>HMAC SHA256<span class="o">)</span>
+  <span class="o">[</span>linux]<span class="nv">$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order'</span> -d <span class="s1">'symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'</span>
+</code></pre>
+<p><strong>示例 3: 混合使用 query string 与 request body</strong></p>
+
+<ul>
+<li><strong>queryString:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC</li>
+<li><strong>requestBody:</strong> quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 签名:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code>  <span class="o">[</span>linux]<span class="nv">$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTCquantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+  <span class="o">(</span>stdin<span class="o">)=</span> 0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77
+</code></pre>
+<ul>
+<li><strong>curl 调用:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code>  <span class="o">(</span>HMAC SHA256<span class="o">)</span>
+  <span class="o">[</span>linux]<span class="nv">$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order?symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC'</span> -d <span class="s1">'quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77'</span>
+</code></pre>
+<p>Note that the signature is different in example 3.
+There is no &amp; between &quot;GTC&quot; and &quot;quantity=1&quot;.</p>
+<h2 id='api-2'>公开API参数</h2>
+<p><strong>术语解释</strong></p>
+
+<ul>
+<li><code>base asset</code> 指一个交易对的交易对象，即写在靠前部分的资产名</li>
+<li><code>quote asset</code> 指一个交易对的定价资产，即写在靠后部分资产名</li>
+</ul>
+
+<p><strong>枚举定义</strong></p>
+
+<p><strong>交易对状态:</strong></p>
+
+<ul>
+<li>PRE_TRADING 盘前交易</li>
+<li>TRADING 正常交易中</li>
+<li>POST_TRADING 盘后交易</li>
+<li>END_OF_DAY 收盘</li>
+<li>HALT 交易终止(该交易对已下线)</li>
+<li>AUCTION_MATCH 集合竞价</li>
+<li>BREAK 交易暂停</li>
+</ul>
+
+<p><strong>交易对类型:</strong></p>
+
+<ul>
+<li>SPOT 币币</li>
+<li>OPTION 期权</li>
+<li>CONTRACT 合约</li>
+</ul>
+
+<p><strong>币币和期权订单状态:</strong></p>
+
+<ul>
+<li>NEW 新建订单</li>
+<li>PARTIALLY_FILLED  部分成交</li>
+<li>FILLED  全部成交</li>
+<li>CANCELED  已撤销</li>
+<li>PENDING_CANCEL 正在撤销中(目前不会遇到这个状态)</li>
+<li>FAIL 下单失败</li>
+<li>CANCLEFILLED 撤单完成</li>
+<li>REJECTED 订单被拒绝 (目前不会遇到这个状态)</li>
+<li>EXPIRED 订单过期(目前不会遇到这个状态)</li>
+</ul>
+
+<p><strong>合约的订单状态:</strong></p>
+
+<ul>
+<li>ENTRUSTED 下单完成</li>
+<li>ENTRUSTING 下单中</li>
+<li>FAIL 下单失败</li>
+<li>PARTFILLED 部分成交</li>
+<li>FILLED 订单完成</li>
+<li>CANCEL 订单取消</li>
+</ul>
+
+<p><strong>订单种类:</strong></p>
+
+<ul>
+<li>LIMIT 限价单</li>
+<li>MARKET  市价单</li>
+<li>STOPLIMIT 限价止损</li>
+<li>STOPMARKET 市价止损</li>
+<li>PROFITLIMIT 限价止盈</li>
+<li>PROFITMARKET 市价止盈单</li>
+</ul>
+
+<p><strong>订单方向:</strong></p>
+
+<ul>
+<li>BUY 买入</li>
+<li>SELL 卖出</li>
+</ul>
+
+<p><strong>Time in force:</strong></p>
+
+<ul>
+<li>GTC - Good Till Cancel 成交为止</li>
+<li>IOC - Immediate or Cancel 无法立即成交(吃单)的部分就撤销</li>
+<li>FOK - Fill or Kill 无法全部立即成交就撤销</li>
+</ul>
+
+<p><strong>K线间隔:</strong></p>
+
+<p>m -&gt; 分钟; h -&gt; 小时; d -&gt; 天; w -&gt; 周; M -&gt; 月</p>
+
+<ul>
+<li>1m</li>
+<li>3m</li>
+<li>5m</li>
+<li>15m</li>
+<li>30m</li>
+<li>1h</li>
+<li>2h</li>
+<li>4h</li>
+<li>6h</li>
+<li>12h</li>
+<li>1d</li>
+<li>1w</li>
+</ul>
+
+<p><strong>限制种类 (rateLimitType)</strong></p>
+
+<ul>
+<li>REQUESTS_WEIGHT  单位时间请求权重之和上限</li>
+<li>ORDERS    单位时间下单(撤单)次数上限</li>
+<li>RAW_REQUESTS  单位时间请求次数上限</li>
+</ul>
+
+<p><strong>限制间隔</strong></p>
+
+<ul>
+<li>SECOND</li>
+<li>MINUTE</li>
+<li>DAY</li>
+</ul>
+
+<p><strong>合约账单接口(type)</strong></p>
+
+<ul>
+<li>transfer       资金划转</li>
+<li>fee            手续费</li>
+<li>funding        资金费用</li>
+<li>closPosition   平仓</li>
+<li>liquidation    爆仓平仓</li>
+<li>adl            强减平仓</li>
+<li>autoMargin     自动减仓</li>
+<li>positionSize   持仓变化</li>
+</ul>

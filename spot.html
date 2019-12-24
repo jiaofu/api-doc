@@ -1,0 +1,3276 @@
+
+
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>spot api</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+
+
+     
+      .header{
+        padding: 0 26px;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        height: 60px;
+        background: #222;
+        position: fixed;
+        display: flex;
+        z-index: 100;
+        top: 0;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .header-left{
+        display: flex;
+        align-items: center;
+      }
+      .header .logo{
+        width: 212px;
+        height: 32px;
+      }
+      .nav li{
+        display:inline-block;
+        color:#B0B8DB;
+        padding: 0 20px;
+        font-size: 16px;
+      }
+      .nav li a{
+        height: 60px;
+        line-height: 60px;
+        display: block;
+        color:#B0B8DB;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        cursor: pointer;
+      }
+      .nav li a.current{
+        color:#fff;
+        border-bottom: 2px solid #F0B90B;
+      
+      }
+      .nav li a span{
+        display:none;
+      }
+      .language{
+        width: 78px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        border: 1px solid #383F66;
+        color: #F0B90B;
+        text-decoration: none;
+        border-radius: 3px;
+        -webkit-transition: all 300ms;
+        transition: all 300ms;
+        cursor: pointer;
+      }
+      .language span{
+        display:none;
+      }
+      .toc-wrapper,.page-wrapper{
+        margin-top: 60px;
+      }
+      .toc-list-h1 li a{
+        height: 48px;
+        line-height: 48px;
+      }
+
+      
+
+    </style>
+    <link href="stylesheets/screen-a1ce949a.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-bccf8c07.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all-c5541673.js"></script>
+  </head>
+
+  <body class="spot" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar-cad8cdcb.png" alt="Navbar" />
+      </span>
+    </a>
+
+           
+    <div class="header">
+      <div class="header-left">
+      <img src="images/jex-d68ad4f4.png" class="logo" alt="Jex" />
+        <ul class="nav" id="data-nav">
+          <li><a href="spot_CN.html"><span class="english">Spot</span><span class="chinese">币币</span></a></li>
+          <li><a href="option_CN.html"><span class="english">Options</span><span class="chinese">期权</span></a></li>
+          <li><a href="future_CN.html"><span class="english">Futures</span><span class="chinese">合约</span></a></li>
+          <li><a href="testnet_CN.html"><span class="english">TestNet API</span><span class="chinese">TestNet API</span></a></li>
+        </ul>
+      </div>
+      <a class="language" id="language"><span class="english">English</span><span class="chinese">简体中文</span></a>
+    </div>
+
+    <div class="toc-wrapper">
+    
+  
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <ul id="toc" class="toc-list-h1">
+          <li>
+            <a href="#change-log" class="toc-h1 toc-link" data-title="Change Log">Change Log</a>
+          </li>
+          <li>
+            <a href="#general-api" class="toc-h1 toc-link" data-title="General API">General API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#general-api-information" class="toc-h2 toc-link" data-title="General API Information">General API Information</a>
+                  </li>
+                  <li>
+                    <a href="#limits" class="toc-h2 toc-link" data-title="LIMITS">LIMITS</a>
+                  </li>
+                  <li>
+                    <a href="#endpoint-security-type" class="toc-h2 toc-link" data-title="Endpoint security type">Endpoint security type</a>
+                  </li>
+                  <li>
+                    <a href="#signed-trade-and-user_data-endpoint-security" class="toc-h2 toc-link" data-title="SIGNED (TRADE and USER_DATA) Endpoint security">SIGNED (TRADE and USER_DATA) Endpoint security</a>
+                  </li>
+                  <li>
+                    <a href="#terminology" class="toc-h2 toc-link" data-title="Terminology">Terminology</a>
+                  </li>
+                  <li>
+                    <a href="#enum-definitions" class="toc-h2 toc-link" data-title="ENUM definitions">ENUM definitions</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#general-endpoints" class="toc-h1 toc-link" data-title="General endpoints">General endpoints</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#test-connectivity-ping" class="toc-h2 toc-link" data-title="Test connectivity PING">Test connectivity PING</a>
+                  </li>
+                  <li>
+                    <a href="#check-server-time" class="toc-h2 toc-link" data-title="Check server time">Check server time</a>
+                  </li>
+                  <li>
+                    <a href="#exchange-information" class="toc-h2 toc-link" data-title="Exchange information">Exchange information</a>
+                  </li>
+                  <li>
+                    <a href="#depth-information-for-spot" class="toc-h2 toc-link" data-title="Depth information for spot">Depth information for spot</a>
+                  </li>
+                  <li>
+                    <a href="#recent-trades-for-spot" class="toc-h2 toc-link" data-title="Recent trades for spot">Recent trades for spot</a>
+                  </li>
+                  <li>
+                    <a href="#old-trade-lookup-market_data" class="toc-h2 toc-link" data-title="Old trade lookup (MARKET_DATA)">Old trade lookup (MARKET_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#kline-candlestick-data" class="toc-h2 toc-link" data-title="Kline/Candlestick data">Kline/Candlestick data</a>
+                  </li>
+                  <li>
+                    <a href="#current-average-price" class="toc-h2 toc-link" data-title="Current average price">Current average price</a>
+                  </li>
+                  <li>
+                    <a href="#24hr-ticker-price-change-statistics" class="toc-h2 toc-link" data-title="24hr ticker price change statistics">24hr ticker price change statistics</a>
+                  </li>
+                  <li>
+                    <a href="#price-ticker-for-spot" class="toc-h2 toc-link" data-title="Price ticker for spot">Price ticker for spot</a>
+                  </li>
+                  <li>
+                    <a href="#symbol-order-book-ticker-for-spot" class="toc-h2 toc-link" data-title="Symbol order book ticker for spot">Symbol order book ticker for spot</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#account-endpoints" class="toc-h1 toc-link" data-title="Account endpoints">Account endpoints</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#place-order-in-coins-transaction-trade" class="toc-h2 toc-link" data-title="Place order in coins transaction（TRADE）">Place order in coins transaction（TRADE）</a>
+                  </li>
+                  <li>
+                    <a href="#test-placing-order-api-of-coins-transaction-trade" class="toc-h2 toc-link" data-title="Test placing order API of coins transaction(TRADE)">Test placing order API of coins transaction(TRADE)</a>
+                  </li>
+                  <li>
+                    <a href="#check-orders-of-coins-transaction-user_data" class="toc-h2 toc-link" data-title="Check orders of coins transaction(USER_DATA)">Check orders of coins transaction(USER_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#cancel-order-for-coins-transaction-trade" class="toc-h2 toc-link" data-title="Cancel order for coins transaction(TRADE)">Cancel order for coins transaction(TRADE)</a>
+                  </li>
+                  <li>
+                    <a href="#check-entry-orders-of-coins-transaction-of-this-account-user_data" class="toc-h2 toc-link" data-title="Check entry orders of coins transaction of this account(USER_DATA)">Check entry orders of coins transaction of this account(USER_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#account-information-user_data" class="toc-h2 toc-link" data-title="Account information(USER_DATA)">Account information(USER_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#historical-coins-entry-order-of-the-account-user_data" class="toc-h2 toc-link" data-title="Historical coins entry order of the account (USER_DATA)">Historical coins entry order of the account (USER_DATA)</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#user-data" class="toc-h1 toc-link" data-title="User data">User data</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#user-s-assets-user_data" class="toc-h2 toc-link" data-title="User’s assets (USER_DATA)">User’s assets (USER_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#depositing-address-of-the-user-user_data" class="toc-h2 toc-link" data-title="Depositing address of the user(USER_DATA)">Depositing address of the user(USER_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#historical-depositing-records-of-the-user-user_data" class="toc-h2 toc-link" data-title="Historical depositing records of the user (USER_DATA)">Historical depositing records of the user (USER_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#service-fee-of-the-trading-user_data" class="toc-h2 toc-link" data-title="Service fee of the trading (USER_DATA)">Service fee of the trading (USER_DATA)</a>
+                  </li>
+                  <li>
+                    <a href="#historical-withdrawal-records-of-the-user-user_data" class="toc-h2 toc-link" data-title="Historical withdrawal records of the user(USER_DATA)">Historical withdrawal records of the user(USER_DATA)</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#user-data-streams" class="toc-h1 toc-link" data-title="User Data Streams">User Data Streams</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#start-user-data-stream-user_stream" class="toc-h2 toc-link" data-title="Start user data stream (USER_STREAM)">Start user data stream (USER_STREAM)</a>
+                  </li>
+                  <li>
+                    <a href="#keepalive-user_stream" class="toc-h2 toc-link" data-title="Keepalive (USER_STREAM)">Keepalive (USER_STREAM)</a>
+                  </li>
+                  <li>
+                    <a href="#close-user-data-stream-user_stream" class="toc-h2 toc-link" data-title="Close user data stream (USER_STREAM)">Close user data stream (USER_STREAM)</a>
+                  </li>
+                  <li>
+                    <a href="#account-updates" class="toc-h2 toc-link" data-title="Account updates">Account updates</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#web-socket-streams" class="toc-h1 toc-link" data-title="Web Socket Streams">Web Socket Streams</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#general-wss-information" class="toc-h2 toc-link" data-title="General WSS information">General WSS information</a>
+                  </li>
+                  <li>
+                    <a href="#stream-detailed-stream-information" class="toc-h2 toc-link" data-title="Stream Detailed Stream information">Stream Detailed Stream information</a>
+                  </li>
+                  <li>
+                    <a href="#websocket-trade-streams" class="toc-h2 toc-link" data-title="Websocket Trade Streams">Websocket Trade Streams</a>
+                  </li>
+                  <li>
+                    <a href="#websocket-kline-candlestick-streams" class="toc-h2 toc-link" data-title="Websocket Kline/Candlestick Streams">Websocket Kline/Candlestick Streams</a>
+                  </li>
+                  <li>
+                    <a href="#individual-symbol-mini-ticker-stream" class="toc-h2 toc-link" data-title="Individual Symbol Mini Ticker Stream">Individual Symbol Mini Ticker Stream</a>
+                  </li>
+                  <li>
+                    <a href="#all-market-mini-tickers-stream" class="toc-h2 toc-link" data-title="All Market Mini Tickers Stream">All Market Mini Tickers Stream</a>
+                  </li>
+                  <li>
+                    <a href="#individual-symbol-ticker-streams" class="toc-h2 toc-link" data-title="Individual Symbol Ticker Streams">Individual Symbol Ticker Streams</a>
+                  </li>
+                  <li>
+                    <a href="#all-market-tickers-stream" class="toc-h2 toc-link" data-title="All Market Tickers Stream">All Market Tickers Stream</a>
+                  </li>
+                  <li>
+                    <a href="#partial-book-depth-streams" class="toc-h2 toc-link" data-title="Partial Book Depth Streams">Partial Book Depth Streams</a>
+                  </li>
+                  <li>
+                    <a href="#diff-depth-stream" class="toc-h2 toc-link" data-title="Diff. Depth Stream">Diff. Depth Stream</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#error-codes" class="toc-h1 toc-link" data-title="Error Codes">Error Codes</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#10xx" class="toc-h2 toc-link" data-title="10xx - 服务器或网络问题">10xx - 服务器或网络问题</a>
+                  </li>
+                  <li>
+                    <a href="#11xx" class="toc-h2 toc-link" data-title="11xx - 请求内容中的问题">11xx - 请求内容中的问题</a>
+                  </li>
+                  <li>
+                    <a href="#1010" class="toc-h2 toc-link" data-title="-1010 收到了错误消息">-1010 收到了错误消息</a>
+                  </li>
+                  <li>
+                    <a href="#8xxx" class="toc-h2 toc-link" data-title="-8xxx 提现错误">-8xxx 提现错误</a>
+                  </li>
+                  <li>
+                    <a href="#9xxx" class="toc-h2 toc-link" data-title="-9xxx 订单未能通过过滤器">-9xxx 订单未能通过过滤器</a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+        <ul class="toc-footer">
+            <li><a href='https://testnet.jexzh.com/cn/contract'>Binance jex Futures</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='change-log'>Change Log</h1>
+<p><strong>2019-12-23</strong></p>
+
+<p><strong>Rest API</strong></p>
+
+<ul>
+<li>Add interface get all orders  <code>/api/v1/contract/batchOrder (HMAC SHA256)</code>  get all orders.</li>
+</ul>
+
+<p><strong>2019-10-28</strong></p>
+
+<p><strong>websocket</strong></p>
+
+<ul>
+<li>Optimize websocket to make connections more stable</li>
+<li>It is recommended to use the combined streams method for connection. Each combined stream can subscribe to a maximum of 10 streams</li>
+</ul>
+
+<p><strong>2019-10-22</strong></p>
+
+<p><strong>Rest API</strong></p>
+
+<ul>
+<li>New contract order type: <code>stopLimit</code>,<code>profitLimit</code></li>
+<li>User can preset the Take profit/Stop command with the trigger price, commission price, and commission quantity in advance. When the corresponding “indicator” satisfies the trigger price set by the user, the order will be triggered, then the system will submit an order according to the price and quantity set by the user</li>
+</ul>
+<h4 id='trigger-price-of-condition-order-must-be'>Trigger price of condition order must be:</h4>
+<ul>
+<li><p>Take Profit</p>
+
+<ul>
+<li>Long: when it&#39;s bullish, set the trigger price higher than the latest price (or mark price, index), you can set the sell Take profit order;</li>
+<li>Short: If it&#39;s bearish, set the trigger price below the latest price (or mark price, index), you can set the buy Take profit order;</li>
+</ul></li>
+<li><p>Stop</p>
+
+<ul>
+<li>Long: when it&#39;s bearish, set the trigger price below the latest price (or mark the price, index),  you can set the sell Stop order;</li>
+<li> Short: If it&#39;s bullish, set the trigger price higher than the latest price (or mark the price, index),you can set the buy Stop order;</li>
+</ul></li>
+<li><p>When the trigger price = the latest price (or mark price, index), or no position, the Take profit/Stop order can not be set;</p></li>
+</ul>
+
+<p><strong>2019-10-15</strong></p>
+
+<ul>
+<li>Document update</li>
+<li>Increase the log of document updates</li>
+<li>Add updates to frequently asked questions</li>
+</ul>
+
+<p><strong>2019-10-14</strong></p>
+
+<ul>
+<li>Rest API</li>
+<li>Maximum 200 open orders per contract per account;</li>
+<li>Maximum 10 stop profit or stop orders per contract per account;</li>
+<li>When placing a new order that causes these caps to be exceeded, it will be rejected with the message “has reach max order number [200|10]</li>
+</ul>
+
+<p><strong>2019-10-11</strong></p>
+
+<ul>
+<li>Rest API</li>
+<li>Add interface cancel all orders  <code>/api/v1/contract/batchOrder (HMAC SHA256)</code>  cancel all orders</li>
+<li>Add interface Contract bill of obtained account  <code>//api/v1/contract/userHistoricalTrades</code>  Contract bill of obtained account</li>
+</ul>
+
+<p><strong>2019-09-27</strong></p>
+
+<p><strong>Rest API</strong></p>
+
+<ul>
+<li>New <code>intervalLetter</code> values for headers:
+
+<ul>
+<li>SECOND =&gt; S</li>
+<li>MINUTE =&gt; M</li>
+<li>HOUR =&gt; H</li>
+<li>DAY =&gt; D</li>
+</ul></li>
+<li>New Headers <code>X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter)</code> will give your current used request weight for the (intervalNum)(intervalLetter) rate limiter. For example, if there is a one minute request rate weight limiter set, you will get a <code>X-MBX-USED-WEIGHT-1M</code> header in the response. The legacy header <code>X-MBX-USED-WEIGHT</code> will still be returned and will represent the current used weight for the one minute request rate weight limit.</li>
+<li>New Header <code>X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)</code>that is updated on any valid order placement and tracks your current order count for the interval; rejected/unsuccessful orders are not guaranteed to have <code>X-MBX-ORDER-COUNT-**</code> headers in the response.
+
+<ul>
+<li>Eg. <code>X-MBX-ORDER-COUNT-1S</code> for &quot;orders per 1 second&quot; and <code>X-MBX-ORDER-COUNT-1D</code> for orders per &quot;one day&quot;</li>
+</ul></li>
+<li>GET api/v1/depth now supports <code>limit</code> 5000 and 10000; weights are 50 and 100 respectively.</li>
+<li>GET api/v1/exchangeInfo has a new parameter <code>ocoAllowed</code>.</li>
+</ul>
+<h1 id='general-api'>General API</h1><h2 id='general-api-information'>General API Information</h2>
+<ul>
+<li>The base endpoint is:  https://www.jex.com </li>
+<li>All endpoints return either a JSON object or array.</li>
+<li>Data is returned in ascending order. Oldest first, newest last。</li>
+<li>All time and timestamp related fields are in milliseconds</li>
+<li>HTTP <code>4XX</code> return codes are used for malformed requests; the issue is on the sender&#39;s side</li>
+<li>HTTP <code>429</code> return code is used when breaking a request rate limit.</li>
+<li>HTTP <code>418</code> return code is used when an IP has been auto-banned for continuing to send requests after receiving <code>429</code> codes.</li>
+<li>HTTP <code>5XX</code> return codes are used for internal errors; the issue is on
+jex&#39;s side.
+It is important to <strong>NOT</strong> treat this as a failure operation; the execution status is
+<strong>UNKNOWN</strong> and could have been a success.</li>
+<li>Any endpoint can return an ERROR; the error payload is as follows:</li>
+</ul>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"code"</span><span class="p">:</span> <span class="o">-</span><span class="mi">1121</span><span class="p">,</span>
+  <span class="s2">"msg"</span><span class="p">:</span> <span class="s2">"Invalid symbol."</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>Specific error codes and messages defined in another document.</li>
+<li>For <code>GET</code> endpoints, parameters must be sent as a <code>query string</code>.</li>
+<li>For <code>POST</code>, <code>PUT</code>, and <code>DELETE</code> endpoints, the parameters may be sent as a
+<code>query string</code> or in the <code>request body</code> with content type
+<code>application/x-www-form-urlencoded</code>. You may mix parameters between both the
+<code>query string</code> and <code>request body</code> if you wish to do so.</li>
+<li>Parameters may be sent in any order.</li>
+<li>If a parameter sent in both the <code>query string</code> and <code>request body</code>, the
+<code>query string</code> parameter will be used.</li>
+</ul>
+<h2 id='limits'>LIMITS</h2>
+<ul>
+<li>New intervalLetter values for headers:
+
+<ul>
+<li>SECOND =&gt; S</li>
+<li>MINUTE =&gt; M</li>
+<li>HOUR =&gt; H</li>
+<li>DAY =&gt; D</li>
+</ul></li>
+<li>The <code>/api/v1/exchangeInfo</code> <code>rateLimits</code> array contains objects related to the exchange&#39;s <code>RAW_REQUEST</code>, symbol accuracy,<code>REQUEST_WEIGHT</code>, and <code>ORDER</code> rate limits. These are further defined in the <code>ENUM definitions</code> section under <code>Rate limiters (rateLimitType)</code>.</li>
+<li>When a 429 is recieved, it&#39;s your obligation as an API to back off and not spam the API</li>
+<li>Repeatedly violating rate limits and/or failing to back off after receiving 429s will result in an automated IP ban (http status 418).</li>
+<li>IP bans are tracked and scale in duration for repeat offenders, from 2 minutes to 3 days</li>
+<li>New Headers  <code>X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter) </code> will give your current used request weight for the (intervalNum)(intervalLetter) rate limiter. For example, if there is a one minute request rate weight limiter set, you will get a  <code>X-MBX-USED-WEIGHT-1M </code> header in the response. The legacy header  <code>X-MBX-USED-WEIGHT </code> will still be returned and will represent the current used weight for the one minute request rate weight limit</li>
+<li>New Header <code>X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)</code>that is updated on any valid order placement and tracks your current order count for the interval; rejected/unsuccessful orders are not guaranteed to have <code>X-MBX-ORDER-COUNT-**</code> headers in the response。
+
+<ul>
+<li>Eg. <code>X-MBX-ORDER-COUNT-1S</code> for &quot;orders per 1 second&quot; and <code>X-MBX-ORDER-COUNT-1D</code> for orders per &quot;one day&quot;</li>
+</ul></li>
+<li>A <code>Retry-After</code> header is sent with a 418 or 429 responses and will give the number of seconds required to wait, in the case of a 418, to prevent a ban, or, in the case of a 429, until the ban is over.。</li>
+<li>Wrong order accuracy does not allow ordering</li>
+</ul>
+
+<p><strong>Order Count Limits</strong>
+* To keep an orderly market, jex imposes limits on the number of open orders per account. These limits are:
+* Maximum 200 open orders per contract per account;
+* Maximum 10 stop profit or stop  orders per contract per account;
+* When placing a new order that causes these caps to be exceeded, it will be rejected with the message “has reach max order number [200|10]”.</p>
+
+<p><strong>Other instructions</strong>
+The number of contract orders sells for API is uniformly negative</p>
+<h2 id='endpoint-security-type'>Endpoint security type</h2>
+<ul>
+<li>Each endpoint has a security type that determines the how you will interact with it</li>
+<li>API-keys are passed into the Rest API via the <code>X-JEX-APIKEY</code> header</li>
+<li>API-keys and secret-keys are case sensitive</li>
+<li>API-keys can be configured to only access certain types of secure endpoints. For example, one API-key could be used for TRADE only, while another API-key can access everything except for TRADE routes.</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Security Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>NONE</td>
+<td>Endpoint can be accessed freely.</td>
+</tr>
+<tr>
+<td>TRADE</td>
+<td>Endpoint requires sending a valid API-Key and signature</td>
+</tr>
+<tr>
+<td>USER_DATA</td>
+<td>Endpoint requires sending a valid API-Key and signature.</td>
+</tr>
+<tr>
+<td>USER_STREAM</td>
+<td>Endpoint requires sending a valid API-Key.</td>
+</tr>
+<tr>
+<td>MARKET_DATA</td>
+<td>Endpoint requires sending a valid API-Key.</td>
+</tr>
+</tbody></table>
+<h2 id='signed-trade-and-user_data-endpoint-security'>SIGNED (TRADE and USER_DATA) Endpoint security</h2>
+<ul>
+<li><code>SIGNED</code> endpoints require an additional parameter, <code>signature</code>, to be
+sent in the  <code>query string</code> or <code>request body</code>.</li>
+<li>Endpoints use <code>HMAC SHA256</code> signatures. The <code>HMAC SHA256 signature</code> is a keyed <code>HMAC SHA256</code> operation.
+Use your <code>secretKey</code> as the key and <code>totalParams</code> as the value for the HMAC operation.</li>
+<li>The <code>signature</code> is <strong>not case sensitive</strong>.</li>
+<li><code>totalParams</code> is defined as the <code>query string</code> concatenated with the
+<code>request body</code>.</li>
+<li>The parameters of signature must be transmitted in the order of interface documents.</li>
+</ul>
+
+<p><strong>Timing security</strong>
+* A <code>SIGNED</code> endpoint also requires a parameter, <code>timestamp</code>, to be sent which
+  should be the millisecond timestamp of when the request was created and sent.
+* An additional parameter, <code>recvWindow</code>, may be sent to specify the number of
+  milliseconds after <code>timestamp</code> the request is valid for. If <code>recvWindow</code>
+  is not sent, <strong>it defaults to 5000</strong>.
+* The logic is as follows:
+  <code>javascript
+  if (timestamp &lt; (serverTime + 1000) &amp;&amp; (serverTime - timestamp) &lt;= recvWindow) {
+    // process request
+  } else {
+    // reject request
+  }
+</code>
+<strong>Serious trading is about timing.</strong> Networks can be unstable and unreliable,
+which can lead to requests taking varying amounts of time to reach the
+servers. With <code>recvWindow</code>, you can specify that the request must be
+processed within a certain number of milliseconds or be rejected by the
+server.</p>
+
+<aside class="notice">
+**It recommended to use a small recvWindow of 5000 or less! The max cannot go beyond 60,000!**
+</aside>
+
+<ul>
+<li>POST /api/v1/spot/order Examples for POST
+Here is a step-by-step example of how to send a vaild signed payload from the
+Linux command line using <code>echo</code>, <code>openssl</code>, and <code>curl</code>.</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>apiKey</td>
+<td>vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A</td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Parameters</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>LTCBTC</td>
+</tr>
+<tr>
+<td>side</td>
+<td>BUY</td>
+</tr>
+<tr>
+<td>type</td>
+<td>LIMIT</td>
+</tr>
+<tr>
+<td>timeInForce</td>
+<td>GTC</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>1</td>
+</tr>
+<tr>
+<td>price</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>5000</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>1499827319559</td>
+</tr>
+</tbody></table>
+<h3 id='example-1-as-a-query-string'>Example 1: As a query string</h3>
+<ul>
+<li><strong>queryString:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 signature:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+</code></pre>
+<ul>
+<li><strong>curl command:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code>  <span class="o">(</span>HMAC SHA256<span class="o">)</span>
+  <span class="o">[</span>linux]<span class="nv">$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order?symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'</span>
+</code></pre><h3 id='example-2-as-a-request-body'>Example 2: As a request body</h3>
+<ul>
+<li><strong>requestBody:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 signature:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71
+</code></pre>
+<ul>
+<li><strong>curl command:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="o">(</span>HMAC SHA256<span class="o">)</span>
+<span class="gp">[linux]$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order'</span> -d <span class="s1">'symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC&amp;quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=c8db56825ae71d6d79447849e617115f4a920fa2acdcab2b053c4b2838bd6b71'</span>
+</code></pre><h3 id='example-3-mixed-query-string-and-request-body'>Example 3: Mixed query string and request body</h3>
+<ul>
+<li><strong>queryString:</strong> symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC</li>
+<li><strong>requestBody:</strong> quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559</li>
+<li><strong>HMAC SHA256 signature:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">[linux]$ </span><span class="nb">echo</span> -n <span class="s2">"symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTCquantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559"</span> | openssl dgst -sha256 -hmac <span class="s2">"NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j"</span>
+<span class="o">(</span>stdin<span class="o">)=</span> 0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77
+</code></pre>
+<ul>
+<li><strong>curl command:</strong></li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="o">(</span>HMAC SHA256<span class="o">)</span>
+<span class="gp">[linux]$ </span>curl -H <span class="s2">"X-JEX-APIKEY: vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A"</span> -X POST <span class="s1">'https://www.jex.com/api/v1/order?symbol=LTCBTC&amp;side=BUY&amp;type=LIMIT&amp;timeInForce=GTC'</span> -d <span class="s1">'quantity=1&amp;price=0.1&amp;recvWindow=5000&amp;timestamp=1499827319559&amp;signature=0fd168b8ddb4876a0358a8d14d0c9f3da0e9b20c5d52b2a00fcf7d1c602f9a77'</span>
+</code></pre>
+<p>Note that the signature is different in example 3.
+There is no &amp; between &quot;GTC&quot; and &quot;quantity=1&quot;.</p>
+<h2 id='terminology'>Terminology</h2>
+<ul>
+<li><code>base asset</code> refers to the asset that is the <code>quantity</code> of a symbol.</li>
+<li><code>quote asset</code> refers to the asset that is the <code>price</code> of a symbol.</li>
+</ul>
+<h2 id='enum-definitions'>ENUM definitions</h2>
+<p><strong>Symbol status (status):</strong></p>
+
+<ul>
+<li>PRE_TRADING </li>
+<li>TRADING </li>
+<li>POST_TRADING </li>
+<li>END_OF_DAY </li>
+<li>HALT </li>
+<li>AUCTION_MATCH </li>
+<li>BREAK </li>
+</ul>
+
+<p><strong>Symbol type:</strong></p>
+
+<ul>
+<li>SPOT </li>
+<li>OPTION </li>
+<li>CONTRACT </li>
+</ul>
+
+<p><strong>spot and option Order status (status):</strong></p>
+
+<ul>
+<li>NEW </li>
+<li>PARTIALLY_FILLED<br></li>
+<li>FILLED<br></li>
+<li>CANCELED<br></li>
+<li>PENDING_CANCEL (currently unused))</li>
+<li>FAIL </li>
+<li>CANCLEFILLED</li>
+<li>REJECTED  (currently unused)</li>
+<li>EXPIRED  (currently unused)</li>
+</ul>
+
+<p><strong>contract status (status):</strong></p>
+
+<ul>
+<li>ENTRUSTED </li>
+<li>ENTRUSTING </li>
+<li>FAIL </li>
+<li>PARTFILLED </li>
+<li>FILLED </li>
+<li>CANCEL </li>
+</ul>
+
+<p><strong>Order types (orderTypes, type):</strong></p>
+
+<ul>
+<li>LIMIT </li>
+<li>MARKET<br></li>
+<li>STOPLIMIT </li>
+<li>STOPMARKET </li>
+<li>PROFITLIMIT </li>
+<li>PROFITMARKET </li>
+</ul>
+
+<p><strong>Order side (side):</strong></p>
+
+<ul>
+<li>BUY </li>
+<li>SELL </li>
+</ul>
+
+<p><strong>Time in force:</strong></p>
+
+<ul>
+<li>GTC - Good Till Cancel </li>
+<li>IOC - Immediate or Cancel </li>
+<li>FOK - Fill or Kill </li>
+</ul>
+
+<p><strong>Kline/Candlestick chart intervals:</strong></p>
+
+<p>m -&gt; minutes; h -&gt; hours; d -&gt; days; w -&gt; weeks; M -&gt; months</p>
+
+<ul>
+<li>1m</li>
+<li>3m</li>
+<li>5m</li>
+<li>15m</li>
+<li>30m</li>
+<li>1h</li>
+<li>2h</li>
+<li>4h</li>
+<li>6h</li>
+<li>12h</li>
+<li>1d</li>
+<li>1w</li>
+</ul>
+
+<p><strong>Rate limiters (rateLimitType)</strong></p>
+
+<ul>
+<li>REQUESTS_WEIGHT<br></li>
+<li>ORDERS<br></li>
+<li>RAW_REQUESTS </li>
+</ul>
+
+<p><strong>Rate limit intervals (interval)</strong></p>
+
+<ul>
+<li>SECOND</li>
+<li>MINUTE</li>
+<li>DAY</li>
+</ul>
+
+<p><strong>Endpoints for futures account</strong></p>
+
+<ul>
+<li>transfer<br></li>
+<li>fee<br></li>
+<li>funding<br></li>
+<li>closPosition<br></li>
+<li>liquidation<br></li>
+<li>adl<br></li>
+<li>autoMargin<br></li>
+<li>positionSize<br></li>
+</ul>
+<h1 id='general-endpoints'>General endpoints</h1><h2 id='test-connectivity-ping'>Test connectivity PING</h2>
+<p><code>GET /api/v1/ping</code></p>
+
+<p>Test connectivity </p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong>
+NONE</p>
+
+<blockquote>
+<p><strong>Response</strong></p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{}</span>
+</code></pre><h2 id='check-server-time'>Check server time</h2><pre class="highlight plaintext"><code>GET /api/v1/time
+</code></pre>
+<p>Get the current server time.</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong>
+NONE</p>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"serverTime"</span><span class="p">:</span> <span class="mi">1499827319595</span>
+<span class="p">}</span>
+</code></pre><h2 id='exchange-information'>Exchange information</h2>
+<p><code>GET /api/v1/exchangeInfo</code></p>
+
+<p>Get the current trading rules and symbol information</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong>
+NONE</p>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"timezone"</span><span class="p">:</span> <span class="s2">"UTC"</span><span class="p">,</span>
+  <span class="s2">"serverTime"</span><span class="p">:</span> <span class="mi">1551270414646</span><span class="p">,</span>
+  <span class="s2">"rateLimits"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"rateLimitType"</span><span class="p">:</span> <span class="s2">"requestsWeight"</span><span class="p">,</span>
+      <span class="s2">"interval"</span><span class="p">:</span> <span class="s2">"minute"</span><span class="p">,</span>
+      <span class="s2">"intervalNum"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"limit"</span><span class="p">:</span> <span class="mi">1200</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"rateLimitType"</span><span class="p">:</span> <span class="s2">"orders"</span><span class="p">,</span>
+      <span class="s2">"interval"</span><span class="p">:</span> <span class="s2">"second"</span><span class="p">,</span>
+      <span class="s2">"intervalNum"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"limit"</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"rateLimitType"</span><span class="p">:</span> <span class="s2">"orders"</span><span class="p">,</span>
+      <span class="s2">"interval"</span><span class="p">:</span> <span class="s2">"day"</span><span class="p">,</span>
+      <span class="s2">"intervalNum"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"limit"</span><span class="p">:</span> <span class="mi">100000</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"rateLimitType"</span><span class="p">:</span> <span class="s2">"rawRequests"</span><span class="p">,</span>
+      <span class="s2">"interval"</span><span class="p">:</span> <span class="s2">"minute"</span><span class="p">,</span>
+      <span class="s2">"intervalNum"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="s2">"limit"</span><span class="p">:</span> <span class="mi">5000</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"optionSymbols"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"BTCCALLM"</span><span class="p">,</span>
+      <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"TRADING"</span><span class="p">,</span>
+      <span class="s2">"baseAsset"</span><span class="p">:</span> <span class="s2">"月BTC看涨0226"</span><span class="p">,</span>
+      <span class="s2">"baseAssetPrecision"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">"quoteAsset"</span><span class="p">:</span> <span class="s2">"USDT"</span><span class="p">,</span>
+      <span class="s2">"quotePrecision"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"orderTypes"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"LIMIT"</span>
+      <span class="p">],</span>
+      <span class="s2">"icebergAllowed"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"filters"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">"filterType"</span><span class="p">:</span> <span class="s2">"PRICE_FILTER"</span><span class="p">,</span>
+          <span class="s2">"maxPrice"</span><span class="p">:</span> <span class="s2">"100000"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="s2">"filterType"</span><span class="p">:</span> <span class="s2">"LOT_SIZE"</span><span class="p">,</span>
+          <span class="s2">"minQty"</span><span class="p">:</span> <span class="s2">"0.00000000"</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"contractSymbols"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"BTCUSDT"</span><span class="p">,</span>
+      <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"TRADING"</span><span class="p">,</span>
+      <span class="s2">"baseAsset"</span><span class="p">:</span> <span class="s2">"btc"</span><span class="p">,</span>
+      <span class="s2">"baseAssetPrecision"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="s2">"quoteAsset"</span><span class="p">:</span> <span class="s2">"usdt"</span><span class="p">,</span>
+      <span class="s2">"quotePrecision"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">"orderTypes"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"LIMIT"</span><span class="p">,</span>
+        <span class="s2">"MARKET"</span>
+      <span class="p">],</span>
+      <span class="s2">"icebergAllowed"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"filters"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">"filterType"</span><span class="p">:</span> <span class="s2">"PRICE_FILTER"</span><span class="p">,</span>
+          <span class="s2">"minPrice"</span><span class="p">:</span> <span class="s2">"0.00000001000000000000"</span><span class="p">,</span>
+          <span class="s2">"maxPrice"</span><span class="p">:</span> <span class="s2">"1000000.00000000000000000000"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="s2">"filterType"</span><span class="p">:</span> <span class="s2">"LOT_SIZE"</span><span class="p">,</span>
+          <span class="s2">"minQty"</span><span class="p">:</span> <span class="s2">"0.00010000000000000000"</span><span class="p">,</span>
+          <span class="s2">"maxQty"</span><span class="p">:</span> <span class="s2">"1000000.00000000000000000000"</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"spotSymbols"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"DASHUSDT"</span><span class="p">,</span>
+      <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"TRADING"</span><span class="p">,</span>
+      <span class="s2">"baseAsset"</span><span class="p">:</span> <span class="s2">"DASH"</span><span class="p">,</span>
+      <span class="s2">"baseAssetPrecision"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="s2">"quoteAsset"</span><span class="p">:</span> <span class="s2">"USDT"</span><span class="p">,</span>
+      <span class="s2">"quotePrecision"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">"orderTypes"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"LIMIT"</span>
+      <span class="p">],</span>
+      <span class="s2">"icebergAllowed"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">"filters"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">"filterType"</span><span class="p">:</span> <span class="s2">"PRICE_FILTER"</span><span class="p">,</span>
+          <span class="s2">"maxPrice"</span><span class="p">:</span> <span class="s2">"100000"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="s2">"filterType"</span><span class="p">:</span> <span class="s2">"LOT_SIZE"</span><span class="p">,</span>
+          <span class="s2">"minQty"</span><span class="p">:</span> <span class="s2">"1.00000000"</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h2 id='depth-information-for-spot'>Depth information for spot</h2>
+<p><code>GET /api/v1/spot/depth</code></p>
+
+<p><strong>Weight:1</strong></p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>INT</td>
+<td>NO</td>
+<td>Default  60; Max 60. Available:[5, 10, 20, 50, 60]</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"lastUpdateId"</span><span class="p">:</span> <span class="mi">1027024</span><span class="p">,</span>
+  <span class="s2">"bids"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span>
+      <span class="s2">"4.00000000"</span><span class="p">,</span>     <span class="c1">// PRICE</span>
+      <span class="s2">"431.00000000"</span><span class="p">,</span>   <span class="c1">// QTY</span>
+      <span class="p">[]</span>                <span class="c1">// IGNORE.</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"asks"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span>
+      <span class="s2">"4.00000200"</span><span class="p">,</span>
+      <span class="s2">"12.00000000"</span><span class="p">,</span>
+      <span class="p">[]</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h2 id='recent-trades-for-spot'>Recent trades for spot</h2>
+<p><code>GET /api/v1/spot/trades</code></p>
+
+<p>Get recent trades</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>INT</td>
+<td>NO</td>
+<td>Default 60; max 60.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"81.230000000000000000"</span><span class="p">,</span>
+    <span class="s2">"qty"</span><span class="p">:</span> <span class="s2">"0.001000000000000000"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"81.230000000000000000"</span><span class="p">,</span>
+    <span class="s2">"qty"</span><span class="p">:</span> <span class="s2">"0.000400000000000000"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"81.240000000000000000"</span><span class="p">,</span>
+    <span class="s2">"qty"</span><span class="p">:</span> <span class="s2">"0.001100000000000000"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h2 id='old-trade-lookup-market_data'>Old trade lookup (MARKET_DATA)</h2>
+<p><code>GET /api/v1/spot/historicalTrades</code></p>
+
+<p><strong>Weight:</strong>
+5</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>INT</td>
+<td>NO</td>
+<td>Default 200; max 500.</td>
+</tr>
+<tr>
+<td>fromId</td>
+<td>LONG</td>
+<td>NO</td>
+<td>TradeId to fetch from. Default gets most recent trades.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"3489"</span><span class="p">,</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.00001457"</span><span class="p">,</span>
+    <span class="s2">"qty"</span><span class="p">:</span> <span class="s2">"6"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">:</span> <span class="mi">1551129538000</span><span class="p">,</span>
+    <span class="s2">"buyerMaker"</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"3488"</span><span class="p">,</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.00001464"</span><span class="p">,</span>
+    <span class="s2">"qty"</span><span class="p">:</span> <span class="s2">"2"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">:</span> <span class="mi">1551129500000</span><span class="p">,</span>
+    <span class="s2">"buyerMaker"</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h2 id='kline-candlestick-data'>Kline/Candlestick data</h2>
+<p><code>GET /api/v1/spot/klines</code></p>
+
+<p>Kline/candlestick bars for a symbol. Klines are uniquely identified by their open time.</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>interval</td>
+<td>ENUM</td>
+<td>YES</td>
+<td>&quot;1m&quot;:minute&quot;3m&quot;: minute&quot;5m&quot;: minute&quot;15m&quot;:minute&quot;30m&quot;:minute&quot;1h&quot;:hour&quot;2h&quot;:hour&quot;4h&quot;:hour&quot;6h&quot;:&quot;12h&quot;:hour&quot;1d&quot;:day&quot;3d&quot;:day&quot;1w&quot;:week</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>INT</td>
+<td>NO</td>
+<td>Default 500; max 1000.</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>If startTime and endTime are not sent, the most recent klines are returned.</li>
+</ul>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">[</span>
+    <span class="mi">1499040000000</span><span class="p">,</span>      <span class="c1">// Open time</span>
+    <span class="s2">"0.01634790"</span><span class="p">,</span>       <span class="c1">// Open</span>
+    <span class="s2">"0.80000000"</span><span class="p">,</span>       <span class="c1">// High</span>
+    <span class="s2">"0.01575800"</span><span class="p">,</span>       <span class="c1">// Low</span>
+    <span class="s2">"0.01577100"</span><span class="p">,</span>       <span class="c1">// Close</span>
+    <span class="s2">"148976.11427815"</span><span class="p">,</span>  <span class="c1">// Volume</span>
+    <span class="mi">1499644799999</span><span class="p">,</span>      <span class="c1">// Close time</span>
+    <span class="s2">"2434.19055334"</span><span class="p">,</span>    <span class="c1">// Quote asset volume</span>
+    <span class="mi">308</span><span class="p">,</span>                <span class="c1">// Number of trades</span>
+    <span class="s2">"1756.87402397"</span><span class="p">,</span>    <span class="c1">// Taker buy base asset volume</span>
+    <span class="s2">"28.46694368"</span><span class="p">,</span>      <span class="c1">// Taker buy quote asset volume</span>
+    <span class="s2">"17928899.62484339"</span> <span class="c1">// Ignore</span>
+  <span class="p">]</span>
+<span class="p">]</span>
+</code></pre><h2 id='current-average-price'>Current average price</h2>
+<p><code>GET /api/v1/spot/avgPrice</code></p>
+
+<p><strong>Weight:</strong>
+1
+<strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"mins"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"9.35751834"</span>
+<span class="p">}</span>
+</code></pre><h2 id='24hr-ticker-price-change-statistics'>24hr ticker price change statistics</h2>
+<p><code>GET /api/v1/spot/ticker/24hr</code></p>
+
+<p>24 hour rolling window price change statistics. Careful when accessing this with no symbol.</p>
+
+<p><strong>Weight:</strong>
+1 for a single symbol; <strong>40</strong> when the symbol parameter is omitted</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>NO</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"BNBBTC"</span><span class="p">,</span>
+  <span class="s2">"priceChange"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+  <span class="s2">"priceChangePercent"</span><span class="p">:</span> <span class="s2">"50.00000000"</span><span class="p">,</span>
+  <span class="s2">"weightedAvgPrice"</span><span class="p">:</span> <span class="s2">"1.88"</span><span class="p">,</span>
+  <span class="s2">"lastPrice"</span><span class="p">:</span> <span class="s2">"3.00000000"</span><span class="p">,</span>
+  <span class="s2">"bidPrice"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+  <span class="s2">"bidQty"</span><span class="p">:</span> <span class="s2">"5.00000000"</span><span class="p">,</span>
+  <span class="s2">"askPrice"</span><span class="p">:</span> <span class="s2">"3.00000000"</span><span class="p">,</span>
+  <span class="s2">"askQty"</span><span class="p">:</span> <span class="s2">"9.00000000"</span><span class="p">,</span>
+  <span class="s2">"openPrice"</span><span class="p">:</span> <span class="s2">"2.00000000"</span><span class="p">,</span>
+  <span class="s2">"highPrice"</span><span class="p">:</span> <span class="s2">"18.00000000"</span><span class="p">,</span>
+  <span class="s2">"lowPrice"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+  <span class="s2">"volume"</span><span class="p">:</span> <span class="s2">"8.00000000"</span><span class="p">,</span>
+  <span class="s2">"quoteVolume"</span><span class="p">:</span> <span class="s2">"15.00000000"</span><span class="p">,</span>
+  <span class="s2">"openTime"</span><span class="p">:</span> <span class="mi">1551174049782</span><span class="p">,</span>
+  <span class="s2">"closeTime"</span><span class="p">:</span> <span class="mi">1551173957144</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>OR</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"BNBBTC"</span><span class="p">,</span>
+    <span class="s2">"priceChange"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+    <span class="s2">"priceChangePercent"</span><span class="p">:</span> <span class="s2">"50.00000000"</span><span class="p">,</span>
+    <span class="s2">"weightedAvgPrice"</span><span class="p">:</span> <span class="s2">"1.88"</span><span class="p">,</span>
+    <span class="s2">"lastPrice"</span><span class="p">:</span> <span class="s2">"3.00000000"</span><span class="p">,</span>
+    <span class="s2">"bidPrice"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+    <span class="s2">"bidQty"</span><span class="p">:</span> <span class="s2">"5.00000000"</span><span class="p">,</span>
+    <span class="s2">"askPrice"</span><span class="p">:</span> <span class="s2">"3.00000000"</span><span class="p">,</span>
+    <span class="s2">"askQty"</span><span class="p">:</span> <span class="s2">"9.00000000"</span><span class="p">,</span>
+    <span class="s2">"openPrice"</span><span class="p">:</span> <span class="s2">"2.00000000"</span><span class="p">,</span>
+    <span class="s2">"highPrice"</span><span class="p">:</span> <span class="s2">"18.00000000"</span><span class="p">,</span>
+    <span class="s2">"lowPrice"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+    <span class="s2">"volume"</span><span class="p">:</span> <span class="s2">"8.00000000"</span><span class="p">,</span>
+    <span class="s2">"quoteVolume"</span><span class="p">:</span> <span class="s2">"15.00000000"</span><span class="p">,</span>
+    <span class="s2">"openTime"</span><span class="p">:</span> <span class="mi">1551174049782</span><span class="p">,</span>
+    <span class="s2">"closeTime"</span><span class="p">:</span> <span class="mi">1551173957144</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h2 id='price-ticker-for-spot'>Price ticker for spot</h2>
+<p><code>GET /api/v1/spot/ticker/price</code></p>
+
+<p>Back to newest price</p>
+
+<p><strong>Weight:</strong>
+1 for a single symbol; <strong>2</strong> when the symbol parameter is omitted</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>NO</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>If the symbol is not sent, prices for all symbols will be returned in an array.</li>
+</ul>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"LTCBTC"</span><span class="p">,</span>
+  <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"4.00000200"</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>OR</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"LTCBTC"</span><span class="p">,</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"4.00000200"</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"ETHBTC"</span><span class="p">,</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.07946600"</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h2 id='symbol-order-book-ticker-for-spot'>Symbol order book ticker for spot</h2>
+<p><code>GET /api/v1/spot/ticker/bookTicker</code></p>
+
+<p>Best price/qty on the order book for a symbol or symbols.</p>
+
+<p><strong>Weight:</strong>
+1 for a single symbol; <strong>2</strong> when the symbol parameter is omitted</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>NO</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>If the symbol is not sent, prices for all symbols will be returned in an array.</li>
+</ul>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"LTCBTC"</span><span class="p">,</span>
+  <span class="s2">"bidPrice"</span><span class="p">:</span> <span class="s2">"4.00000000"</span><span class="p">,</span><span class="c1">//Best price for buy</span>
+  <span class="s2">"bidQty"</span><span class="p">:</span> <span class="s2">"431.00000000"</span><span class="p">,</span><span class="c1">//QTY</span>
+  <span class="s2">"askPrice"</span><span class="p">:</span> <span class="s2">"4.00000200"</span><span class="p">,</span><span class="c1">//Best price for sell</span>
+  <span class="s2">"askQty"</span><span class="p">:</span> <span class="s2">"9.00000000"</span><span class="c1">//QTY</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>OR</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"LTCBTC"</span><span class="p">,</span>
+    <span class="s2">"bidPrice"</span><span class="p">:</span> <span class="s2">"4.00000000"</span><span class="p">,</span>
+    <span class="s2">"bidQty"</span><span class="p">:</span> <span class="s2">"431.00000000"</span><span class="p">,</span>
+    <span class="s2">"askPrice"</span><span class="p">:</span> <span class="s2">"4.00000200"</span><span class="p">,</span>
+    <span class="s2">"askQty"</span><span class="p">:</span> <span class="s2">"9.00000000"</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"ETHBTC"</span><span class="p">,</span>
+    <span class="s2">"bidPrice"</span><span class="p">:</span> <span class="s2">"0.07946700"</span><span class="p">,</span>
+    <span class="s2">"bidQty"</span><span class="p">:</span> <span class="s2">"9.00000000"</span><span class="p">,</span>
+    <span class="s2">"askPrice"</span><span class="p">:</span> <span class="s2">"100000.00000000"</span><span class="p">,</span>
+    <span class="s2">"askQty"</span><span class="p">:</span> <span class="s2">"1000.00000000"</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h1 id='account-endpoints'>Account endpoints</h1><h2 id='place-order-in-coins-transaction-trade'>Place order in coins transaction（TRADE）</h2>
+<p><code>POST /api/v1/spot/order  (HMAC SHA256)</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>side</td>
+<td>ENUM</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>type</td>
+<td>ENUM</td>
+<td>YES</td>
+<td><code>LIMIT</code></td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>DECIMAL</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>price</td>
+<td>DECIMAL</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>newOrderRespType</td>
+<td>ENUM</td>
+<td>NO</td>
+<td>Specify response type   <code>ACK</code>, <code>RESULT</code>; Default is <code>ACK</code>.</td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p>Two choices for newOrderRespType</p>
+
+<p><strong>Response ACK:</strong>
+Returning speed is fast, trading information not included, less information </p>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>
+  <span class="s2">"orderId"</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>
+  <span class="s2">"transactTime"</span><span class="p">:</span> <span class="mi">1507725176595</span>
+<span class="p">}</span>
+</code></pre>
+<p><strong>Response RESULT:</strong>
+Returning speed is slow, returning some information on taking order transaction</p>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>
+  <span class="s2">"orderId"</span><span class="p">:</span> <span class="mi">2208</span><span class="p">,</span>
+  <span class="s2">"transactTime"</span><span class="p">:</span> <span class="mi">1551184078060</span><span class="p">,</span>
+  <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.00001464"</span><span class="p">,</span>
+  <span class="s2">"origQty"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>
+  <span class="s2">"executedQty"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span>
+  <span class="s2">"cummulativeQuoteQty"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>
+  <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>
+  <span class="s2">"timeInForce"</span><span class="p">:</span> <span class="s2">"GTC"</span><span class="p">,</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"LIMIT"</span><span class="p">,</span>
+  <span class="s2">"side"</span><span class="p">:</span> <span class="s2">"BUY"</span>
+<span class="p">}</span>
+</code></pre><h2 id='test-placing-order-api-of-coins-transaction-trade'>Test placing order API of coins transaction(TRADE)</h2>
+<p><code>POST /api/v1/spot/order/test (HMAC SHA256)</code></p>
+
+<p>Used for test placing order request, won’t be submitted to matchmaking trading engine</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<p>Reference   <code>POST /api/v1/spot/order</code></p>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{}</span>
+</code></pre><h2 id='check-orders-of-coins-transaction-user_data'>Check orders of coins transaction(USER_DATA)</h2>
+<p><code>GET /api/v1/spot/order (HMAC SHA256)</code></p>
+
+<p>Check order status</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>orderId</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>
+  <span class="s2">"orderId"</span><span class="p">:</span> <span class="s2">"2208"</span><span class="p">,</span>
+  <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.00001464"</span><span class="p">,</span>
+  <span class="s2">"origQty"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+  <span class="s2">"executedQty"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>
+  <span class="s2">"cummulativeQuoteQty"</span><span class="p">:</span> <span class="s2">"0.00001464"</span><span class="p">,</span>
+  <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"FILLED"</span><span class="p">,</span>
+  <span class="s2">"timeInForce"</span><span class="p">:</span> <span class="s2">"GTC"</span><span class="p">,</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"LIMIT"</span><span class="p">,</span>
+  <span class="s2">"side"</span><span class="p">:</span> <span class="s2">"BUY"</span><span class="p">,</span>
+  <span class="s2">"time"</span><span class="p">:</span> <span class="mi">1551184037000</span><span class="p">,</span>
+  <span class="s2">"updateTime"</span><span class="p">:</span> <span class="mi">1551184037000</span><span class="p">,</span>
+  <span class="s2">"working"</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre><h2 id='cancel-order-for-coins-transaction-trade'>Cancel order for coins transaction(TRADE)</h2>
+<p><code>DELETE /api/v1/spot/order  (HMAC SHA256)</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>orderId</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>
+  <span class="s2">"orderId"</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+  <span class="s2">"transactTime"</span><span class="p">:</span> <span class="mi">1551238738296</span><span class="p">,</span>
+  <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.00001407"</span><span class="p">,</span>
+  <span class="s2">"origQty"</span><span class="p">:</span> <span class="s2">"4"</span><span class="p">,</span>
+  <span class="s2">"executedQty"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span>
+  <span class="s2">"cummulativeQuoteQty"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>
+  <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"CANCELED"</span><span class="p">,</span>
+  <span class="s2">"timeInForce"</span><span class="p">:</span> <span class="s2">"GTC"</span><span class="p">,</span>
+  <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"LIMIT"</span><span class="p">,</span>
+  <span class="s2">"side"</span><span class="p">:</span> <span class="s2">"BUY"</span>
+<span class="p">}</span>
+</code></pre><h2 id='check-entry-orders-of-coins-transaction-of-this-account-user_data'>Check entry orders of coins transaction of this account(USER_DATA)</h2>
+<p><code>GET /api/v1/spot/openOrders  (HMAC SHA256)</code></p>
+
+<p><strong>Weight:</strong><br>
+ 5</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>orderId</td>
+<td>LONG</td>
+<td>NO</td>
+<td>Only orders after this orderID will be returned. Only partial recent orders will be returned</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>INT</td>
+<td>NO</td>
+<td>Default 500; max 500.</td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>
+    <span class="s2">"orderId"</span><span class="p">:</span> <span class="s2">"76"</span><span class="p">,</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.00001406"</span><span class="p">,</span>
+    <span class="s2">"origQty"</span><span class="p">:</span> <span class="s2">"5.00000000"</span><span class="p">,</span>
+    <span class="s2">"executedQty"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>
+    <span class="s2">"cummulativeQuoteQty"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>
+    <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>
+    <span class="s2">"timeInForce"</span><span class="p">:</span> <span class="s2">"GTC"</span><span class="p">,</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"LIMIT"</span><span class="p">,</span>
+    <span class="s2">"side"</span><span class="p">:</span> <span class="s2">"BUY"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">:</span> <span class="mi">1550659007000</span><span class="p">,</span>
+    <span class="s2">"updateTime"</span><span class="p">:</span> <span class="mi">1550659007000</span><span class="p">,</span>
+    <span class="s2">"working"</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h2 id='account-information-user_data'>Account information(USER_DATA)</h2>
+<p><code>GET /api/v1/account (HMAC SHA256)</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"updateTime"</span><span class="p">:</span> <span class="mi">1523093528000</span>
+    <span class="s2">"contractBalances"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"usdt"</span><span class="p">,</span>
+            <span class="s2">"canDeposit"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="s2">"canTrade"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"canWithdraw"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="s2">"free"</span><span class="p">:</span> <span class="s2">"8144.0412"</span><span class="p">,</span>
+            <span class="s2">"locked"</span><span class="p">:</span> <span class="s2">"1855.3288"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">"optionBalances"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"BCXBTC01"</span><span class="p">,</span>
+            <span class="s2">"canDeposit"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="s2">"canTrade"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"canWithdraw"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="s2">"free"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span>
+            <span class="s2">"locked"</span><span class="p">:</span> <span class="s2">"0"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">"spotBalances"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+            <span class="s2">"canDeposit"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"canTrade"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">"canWithdraw"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="s2">"free"</span><span class="p">:</span> <span class="s2">"999616.1363"</span><span class="p">,</span>
+            <span class="s2">"locked"</span><span class="p">:</span> <span class="s2">"0.7219"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+<span class="p">}</span>
+</code></pre><h2 id='historical-coins-entry-order-of-the-account-user_data'>Historical coins entry order of the account (USER_DATA)</h2>
+<p><code>GET /api/v1/spot/historyOrders  (HMAC SHA256)</code></p>
+
+<p>Obtain trading history of specified trading pair</p>
+
+<p><strong>Weight:</strong>
+5</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>orderId</td>
+<td>LONG</td>
+<td>NO</td>
+<td>Only orders after this orderID will be returned. Only partial recent orders will be returned</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>INT</td>
+<td>NO</td>
+<td>Default 500; max 500.</td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>
+    <span class="s2">"orderId"</span><span class="p">:</span> <span class="s2">"15"</span><span class="p">,</span>
+    <span class="s2">"price"</span><span class="p">:</span> <span class="s2">"0.00001490"</span><span class="p">,</span>
+    <span class="s2">"origQty"</span><span class="p">:</span> <span class="s2">"3.00000000"</span><span class="p">,</span>
+    <span class="s2">"executedQty"</span><span class="p">:</span> <span class="s2">"3.00000000"</span><span class="p">,</span>
+    <span class="s2">"cummulativeQuoteQty"</span><span class="p">:</span> <span class="s2">"0.00004470"</span><span class="p">,</span>
+    <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"FILLED"</span><span class="p">,</span>
+    <span class="s2">"timeInForce"</span><span class="p">:</span> <span class="s2">"GTC"</span><span class="p">,</span>
+    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"LIMIT"</span><span class="p">,</span>
+    <span class="s2">"side"</span><span class="p">:</span> <span class="s2">"BUY"</span><span class="p">,</span>
+    <span class="s2">"time"</span><span class="p">:</span> <span class="mi">1550643800000</span><span class="p">,</span>
+    <span class="s2">"updateTime"</span><span class="p">:</span> <span class="mi">1550644851000</span><span class="p">,</span>
+    <span class="s2">"working"</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h1 id='user-data'>User data</h1><h2 id='user-s-assets-user_data'>User’s assets (USER_DATA)</h2>
+<p><code>GET /wapi/v1/assetDetail</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"ADC"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"minWithdrawAmount"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">"withdrawFee"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span>
+    <span class="s2">"depositStatus"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">"withdrawStatus"</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">},</span>
+  <span class="s2">"ATT"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"minWithdrawAmount"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s2">"withdrawFee"</span><span class="p">:</span> <span class="s2">"[0.01]"</span><span class="p">,</span>
+    <span class="s2">"depositStatus"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">"withdrawStatus"</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h2 id='depositing-address-of-the-user-user_data'>Depositing address of the user(USER_DATA)</h2>
+<p><code>GET /wapi/v1/depositAddress</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>asset</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"address"</span><span class="p">:</span> <span class="s2">"chongzhidizhichongzhidizhi"</span><span class="p">,</span>
+  <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+  <span class="s2">"success"</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre><h2 id='historical-depositing-records-of-the-user-user_data'>Historical depositing records of the user (USER_DATA)</h2>
+<p><code>GET /wapi/v1/depositHistory</code></p>
+
+<p><strong>Weight:</strong>
+5</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>asset</td>
+<td>STRING</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>status</td>
+<td>int</td>
+<td>NO</td>
+<td>0:pending,1:success</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"insertTime"</span><span class="p">:</span> <span class="mi">1530096910000</span><span class="p">,</span>
+    <span class="s2">"amount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+    <span class="s2">"address"</span><span class="p">:</span> <span class="s2">"chongzhidizhichongzhidizhi"</span><span class="p">,</span>
+    <span class="s2">"txId"</span><span class="p">:</span> <span class="s2">"g3jrglkelmrioqnfmkcmxcmkllfemfkmfmseme"</span><span class="p">,</span>
+    <span class="s2">"status"</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"insertTime"</span><span class="p">:</span> <span class="mi">1530096910000</span><span class="p">,</span>
+    <span class="s2">"amount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+    <span class="s2">"address"</span><span class="p">:</span> <span class="s2">"chongzhidizhichongzhidizhi"</span><span class="p">,</span>
+    <span class="s2">"txId"</span><span class="p">:</span> <span class="s2">"gjrglkel4mrioqnfmkcmxcmkllfemfkmfmseme"</span><span class="p">,</span>
+    <span class="s2">"status"</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+
+</code></pre><h2 id='service-fee-of-the-trading-user_data'>Service fee of the trading (USER_DATA)</h2>
+<p><code>GET /wapi/v1/tradeFee</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>STRING</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"DASHUSDT"</span><span class="p">,</span>
+    <span class="s2">"maker"</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="s2">"taker"</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.001</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s2">"symbol"</span><span class="p">:</span> <span class="s2">"BTCUSDT"</span><span class="p">,</span>
+    <span class="s2">"maker"</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="s2">"taker"</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h2 id='historical-withdrawal-records-of-the-user-user_data'>Historical withdrawal records of the user(USER_DATA)</h2>
+<p><code>GET /wapi/v1/withdrawHistory</code></p>
+
+<p><strong>Weight:</strong>
+5</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>asset</td>
+<td>STRING</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>status</td>
+<td>INT</td>
+<td>NO</td>
+<td>0:Email Sent,1:Cancelled 2:Awaiting Approval 3:Rejected 4:Processing 5:Failure 6Completed</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>recvWindow</td>
+<td>LONG</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>LONG</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"withdrawRecordList"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"20F13F5291908F81"</span><span class="p">,</span>
+      <span class="s2">"amount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"address"</span><span class="p">:</span> <span class="s2">"swswsdgsdwesdfwsdw"</span><span class="p">,</span>
+      <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+      <span class="s2">"txId"</span><span class="p">:</span> <span class="s2">"g3jrglkelmrioqnfmkcmxcmkllfemfkmfmseme"</span><span class="p">,</span>
+      <span class="s2">"applyTime"</span><span class="p">:</span> <span class="mi">1551339300000</span><span class="p">,</span>
+      <span class="s2">"status"</span><span class="p">:</span> <span class="mi">4</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"AAEAAECD5F890E47"</span><span class="p">,</span>
+      <span class="s2">"amount"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">"address"</span><span class="p">:</span> <span class="s2">"swswsdgsdwesdfwsdw"</span><span class="p">,</span>
+      <span class="s2">"asset"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+      <span class="s2">"txId"</span><span class="p">:</span> <span class="s2">"g3jrglkelmrioqnfmkcmxcmkllfemfkmfmseme"</span><span class="p">,</span>
+      <span class="s2">"applyTime"</span><span class="p">:</span> <span class="mi">1551340680000</span><span class="p">,</span>
+      <span class="s2">"status"</span><span class="p">:</span> <span class="mi">4</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">"success"</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre><h1 id='user-data-streams'>User Data Streams</h1>
+<ul>
+<li>The base API endpoint is: <strong>https://www.jex.com</strong> </li>
+<li>A User Data Stream <code>listenKey</code> is valid for 60 minutes after creation.</li>
+<li>Doing a <code>PUT</code> on a <code>listenKey</code> will extend its validity for 60 minutes.</li>
+<li>Doing a <code>DELETE</code> on a <code>listenKey</code> will close the stream.</li>
+<li>The base websocket endpoint is: <strong>wss://ws.jex.com</strong> </li>
+<li>User Data Streams are accessed at <strong>/ws/&lt;listenKey&gt;</strong></li>
+<li>A single connection to <strong>stream.jex.com</strong> is only valid for 24 hours; expect to be disconnected at the 24 hour mark</li>
+<li><p>User data stream payloads are <strong>not guaranteed</strong> to be in order during heavy periods; <strong>make sure to order your updates using E</strong></p></li>
+<li><p>Specifics on how user data streams work.</p></li>
+<li><p>For detailed subscription method, please refer to another websocket document.</p></li>
+</ul>
+<h2 id='start-user-data-stream-user_stream'>Start user data stream (USER_STREAM)</h2>
+<p><code>POST /api/v1/userDataStream</code></p>
+
+<p>Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent.</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong>
+NONE</p>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"listenKey"</span><span class="p">:</span> <span class="s2">"pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1"</span> <span class="c1">//用于订阅的数据流名</span>
+<span class="p">}</span>
+</code></pre><h2 id='keepalive-user_stream'>Keepalive (USER_STREAM)</h2>
+<p><code>PUT /api/v1/userDataStream</code></p>
+
+<p>Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It&#39;s recommended to send a ping about every 30 minutes.</p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>listenKey</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{}</span>
+</code></pre><h2 id='close-user-data-stream-user_stream'>Close user data stream (USER_STREAM)</h2>
+<p><code>DELETE /api/v1/userDataStream</code></p>
+
+<p><strong>Weight:</strong>
+1</p>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>listenKey</td>
+<td>STRING</td>
+<td>YES</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{}</span>
+</code></pre><h2 id='account-updates'>Account updates</h2>
+<ul>
+<li>Event type of account updates is fixed to <code>accountSpotInfo</code> AND <code>accountOptionInfo</code> AND <code>accountContractInfo</code> They respectively refers to the asset related event of spot, options and futures.
+When there is a change of asset, relevant event will be pushed</li>
+</ul>
+
+<blockquote>
+<p><strong>Response</strong> </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"accountSpotInfo"</span><span class="p">,</span>       <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>           <span class="c1">// Event time</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                       <span class="c1">// Fee rate of entry order </span>
+  <span class="s2">"t"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>                       <span class="c1">// Fee rate of taking order</span>
+  <span class="s2">"u"</span><span class="p">:</span> <span class="mi">1499405658848</span><span class="p">,</span>           <span class="c1">// Time stamp of</span>
+  <span class="s2">"B"</span><span class="p">:</span> <span class="p">[</span>                        <span class="c1">// Balance</span>
+    <span class="p">{</span>
+      <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"LTC"</span><span class="p">,</span>               <span class="c1">// Asset name</span>
+      <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"1.57"</span><span class="p">,</span>              <span class="c1">// Order Margin（Only Furtures）</span>
+      <span class="s2">"p"</span><span class="p">:</span>  <span class="s2">"0"</span>  <span class="err">，</span>             <span class="c1">// Position Margin（Only Furtures ）</span>
+      <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"17366.18538083"</span><span class="p">,</span>    <span class="c1">// Free amount</span>
+      <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>        <span class="c1">// Locked amount  </span>
+      <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can trade</span>
+      <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can withdraw</span>
+      <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can deposit</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"BTC"</span><span class="p">,</span>
+      <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"10537.85314051"</span><span class="p">,</span>
+      <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"2.19464093"</span><span class="p">,</span>
+      <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can trade</span>
+      <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Can withdraw</span>
+       <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>               <span class="c1">// Can deposit</span>
+ <span class="p">},</span>
+    <span class="p">{</span>
+    <span class="s2">"T"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can trade</span>
+    <span class="s2">"W"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can withdraw</span>
+    <span class="s2">"D"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Can deposit</span>
+    <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"ETH"</span><span class="p">,</span>
+    <span class="s2">"f"</span><span class="p">:</span> <span class="s2">"17902.35190619"</span><span class="p">,</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.00000000"</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre><h3 id='update-of-orders'>Update of orders</h3>
+<ul>
+<li>Account state is updated with the outboundAccountInfo event.</li>
+</ul>
+
+<p>event type is <code>execSpotReport</code> AND <code>execOptionReport</code> AND <code>execContractReport</code> They respectively refers to the asset related event of spot、options、futures Event type</p>
+
+<p>Possible executive type of contract(X field)</p>
+
+<blockquote>
+<p>Response  of spot and options:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>            <span class="c1">// Event time</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"execSpotReport"</span><span class="p">,</span>         <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>                 <span class="c1">// Symbol</span>
+  <span class="s2">"S"</span><span class="p">:</span> <span class="s2">"BUY"</span><span class="p">,</span>                    <span class="c1">// Order direction</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"1.00000000"</span><span class="p">,</span>             <span class="c1">//  Order quantity</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.10264410"</span><span class="p">,</span>             <span class="c1">//  Order price</span>
+  <span class="s2">"X"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>                    <span class="c1">// Current order state</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="mi">4293153</span><span class="p">,</span>                  <span class="c1">// ID Order ID</span>
+  <span class="s2">"z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">//  Cumulative filled quantity</span>
+  <span class="s2">"O"</span><span class="p">:</span> <span class="mi">1499405658657</span><span class="p">,</span>            <span class="c1">// Transaction time</span>
+  <span class="s2">"Z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Total transaction sum</span>
+<span class="p">}</span>
+</code></pre><h4 id='possible-executive-type-of-spot-and-options-x-field'>Possible executive type of spot and options (X field):</h4>
+<ul>
+<li>NEW </li>
+<li>PARTIALLY_FILLED<br></li>
+<li>FILLED<br></li>
+<li>CANCELED<br></li>
+<li>FAIL </li>
+<li>CANCLEFILLED</li>
+</ul>
+
+<blockquote>
+<p>Response contract :</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1499405658849</span><span class="p">,</span>            <span class="c1">// Event time</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"execContractReport"</span><span class="p">,</span>     <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"ETHBTC"</span><span class="p">,</span>                 <span class="c1">// Symbol   (Not exist if refused)   </span>
+  <span class="s2">"X"</span><span class="p">:</span> <span class="s2">"NEW"</span><span class="p">,</span>                    <span class="c1">// Current state of the order   </span>
+  <span class="s2">"r"</span><span class="p">:</span> <span class="s2">"NONE"</span><span class="p">,</span>                   <span class="c1">// Refused reason of the order ( exist if refused)</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="mi">4293153</span><span class="p">,</span>                  <span class="c1">// Order ID</span>
+  <span class="s2">"z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Cumulative filled quantity (Not exist if refused)</span>
+  <span class="s2">"Z"</span><span class="p">:</span> <span class="s2">"0.00000000"</span><span class="p">,</span>             <span class="c1">// Cumulative filled sum(Not exist if refused)</span>
+
+<span class="p">}</span>
+</code></pre><h4 id='possible-executive-type-of-contract-x-field'>Possible executive type of contract(X field):</h4>
+<ul>
+<li>ENTRUSTED </li>
+<li>ENTRUSTING </li>
+<li>FAIL </li>
+<li>PARTFILLED </li>
+<li>FILLED </li>
+<li>CANCEL<br></li>
+</ul>
+
+<blockquote>
+<p>Response example if refused:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="nl">E</span><span class="p">:</span> <span class="mi">1571225843289</span>
+  <span class="nl">X</span><span class="p">:</span> <span class="s2">"FAIL"</span>
+  <span class="nl">e</span><span class="p">:</span> <span class="s2">"execContractReport"</span>
+  <span class="nl">i</span><span class="p">:</span> <span class="s2">"4612616205276108403"</span>
+  <span class="nl">r</span><span class="p">:</span> <span class="s2">"insufficient Available"</span>  
+<span class="p">}</span>
+</code></pre><h4 id='if-refused-r-field'>if refused(R field)</h4>
+<ul>
+<li> insufficient Available</li>
+<li> too many pending requests</li>
+<li> position is being liquidated</li>
+<li> position is being closed</li>
+<li> closing empty position</li>
+<li> closing order is enough</li>
+<li> contract is disabled</li>
+<li> reach liquidation price</li>
+<li> reach risk limit</li>
+</ul>
+<h3 id='contract-positions'>Contract positions</h3>
+<ul>
+<li>Where there is a change in contract position</li>
+<li>event type is  contractPositions</li>
+</ul>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"E"</span><span class="p">:</span> <span class="mi">1553050064078</span><span class="p">,</span>
+    <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"contractPositions"</span><span class="p">,</span>
+    <span class="s2">"p"</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s2">"M"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span> <span class="c1">// Largest leverage available </span>
+        <span class="s2">"R"</span><span class="p">:</span> <span class="s2">"3903.99060000"</span><span class="p">,</span> <span class="c1">// Used risk limits</span>
+        <span class="s2">"S"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">// sell Entrusted value</span>
+        <span class="s2">"a"</span><span class="p">:</span> <span class="s2">"20"</span><span class="p">,</span> <span class="c1">// Auto-deleverage sequence</span>
+        <span class="s2">"b"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">// buy Entrusted value</span>
+        <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"1301.33020000"</span><span class="p">,</span> <span class="c1">//Open price</span>
+        <span class="s2">"d"</span><span class="p">:</span> <span class="s2">"longs"</span><span class="p">,</span> <span class="c1">//Direction </span>
+        <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"0.05"</span><span class="p">,</span> <span class="c1">//Initial margin</span>
+        <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"-49.9759"</span><span class="p">,</span> <span class="c1">//Close price</span>
+        <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"0.005"</span><span class="p">,</span> <span class="c1">//Maintenance Margin</span>
+        <span class="s2">"n"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="c1">//Current entrusted value </span>
+        <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"4088.0779300000"</span><span class="p">,</span> <span class="c1">//Margin</span>
+        <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"3.0000"</span><span class="p">,</span><span class="c1">//Holding positions </span>
+        <span class="s2">"r"</span><span class="p">:</span> <span class="s2">"900000"</span><span class="p">,</span><span class="c1">//Current risk value</span>
+        <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"EOSUSDT"</span><span class="p">,</span><span class="c1">//Symbol</span>
+        <span class="s2">"t"</span><span class="p">:</span> <span class="s2">"3903.99060000"</span><span class="p">,</span> <span class="c1">//Holding positions costs value </span>
+        <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"20.00"</span><span class="c1">//Leverage</span>
+    <span class="p">}]</span>
+<span class="p">}</span>
+
+</code></pre><h1 id='web-socket-streams'>Web Socket Streams</h1><h2 id='general-wss-information'>General WSS information</h2>
+<ul>
+<li>The base endpoint is: <strong>wss://ws.jex.com</strong> </li>
+<li>Streams can be accessed either in a single raw stream or in a combined stream</li>
+<li>Raw streams are accessed at <strong>/ws/&lt;streamName&gt;</strong></li>
+<li>Combined streams are accessed at <strong>/stream?streams=&lt;streamName1&gt;/&lt;streamName2&gt;/&lt;streamName3&gt;</strong></li>
+<li>Combined stream events are wrapped as follows: <strong>{&quot;stream&quot;:&quot;&lt;streamName&gt;&quot;,&quot;data&quot;:&lt;rawPayload&gt;}</strong></li>
+<li>All symbols for streams are <strong>lowercase</strong></li>
+<li>A single connection to <strong>stream.jex.com</strong> is only valid for 24 hours; expect to be disconnected at the 24 hour mark</li>
+<li>The websocket server will send a <code>ping frame</code> every 3 minutes. If the websocket server does not receive a <code>pong frame</code> back from the connection within a 10 minute period, the connection will be disconnected. Unsolicited <code>pong frames</code> are allowed.</li>
+<li>WSS contract order sells are uniformly negative</li>
+<li>It is recommended to use the combined streams method for connection. Each combined stream can subscribe to a maximum of 10 streams</li>
+</ul>
+<h2 id='stream-detailed-stream-information'>Stream Detailed Stream information</h2><h2 id='websocket-trade-streams'>Websocket Trade Streams</h2>
+<ul>
+<li>Every 100 ms push, every single transaction in the last second is defined as a transaction between only one order taker and one bill holder.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-tradetype-gt'>Stream Name: &lt;symbol&gt;@&lt;tradeType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="p">[{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotTrade"</span><span class="p">,</span>    <span class="c1">//  Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>      <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>       <span class="c1">// Symbol</span>
+  <span class="s2">"t"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>          <span class="c1">// Trade ID</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.001"</span><span class="p">,</span>        <span class="c1">// Price</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span>          <span class="c1">// Quantity</span>
+  <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123456785</span><span class="p">,</span>      <span class="c1">// Trade time</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>           <span class="c1">// Is the buyer the market maker?If true，this is a seller order，otherwise it is a buyer order.</span>
+<span class="p">},{...},...</span>
+<span class="p">]</span>
+</code></pre><h3 id='tradetype'>tradeType</h3>
+<ul>
+<li>Support 3 types as below:
+
+<ul>
+<li>spotTrade </li>
+<li>optionTrade </li>
+<li>contractTrade </li>
+</ul></li>
+</ul>
+<h2 id='websocket-kline-candlestick-streams'>Websocket Kline/Candlestick Streams</h2>
+<ul>
+<li><p>The Kline/Candlestick Stream push updates to the current klines/candlestick every second</p></li>
+<li><p>Booking Kline requires interval parameter, shortest one is minute line, longest one is week line. Support intervals as below:</p>
+
+<ul>
+<li>1M </li>
+<li>5M </li>
+<li>15M </li>
+<li>30M</li>
+<li>1H </li>
+<li>4H</li>
+<li>1D </li>
+<li>1W</li>
+</ul></li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-klinetype-gt-_-lt-interval-gt'>Stream Name: &lt;symbol&gt;@&lt;klineType&gt;_&lt;interval&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotKline"</span><span class="p">,</span>     <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>       <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>        <span class="c1">// Symbol</span>
+  <span class="s2">"k"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"t"</span><span class="p">:</span> <span class="mi">123400000</span><span class="p">,</span>     <span class="c1">// Kline start time</span>
+    <span class="s2">"T"</span><span class="p">:</span> <span class="mi">123460000</span><span class="p">,</span>     <span class="c1">// Kline close time</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>      <span class="c1">// Symbol</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"1m"</span><span class="p">,</span>          <span class="c1">// Interval</span>
+    <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>      <span class="c1">// Open price</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0020"</span><span class="p">,</span>      <span class="c1">// Close price</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>      <span class="c1">// High price</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>      <span class="c1">// Low price</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"1000"</span><span class="p">,</span>        <span class="c1">// Base asset volume</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"1.0000"</span><span class="p">,</span>      <span class="c1">// Quote asset volume</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre><h3 id='klinetype'>klineType</h3>
+<p>-Support types
+  - spotKline
+  - optionKline
+  - contractKline</p>
+<h2 id='individual-symbol-mini-ticker-stream'>Individual Symbol Mini Ticker Stream</h2>
+<ul>
+<li>24hr rolling window mini-ticker statistics for a single symbol pushed every second.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-minitickertype-gt'>Stream Name: &lt;symbol&gt;@&lt;miniTickerType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotMiniTicker"</span><span class="p">,</span>   <span class="c1">// Event type</span>
+    <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>              <span class="c1">// Event time</span>
+    <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>               <span class="c1">// Symbol</span>
+    <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// Close price</span>
+    <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">//  High  price</span>
+    <span class="s2">"o"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>               <span class="c1">// Open price</span>
+    <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>               <span class="c1">// Low price</span>
+    <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// mark price(Only  contractMiniTicker have)</span>
+    <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// index price(Only contractMiniTicker have)</span>
+    <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>                <span class="c1">// Base asset volume</span>
+    <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span>                    <span class="c1">// Total traded quote asset volume</span>
+<span class="p">}</span>
+
+</code></pre><h3 id='minitickertype'>miniTickerType</h3>
+<ul>
+<li>Support types:
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='all-market-mini-tickers-stream'>All Market Mini Tickers Stream</h2>
+<ul>
+<li>24hr rolling window mini-ticker statistics for all symbols that changed in an array pushed every second</li>
+</ul>
+<h3 id='streamname-lt-minitickertype-gt-arr'>StreamName: !&lt;miniTickerType&gt;@arr</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="p">[</span>
+  <span class="p">{</span>
+     <span class="c1">// Same as &lt;symbol&gt;@miniTicker payload</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre><h3 id='minitickertype-2'>miniTickerType</h3>
+<ul>
+<li>Support types: 
+
+<ul>
+<li>spotMiniTicker</li>
+<li>optionMiniTicker</li>
+<li>contractMiniTicker</li>
+</ul></li>
+</ul>
+<h2 id='individual-symbol-ticker-streams'>Individual Symbol Ticker Streams</h2>
+<ul>
+<li>24hr rollwing window ticker statistics for a single symbol pushed every second. </li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-tickertype-gt'>Stream Name: &lt;symbol&gt;@&lt;tickerType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  </p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"24hrSpotTicker"</span><span class="p">,</span>  <span class="c1">// Event type</span>
+  <span class="s2">"E"</span><span class="p">:</span> <span class="mi">123456789</span><span class="p">,</span>         <span class="c1">// Event time</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// Symbol</span>
+  <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"0.0015"</span><span class="p">,</span>          <span class="c1">// Price change in 24h</span>
+  <span class="s2">"P"</span><span class="p">:</span> <span class="s2">"250.00"</span><span class="p">,</span>          <span class="c1">// Price change in 24h percent</span>
+  <span class="s2">"c"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// Last price</span>
+  <span class="s2">"h"</span><span class="p">:</span> <span class="s2">"0.0025"</span><span class="p">,</span>          <span class="c1">// Highest price in 24h</span>
+  <span class="s2">"l"</span><span class="p">:</span> <span class="s2">"0.0010"</span><span class="p">,</span>          <span class="c1">// Lowest price in 24h</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// Trade volume in 24h</span>
+  <span class="s2">"q"</span><span class="p">:</span> <span class="s2">"18"</span><span class="p">,</span>              <span class="c1">// Trade asset in 24h</span>
+  <span class="s2">"m"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// mark price(Only  contractMiniTicker have)</span>
+  <span class="s2">"i"</span><span class="p">:</span> <span class="s2">"10000"</span><span class="p">,</span>           <span class="c1">// index price(Only contractMiniTicker have)</span>
+  <span class="s2">"O"</span><span class="p">:</span> <span class="mi">1234567890</span><span class="p">,</span>        <span class="c1">// TODO 0  Starting time</span>
+  <span class="s2">"C"</span><span class="p">:</span> <span class="mi">86400000</span><span class="p">,</span>          <span class="c1">// TODO 3600*24*1000，milliseconds in 24h  ending time</span>
+<span class="p">}</span>
+</code></pre><h2 id='all-market-tickers-stream'>All Market Tickers Stream</h2>
+<blockquote>
+<p>24hr rolling window ticker statistics for all symbols that changed in an array pushed every second.</p>
+</blockquote>
+<h3 id='streamname-lt-tickertype-gt-arr'>StreamName: !&lt;tickerType&gt;@arr</h3><h3 id='payload'>Payload:</h3><pre class="highlight javascript tab-javascript"><code><span class="p">[</span>
+  <span class="p">{</span>
+     <span class="c1">//Same as &lt;symbol&gt;@ticker payload</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre>
+<ul>
+<li>tickerType 
+
+<ul>
+<li>spotTicker</li>
+<li>optionTicker</li>
+<li>contractTicker</li>
+</ul></li>
+</ul>
+<h2 id='partial-book-depth-streams'>Partial Book Depth Streams</h2>
+<ul>
+<li>Top <levels> bids and asks, pushed every second. Valid <levels> are 5, 10, or 20.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-depthtype-gt-lt-levels-gt'>Stream Name: &lt;symbol&gt;@&lt;depthType&gt;&lt;levels&gt;</h3>
+<blockquote>
+<p><strong>Response</strong>  :</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"bids"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// Buy</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>         <span class="c1">// Price</span>
+      <span class="s2">"10"</span><span class="p">,</span>             <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"asks"</span><span class="p">:</span> <span class="p">[</span>             <span class="c1">// Sell</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>         <span class="c1">// Price</span>
+      <span class="s2">"100"</span><span class="p">,</span>            <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType 
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>levels 
+
+<ul>
+<li>5</li>
+<li>10</li>
+<li>20</li>
+</ul></li>
+</ul>
+<h2 id='diff-depth-stream'>Diff. Depth Stream</h2>
+<ul>
+<li>Order book price and quantity depth updates used to locally manage an order book pushed every second.</li>
+</ul>
+<h3 id='stream-name-lt-symbol-gt-lt-depthtype-gt'>Stream Name: &lt;symbol&gt;@&lt;depthType&gt;</h3>
+<blockquote>
+<p><strong>Response</strong> :</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+  <span class="s2">"e"</span><span class="p">:</span> <span class="s2">"spotDepthUpdate"</span><span class="p">,</span> <span class="c1">// Event type</span>
+  <span class="s2">"s"</span><span class="p">:</span> <span class="s2">"JEXBTC"</span><span class="p">,</span>          <span class="c1">// Symbol</span>
+  <span class="s2">"v"</span><span class="p">:</span> <span class="mi">157</span><span class="p">,</span>               <span class="c1">// Version to be updated</span>
+  <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span>                  <span class="c1">// Changing depth for buyer</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0024"</span><span class="p">,</span>          <span class="c1">// Price</span>
+      <span class="s2">"10"</span><span class="p">,</span>              <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"a"</span><span class="p">:</span> <span class="p">[</span>                 <span class="c1">// Changing depth for seller</span>
+    <span class="p">[</span>
+      <span class="s2">"0.0026"</span><span class="p">,</span>          <span class="c1">// Price</span>
+      <span class="s2">"100"</span><span class="p">,</span>             <span class="c1">// Quantity</span>
+    <span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>depthType Support types
+
+<ul>
+<li>spotDepth</li>
+<li>optionDepth</li>
+<li>contractDepth</li>
+</ul></li>
+<li>Types for Depth Streams 
+
+<ul>
+<li>spotDepthUpdate</li>
+<li>optionDepthUpdate</li>
+<li>contractDepthUpdate</li>
+</ul></li>
+</ul>
+<h1 id='error-codes'>Error Codes</h1>
+<p>JEX Rest接口(包括wapi)返回的错误包含两部分，错误码与错误信息. 错误码是大类，一个错误码可能对应多个不同的错误信息。
+以下是一个完整错误码实例
+<code>javascript
+{
+  &quot;code&quot;:-1121,
+  &quot;msg&quot;:&quot;Invalid symbol.&quot;
+}
+</code></p>
+<h4 id='1'>-1</h4>
+<ul>
+<li>失败  fail
+#### 0</li>
+<li>成功  success
+#### -5</li>
+<li>ip非法调用  fail
+#### -6</li>
+<li>method非法调用  fail</li>
+</ul>
+<h2 id='10xx'>10xx - 服务器或网络问题</h2><h4 id='1000'>-1000 未知错误</h4>
+<ul>
+<li>未知错误</li>
+</ul>
+<h4 id='1001'>-1001 连接断开</h4>
+<ul>
+<li>通常是一个内部错误，一般重试即可解决。</li>
+</ul>
+<h4 id='1002'>-1002 未授权</h4>
+<ul>
+<li>请检查你的(API)权限</li>
+</ul>
+<h4 id='1003'>-1003 请求过多</h4>
+<ul>
+<li>请求过于频繁超过限制。如果导致了IP地址被封禁，错误消息中会给出解封时间。解决这类问题建议减少rest接口轮询，多采用websocket接收事务消息推送。</li>
+</ul>
+<h4 id='1006'>-1006 非常规响应</h4>
+<ul>
+<li>（从内部）接收到了不符合预设格式的消息，下单状态未知。</li>
+</ul>
+<h4 id='1007'>-1007 超时</h4>
+<ul>
+<li>后端服务超时，下单状态未知。</li>
+</ul>
+<h4 id='1014'>-1014 不支持的订单参数(组合)</h4>
+<ul>
+<li>不支持的订单参数组合. </li>
+</ul>
+<h4 id='1015'>-1015 订单太多</h4>
+<ul>
+<li>下单(撤单)太多</li>
+</ul>
+<h4 id='1016'>-1016 服务器下线</h4>
+<ul>
+<li>服务器下线</li>
+</ul>
+<h4 id='1020'>-1020 不支持的操作</h4>
+<ul>
+<li>不支持的操作</li>
+</ul>
+<h4 id='1021'>-1021 时间同步问题</h4>
+<ul>
+<li>时延过大，服务器根据接请求中的时间戳判定耗时已经超出了recevWindow。请改善网络条件或者增大recevWindow。</li>
+<li>时间偏移过大，服务器根据请求中的时间戳判定客户端时间比服务器时间提前了1秒钟以上。(该参数不可由客户端调节)</li>
+</ul>
+<h4 id='1022'>-1022 签名不正确</h4>
+<ul>
+<li>请求中携带的signature与服务器根据规则计算得到的signature不一致。通常是因为客户端代码中使用的apisecret错误。</li>
+</ul>
+<h2 id='11xx'>11xx - 请求内容中的问题</h2><h4 id='1100'>-1100 非法字符</h4>
+<ul>
+<li>Illegal characters found in a parameter.</li>
+<li>Illegal characters found in parameter &#39;%s&#39;; legal range is &#39;%s&#39;.</li>
+<li>Illegal characters found in parameter &#39;%s&#39; value &#39;%s&#39;</li>
+</ul>
+<h4 id='1101'>-1101 参数太多</h4>
+<ul>
+<li>Too many parameters sent for this endpoint.</li>
+<li>Too many parameters; expected &#39;%s&#39; and received &#39;%s&#39;.</li>
+<li>Duplicate values for a parameter detected.</li>
+</ul>
+<h4 id='1102'>-1102 缺少必须参数</h4>
+<ul>
+<li>A mandatory parameter was not sent, was empty/null, or malformed.</li>
+<li>Mandatory parameter &#39;%s&#39; was not sent, was empty/null, or malformed.</li>
+<li>Param &#39;%s&#39; or &#39;%s&#39; must be sent, but both were empty/null!</li>
+</ul>
+<h4 id='1103'>-1103 无法识别的参数</h4>
+<ul>
+<li>An unknown parameter was sent.</li>
+</ul>
+<h4 id='1104'>-1104 冗余参数</h4>
+<ul>
+<li>Not all sent parameters were read.</li>
+<li>Not all sent parameters were read; read &#39;%s&#39; parameter(s) but was sent &#39;%s&#39;.</li>
+</ul>
+<h4 id='1105'>-1105 空参数(仅有参数名)</h4>
+<ul>
+<li>A parameter was empty.</li>
+<li>Parameter &#39;%s&#39; was empty.</li>
+</ul>
+<h4 id='1106'>-1106 非必需参数</h4>
+<ul>
+<li>A parameter was sent when not required.</li>
+<li>Parameter &#39;%s&#39; sent when not required.</li>
+</ul>
+<h4 id='1111'>-1111 精度过高</h4>
+<ul>
+<li>Precision is over the maximum defined for this asset.</li>
+</ul>
+<h4 id='1112-orderbook'>-1112 空白的orderbook</h4>
+<ul>
+<li>No orders on book for symbol.</li>
+</ul>
+<h4 id='1114-tif'>-1114 错误地发送了不需要的TIF参数</h4>
+<ul>
+<li>TimeInForce parameter sent when not required.</li>
+</ul>
+<h4 id='1115-tif'>-1115 无效的TIF参数</h4>
+<ul>
+<li>Invalid timeInForce.</li>
+</ul>
+<h4 id='1116'>-1116 无效的订单类型</h4>
+<ul>
+<li>Invalid orderType.</li>
+</ul>
+<h4 id='1117'>-1117 无效的订单方向</h4>
+<ul>
+<li>Invalid side.</li>
+</ul>
+<h4 id='1118-newclientorderid'>-1118 空白的newClientOrderId</h4>
+<ul>
+<li>New client order ID was empty.</li>
+</ul>
+<h4 id='1119-originalclientorderid'>-1119 空白的originalClientOrderId</h4>
+<ul>
+<li>Original client order ID was empty.</li>
+</ul>
+<h4 id='1120-interval'>-1120 无效的间隔(interval)</h4>
+<ul>
+<li>Invalid interval.</li>
+</ul>
+<h4 id='1121'>-1121 无效的交易对</h4>
+<ul>
+<li>Invalid symbol.</li>
+</ul>
+<h4 id='1125-listenkey'>-1125 无效的listenKey</h4>
+<ul>
+<li>This listenKey does not exist.</li>
+</ul>
+<h4 id='1127'>-1127 开始结束时间错误</h4>
+<ul>
+<li>endTime befor startTime or  More than &#39;%s&#39; between startTime and endTime.</li>
+<li>endTime befor startTime </li>
+</ul>
+<h4 id='1128'>-1128 无效的可选参数组合</h4>
+<ul>
+<li>Combination of optional parameters invalid.</li>
+</ul>
+<h4 id='1129'>-1129 下单小数位错误</h4>
+<ul>
+<li>error  scale  in parameter &#39;%s&#39;,should be  scale no more than &#39;%s&#39;</li>
+</ul>
+<h4 id='2010'>-2010 订单被拒绝</h4>
+<ul>
+<li>NEW_ORDER_REJECTED</li>
+</ul>
+<h4 id='2011'>-2011 订单取消被拒绝</h4>
+<ul>
+<li>CANCEL_REJECTED</li>
+</ul>
+<h4 id='2012'>-2012 不存在的订单</h4>
+<ul>
+<li>Order does not exist.</li>
+</ul>
+<h4 id='2013'>-2013 不存在的订单</h4>
+<ul>
+<li>Order does not exist.</li>
+</ul>
+<h4 id='2014-api-key'>-2014 API Key格式无效</h4>
+<ul>
+<li>API-key format invalid.</li>
+</ul>
+<h4 id='2015-api-key-key-ip'>-2015 API Key权限，例如该Key不存在、请求并非来自允许的IP范围、或者该接口对应权限未开放</h4>
+<ul>
+<li>Invalid API-key, IP, or permissions for action.</li>
+</ul>
+<h4 id='2016-no_trading_window'>-2016 NO_TRADING_WINDOW</h4>
+<ul>
+<li>No trading window could be found for the symbol. Try ticker/24hrs instead.
+### -2019 ORDER_NUMBER_MAX 达到此订单类型的最大的当前委托</li>
+<li>reach max order number</li>
+</ul>
+<h2 id='1010'>-1010 收到了错误消息</h2>
+<p>这个错误代码是由撮合引擎抛出的，引擎还会抛出2010和2011，具体原因需要参考下面列出的具体消息</p>
+
+<table><thead>
+<tr>
+<th>错误消息</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&quot;Unknown order sent.&quot;</td>
+<td>找不到订单， (根据请求里发送的 <code>orderId</code>, <code>clOrdId</code>, <code>origClOrdId</code>)</td>
+</tr>
+<tr>
+<td>&quot;Duplicate order sent.&quot;</td>
+<td>客户自定义的订单号重复了</td>
+</tr>
+<tr>
+<td>&quot;Market is closed.&quot;</td>
+<td>该交易对交易关闭了</td>
+</tr>
+<tr>
+<td>&quot;Account has insufficient balance for requested action.&quot;</td>
+<td>账户金额不足。</td>
+</tr>
+<tr>
+<td>&quot;Market orders are not supported for this symbol.&quot;</td>
+<td>该交易对无法发起市价单</td>
+</tr>
+<tr>
+<td>&quot;Price * QTY is zero or less.&quot;</td>
+<td>订单金额必须大于0</td>
+</tr>
+<tr>
+<td>&quot;IcebergQty exceeds QTY.&quot;</td>
+<td>冰山订单中小订单的Quantity必须小于总的Quantity</td>
+</tr>
+<tr>
+<td>&quot;This action disabled is on this account.&quot;</td>
+<td>账户被封禁，联系客服</td>
+</tr>
+<tr>
+<td>&quot;Unsupported order combination&quot;</td>
+<td><code>orderType</code>, <code>timeInForce</code>, <code>stopPrice</code>, 某些参数取某些值的时候另一些参数必须/不得提供。</td>
+</tr>
+<tr>
+<td>&quot;Cancel order is invalid. Check origClOrdId and orderId.&quot;</td>
+<td>撤销订单必须提供<code>origClOrdId</code>或者<code>orderId</code>中的一个。</td>
+</tr>
+<tr>
+<td>&quot;Order would immediately match and take.&quot;</td>
+<td><code>LIMIT_MAKER</code> 订单如果按照规则会成为Taker，就会报此错。</td>
+</tr>
+</tbody></table>
+<h4 id='6000'>-6000</h4>
+<ul>
+<li>禁止交易  user prohibit trade</li>
+</ul>
+<h4 id='7001'>-7001</h4>
+<ul>
+<li>转移保证金失败  Transfer margin error.</li>
+</ul>
+<h4 id='7002'>-7002</h4>
+<ul>
+<li>调整杠杆失败  Set leverage error.</li>
+</ul>
+<h4 id='7003'>-7003</h4>
+<ul>
+<li>设置风险值失败  Set risk limit error.</li>
+</ul>
+<h4 id='7004'>-7004</h4>
+<ul>
+<li>下单失败 Please try it later.</li>
+</ul>
+<h4 id='7005'>-7005</h4>
+<ul>
+<li>撤单失败  Cancel error, Please try it later.</li>
+</ul>
+<h4 id='7006'>-7006</h4>
+<ul>
+<li>超过风险限额  Over risk.</li>
+</ul>
+<h4 id='7007'>-7007</h4>
+<ul>
+<li>可用资产不足  asset not enough</li>
+</ul>
+<h4 id='7008'>-7008</h4>
+<ul>
+<li>可用保证金不足  margin not enough</li>
+</ul>
+<h4 id='7009'>-7009</h4>
+<ul>
+<li>发行数量已达到平台风控限额  system asset not enough</li>
+</ul>
+<h4 id='7010'>-7010</h4>
+<ul>
+<li>杠杆过大  Contract leverage too large</li>
+</ul>
+<h4 id='7011'>-7011</h4>
+<ul>
+<li>杠杆过小  Contract leverage too small</li>
+</ul>
+<h4 id='7012'>-7012</h4>
+<ul>
+<li>期权不存在  option not exist</li>
+</ul>
+<h4 id='7013'>-7013</h4>
+<ul>
+<li>期权行权时间已过  passed option exercise time</li>
+</ul>
+<h4 id='7014'>-7014</h4>
+<ul>
+<li>无可赎回期权,请先发行期权  no release option</li>
+</ul>
+<h4 id='7015'>-7015</h4>
+<ul>
+<li>赎回数量大于可赎数量   back amount greater than release amount</li>
+</ul>
+<h4 id='7016'>-7016</h4>
+<ul>
+<li>保证金冻结异常，请联系客服  margin anomaly</li>
+</ul>
+<h4 id='7017'>-7017</h4>
+<ul>
+<li>杠杆过大  Contract leverage too large,must smaller than 100</li>
+</ul>
+<h4 id='7018'>-7018</h4>
+<ul>
+<li>杠杆过小  Contract leverage too small,must larger than 1</li>
+</ul>
+<h4 id='7019'>-7019</h4>
+<ul>
+<li>平仓失败  Liquidation fail</li>
+</ul>
+<h4 id='7020'>-7020</h4>
+<ul>
+<li>仓位不存在  Contract position not exists</li>
+</ul>
+<h2 id='8xxx'>-8xxx 提现错误</h2><h4 id='8000'>-8000</h4>
+<ul>
+<li>提现数量错误  withdraw amount error</li>
+</ul>
+<h4 id='8001'>-8001</h4>
+<ul>
+<li>禁止提现  withdraw is forbidden</li>
+</ul>
+<h4 id='8002'>-8002</h4>
+<ul>
+<li>提现费率错误  withdraw fee error</li>
+</ul>
+<h4 id='8003'>-8003</h4>
+<ul>
+<li>提现地址错误  withdraw address error</li>
+</ul>
+<h4 id='8004'>-8004</h4>
+<ul>
+<li>资产不足  your balance is not enough</li>
+</ul>
+<h4 id='8005'>-8005</h4>
+<ul>
+<li>超过提币额度  withdraw day amount is limited</li>
+</ul>
+<h4 id='8006'>-8006</h4>
+<ul>
+<li>资产错误或资产不支持提现  withdraw asset error</li>
+</ul>
+<h2 id='9xxx'>-9xxx 订单未能通过过滤器</h2>
+<table><thead>
+<tr>
+<th>错误信息</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>&quot;Filter failure: PRICE_FILTER&quot;</td>
+<td>检查价格的上限、下限、步进间隔。</td>
+</tr>
+<tr>
+<td>&quot;Filter failure: PERCENT_PRICE&quot;</td>
+<td>检查订单中价格是否相对于过去N分钟的平均价格变动超过了百分之X。</td>
+</tr>
+<tr>
+<td>&quot;Filter failure: LOT_SIZE&quot;</td>
+<td>检查订单中数量的上限、下线、步进间隔。</td>
+</tr>
+<tr>
+<td>&quot;Filter failure: MIN_NOTIONAL&quot;</td>
+<td><code>price</code> * <code>quantity</code>，也就是订单金额，是否超过了最小值。</td>
+</tr>
+<tr>
+<td>&quot;Filter failure: MARKET_LOT_SIZE&quot;</td>
+<td>与LOT_SIZE含义一致，只是对市价单生效。</td>
+</tr>
+<tr>
+<td>&quot;Filter failure: MAX_NUM_ORDERS&quot;</td>
+<td>账户在该交易对下最多挂单数。</td>
+</tr>
+<tr>
+<td>&quot;Filter failure: EXCHANGE_MAX_NUM_ORDERS&quot;</td>
+<td>账户在全交易所最多的挂单数。</td>
+</tr>
+</tbody></table>
+<h3 id='9000'>-9000 下单被拒</h3>
+<ul>
+<li>下单被拒  校验参数</li>
+</ul>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+
+  <script>
+  const page = ["spot","option","future","testnet"];
+  const pageObject = {
+    "spot" : {
+      "text": "Spot",
+      "url": "/spot",
+    },
+    "option" :{
+      "text": "Option",
+      "url": "/options",
+    },
+    "future" : {
+      "text": "Futures",
+      "url": "/futures",
+    },
+    "testnet" : {
+      "text": "Futures Testnet",
+      "url": "https://testnet.jexzh.com/",
+    },
+  }
+  const htmlItem = location.href.split("/").find(item=>item.indexOf(".html") >= 0) || "future_CN.html";
+  page.forEach((item,index)=>{
+    if(htmlItem.indexOf(item) >= 0){
+      document.querySelectorAll("#data-nav li a")[index].className = "current";
+    }
+  })
+
+  if(htmlItem){
+    if(htmlItem.indexOf("_CN") > 0){
+      const arr = location.href.split("/");
+      arr.splice(-1,1,htmlItem.replace("_CN.html",".html"))
+      const url = arr.join("/");
+      document.querySelector("#language").href = url;
+      document.querySelectorAll("#data-nav li a span.chinese").forEach(item=>{
+        item.style="display:block"
+      })
+      document.querySelector("#language .chinese").style = "display:block;"
+      document.querySelectorAll(".toc-footer li a")[0].href = index !== 4 ? "https://www.jexzh.com" + "/cn" + pageObject[page[index]].url : pageObject[page[index]].url + "/cn"; 
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/cn" + pageObject[page[index]].text; 
+    }else{
+      document.querySelector("#language").href = location.href.replace(".html","_CN.html");
+      document.querySelectorAll("#data-nav li a").forEach(item=>{
+        item.href = item.href.replace("_CN.html",".html") ; 
+      })
+      document.querySelectorAll("#data-nav li a span.english").forEach(item=>{
+        item.style="display:block"
+      })
+      document.querySelector("#language .english").style = "display:block;"
+      document.querySelectorAll(".toc-footer li a")[0].href = index !== 4 ? "https://www.jex.com" + "/en" + pageObject[page[index]].url : pageObject[page[index]].url + "/en"; 
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/en" + pageObject[page[index]].text;  
+    }
+  }
+  </script>
+</html>
+

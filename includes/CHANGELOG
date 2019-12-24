@@ -1,0 +1,90 @@
+<h1 id='change-log'>Change Log</h1>
+<p><strong>2019-12-23</strong></p>
+
+<p><strong>Rest API</strong></p>
+
+<ul>
+<li>Add interface get all orders  <code>/api/v1/contract/batchOrder (HMAC SHA256)</code>  get all orders.</li>
+</ul>
+
+<p><strong>2019-10-28</strong></p>
+
+<p><strong>websocket</strong></p>
+
+<ul>
+<li>Optimize websocket to make connections more stable</li>
+<li>It is recommended to use the combined streams method for connection. Each combined stream can subscribe to a maximum of 10 streams</li>
+</ul>
+
+<p><strong>2019-10-22</strong></p>
+
+<p><strong>Rest API</strong></p>
+
+<ul>
+<li>New contract order type: <code>stopLimit</code>,<code>profitLimit</code></li>
+<li>User can preset the Take profit/Stop command with the trigger price, commission price, and commission quantity in advance. When the corresponding “indicator” satisfies the trigger price set by the user, the order will be triggered, then the system will submit an order according to the price and quantity set by the user</li>
+</ul>
+<h4 id='trigger-price-of-condition-order-must-be'>Trigger price of condition order must be:</h4>
+<ul>
+<li><p>Take Profit</p>
+
+<ul>
+<li>Long: when it&#39;s bullish, set the trigger price higher than the latest price (or mark price, index), you can set the sell Take profit order;</li>
+<li>Short: If it&#39;s bearish, set the trigger price below the latest price (or mark price, index), you can set the buy Take profit order;</li>
+</ul></li>
+<li><p>Stop</p>
+
+<ul>
+<li>Long: when it&#39;s bearish, set the trigger price below the latest price (or mark the price, index),  you can set the sell Stop order;</li>
+<li> Short: If it&#39;s bullish, set the trigger price higher than the latest price (or mark the price, index),you can set the buy Stop order;</li>
+</ul></li>
+<li><p>When the trigger price = the latest price (or mark price, index), or no position, the Take profit/Stop order can not be set;</p></li>
+</ul>
+
+<p><strong>2019-10-15</strong></p>
+
+<ul>
+<li>Document update</li>
+<li>Increase the log of document updates</li>
+<li>Add updates to frequently asked questions</li>
+</ul>
+
+<p><strong>2019-10-14</strong></p>
+
+<ul>
+<li>Rest API</li>
+<li>Maximum 200 open orders per contract per account;</li>
+<li>Maximum 10 stop profit or stop orders per contract per account;</li>
+<li>When placing a new order that causes these caps to be exceeded, it will be rejected with the message “has reach max order number [200|10]</li>
+</ul>
+
+<p><strong>2019-10-11</strong></p>
+
+<ul>
+<li>Rest API</li>
+<li>Add interface cancel all orders  <code>/api/v1/contract/batchOrder (HMAC SHA256)</code>  cancel all orders</li>
+<li>Add interface Contract bill of obtained account  <code>//api/v1/contract/userHistoricalTrades</code>  Contract bill of obtained account</li>
+</ul>
+
+<p><strong>2019-09-27</strong></p>
+
+<p><strong>Rest API</strong></p>
+
+<ul>
+<li>New <code>intervalLetter</code> values for headers:
+
+<ul>
+<li>SECOND =&gt; S</li>
+<li>MINUTE =&gt; M</li>
+<li>HOUR =&gt; H</li>
+<li>DAY =&gt; D</li>
+</ul></li>
+<li>New Headers <code>X-MBX-USED-WEIGHT-(intervalNum)(intervalLetter)</code> will give your current used request weight for the (intervalNum)(intervalLetter) rate limiter. For example, if there is a one minute request rate weight limiter set, you will get a <code>X-MBX-USED-WEIGHT-1M</code> header in the response. The legacy header <code>X-MBX-USED-WEIGHT</code> will still be returned and will represent the current used weight for the one minute request rate weight limit.</li>
+<li>New Header <code>X-MBX-ORDER-COUNT-(intervalNum)(intervalLetter)</code>that is updated on any valid order placement and tracks your current order count for the interval; rejected/unsuccessful orders are not guaranteed to have <code>X-MBX-ORDER-COUNT-**</code> headers in the response.
+
+<ul>
+<li>Eg. <code>X-MBX-ORDER-COUNT-1S</code> for &quot;orders per 1 second&quot; and <code>X-MBX-ORDER-COUNT-1D</code> for orders per &quot;one day&quot;</li>
+</ul></li>
+<li>GET api/v1/depth now supports <code>limit</code> 5000 and 10000; weights are 50 and 100 respectively.</li>
+<li>GET api/v1/exchangeInfo has a new parameter <code>ocoAllowed</code>.</li>
+</ul>
