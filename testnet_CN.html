@@ -3744,7 +3744,7 @@ NONE</p>
       document.querySelector("#language .chinese").style = "display:block;"
       document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/cn" + pageObject[currentPage]
         .url : pageObject[currentPage].url + "/cn";
-      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/cn" + pageObject[currentPage].text;
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + pageObject[currentPage].text;
     } else {
       document.querySelector("#language").href = location.href.replace(".html", "_CN.html");
       document.querySelectorAll("#data-nav li a").forEach(item => {
@@ -3756,7 +3756,7 @@ NONE</p>
       document.querySelector("#language .english").style = "display:block;"
       document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/en" + pageObject[currentPage]
         .url : pageObject[currentPage].url + "/en";
-      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + "/en" + pageObject[currentPage].text;
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + pageObject[currentPage].text;
     }
   }
   </script>
