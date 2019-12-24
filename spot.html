@@ -3247,8 +3247,8 @@ When there is a change of asset, relevant event will be pushed</li>
   })
 
   if (htmlItem) {
-    const currentPage = htmlItem.split("_")[0];
     if (htmlItem.indexOf("_CN") > 0) {
+      const currentPage = htmlItem.split("_")[0];                      
       const arr = location.href.split("/");
       arr.splice(-1, 1, htmlItem.replace("_CN.html", ".html"))
       const url = arr.join("/");
@@ -3261,6 +3261,7 @@ When there is a change of asset, relevant event will be pushed</li>
         .url : pageObject[currentPage].url + "/cn";
       document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + pageObject[currentPage].text;
     } else {
+      const currentPage = htmlItem.replace(".html","_CN.html").split("_")[0];
       document.querySelector("#language").href = location.href.replace(".html", "_CN.html");
       document.querySelectorAll("#data-nav li a").forEach(item => {
         item.href = item.href.replace("_CN.html", ".html");
