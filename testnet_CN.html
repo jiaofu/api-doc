@@ -3744,20 +3744,20 @@ NONE</p>
       document.querySelector("#language .chinese").style = "display:block;"
       document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/cn" + pageObject[currentPage]
         .url : pageObject[currentPage].url + "/cn";
-      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + pageObject[currentPage].text;
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex " + pageObject[currentPage].text;
     } else {
       const currentPage = htmlItem.replace(".html","_CN.html").split("_")[0];
       document.querySelector("#language").href = location.href.replace(".html", "_CN.html");
       document.querySelectorAll("#data-nav li a").forEach(item => {
-        item.href = item.href.replace("_CN.html", ".html");
+        item.href = item.href.replace("_CN.html", ".html")
       })
       document.querySelectorAll("#data-nav li a span.english").forEach(item => {
         item.style = "display:block"
       })
       document.querySelector("#language .english").style = "display:block;"
-      document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jexzh.com" + "/en" + pageObject[currentPage]
+      document.querySelectorAll(".toc-footer li a")[0].href = currentPage !== "testnet" ? "https://www.jex.com" + "/en" + pageObject[currentPage]
         .url : pageObject[currentPage].url + "/en";
-      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex" + pageObject[currentPage].text;
+      document.querySelectorAll(".toc-footer li a")[0].text = "Binance jex " + pageObject[currentPage].text;
     }
   }
   </script>
